@@ -24,9 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g gulp hexo-cli
-    - run: npm install
-    - run: hexo clean && hexo generate
+    - run: npm i -g hexo-cli
+    - run: npm i
+    - run: hexo clean && hexo g
     - name: Commit files
       run: |
         git add .
