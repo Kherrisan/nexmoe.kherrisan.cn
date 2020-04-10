@@ -26,7 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g gulp hexo-cli
     - run: npm install
-    - run: hexo g
+    - run: hexo clean && hexo generate
     - name: Commit files
       run: |
         git add .
