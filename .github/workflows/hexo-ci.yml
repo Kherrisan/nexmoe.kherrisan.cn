@@ -27,7 +27,13 @@ jobs:
     - run: npm install -g gulp hexo
     - run: npm install
     - run: hexo g
-    - run: git add . && git commit -m "CI"
+    - name: Commit files
+      run: |
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "CI" -a
+        git pull
     - name: GitHub Push
       uses: ad-m/github-push-action@v0.5.0
       with:
