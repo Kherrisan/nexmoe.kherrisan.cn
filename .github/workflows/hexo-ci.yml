@@ -20,13 +20,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: snickerbockers/submodules-init@v4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm i -g hexo-cli
     - run: npm i
-    - run: hexo clean && hexo g
+    - run: hexo clean && hexo g --debug
     - name: Commit files
       run: |
         git add .
