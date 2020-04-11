@@ -26,7 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i -g hexo-cli
     - run: npm i
-    - run: hexo clean && hexo g
+    - run: hexo clean && hexo g --debug
     - name: Commit files
       run: |
         git add .
