@@ -19,6 +19,11 @@ jobs:
         node-version: [12.x]
 
     steps:
+    - name: webfactory/ssh-agent
+      uses: webfactory/ssh-agent@v0.2.0
+      with:
+        # Private SSH key to register in the SSH agent
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
     - uses: actions/checkout@v2
     - uses: snickerbockers/submodules-init@v4
     - name: Use Node.js ${{ matrix.node-version }}
