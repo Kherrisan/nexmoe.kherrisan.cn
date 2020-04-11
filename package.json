@@ -31,6 +31,8 @@
     "hexo-wordcount": "^6.0.1"
   },
   "devDependencies": {
+    "lodash.template": ">=4.5.0",
+    "kind-of": ">=6.0.3",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "gulp-babel": "^8.0.0"
