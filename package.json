@@ -28,7 +28,9 @@
     "hexo-renderer-marked": "^2.0.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
-    "hexo-wordcount": "^6.0.1"
+    "hexo-wordcount": "^6.0.1",
+    "leancloud-storage": "^4.5.3",
+    "valine": "^1.4.3"
   },
   "devDependencies": {
     "lodash.template": ">=4.5.0",
