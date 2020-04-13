@@ -1,3 +1,6 @@
 [submodule "themes/nexmoe"]
 	path = themes/nexmoe
 	url = git@github.com:Kherrisan/hexo-theme-nexmoe.git
+[submodule "themes/icarus"]
+	path = themes/icarus
+	url = git@github.com:Kherrisan/hexo-theme-icarus.git
