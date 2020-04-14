@@ -79,7 +79,6 @@ gulp.task('minify-html', function () {
         .pipe(inline(/<script.+?src="(.+?\.js.*?)".*?><\/script>/g, '<script type="text/javascript">', '</script>'))
         .pipe(inline(/<link rel="stylesheet" href="(.+?\.css.*?)">/g, '<style type="text/css">', '</style>'))
         .pipe(htmlclean())
-        .pipe(htmlmin())
         .pipe(gulp.dest('./docs'))
 });
 // 压缩css
