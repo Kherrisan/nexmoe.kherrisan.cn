@@ -488,15 +488,11 @@ figure.highlight .gutter {
   background: rgba(200,200,200,0.15);
 }
 figure.highlight figcaption {
+  margin: 0 !important;
   padding: 0.3em 0.75em;
   text-align: left;
   font-style: normal;
   font-size: 0.8em;
-}
-figure.highlight figcaption:after {
-  clear: both;
-  content: " ";
-  display: table;
 }
 figure.highlight figcaption span {
   font-weight: 500;
@@ -507,7 +503,6 @@ figure.highlight figcaption a {
   color: #9a9a9a;
 }
 figure.highlight figcaption a {
-  float: right;
   margin-left: 0.5em;
 }
 figure.highlight figcaption .fold {
