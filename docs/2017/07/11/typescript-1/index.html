@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Typescript 简述，安装，开发环境配置 - Kherrisan</title>
+
+
+    <meta name="description" content="简述Typescript是一个由微软开发的编程语言，听说有C#的首席架构师助阵Typescript的开发。是Javascript的超集，提供了可选的静态类型和基于类的面向对象编程，感觉就像C#和JavaScript之间的一种语言。 废话少说，先把环境搞起来，环境搭好了就可以码代码了。 以下所有的代码都来自于 Typescriptlang 这个网站，感觉比较良心，大家可以参考一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript 简述，安装，开发环境配置">
+<meta property="og:url" content="http://www.kherrisan.cn/2017/07/11/typescript-1/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="简述Typescript是一个由微软开发的编程语言，听说有C#的首席架构师助阵Typescript的开发。是Javascript的超集，提供了可选的静态类型和基于类的面向对象编程，感觉就像C#和JavaScript之间的一种语言。 废话少说，先把环境搞起来，环境搭好了就可以码代码了。 以下所有的代码都来自于 Typescriptlang 这个网站，感觉比较良心，大家可以参考一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2017-07-11T14:20:15.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.113Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="Typescript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="Typescript 简述，安装，开发环境配置" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>Typescript 简述，安装，开发环境配置
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-07-11T14:20:15.000Z"><i class="far fa-calendar-alt"> </i>2017-07-11</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.113Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/Typescript/">Typescript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    5 分钟 读完 (大约 781 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>Typescript是一个由微软开发的编程语言，听说有C#的首席架构师助阵Typescript的开发。是Javascript的超集，提供了可选的静态类型和基于类的面向对象编程，感觉就像C#和JavaScript之间的一种语言。 废话少说，先把环境搞起来，环境搭好了就可以码代码了。 以下所有的代码都来自于 <a href="http://www.typescriptlang.org" title="Typescript">Typescriptlang</a> 这个网站，感觉比较良心，大家可以参考一下。</p>
+<a id="more"></a>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>用vs插件</li>
+<li>用nodejs的npm</li>
+</ol>
+<p>我选择用npm</p>
+<pre><code class="null">npm install -g typescript
+</code></pre>
+<p>编辑器的话，这次就不靠jetbrain家族了，尝试一下vscode吧，好像vscode对typescript的支持也是相当充足的。说来也有趣，vscode里typescript的插件几乎有一般都是用来自动import的。。。。。。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>我觉得还是先码一点代码，看看效果，再决定是否要找插件比较好。</p>
+<pre><code class="null">function greeter(person) {
+    return "Hello, " + person;
+}
+var user = "Jane User";
+document.body.innerHTML = greeter(user);
+</code></pre>
+<p>嗯这就是一段HelloWorld，不是从标准输出而是在网页上输出的。另存为<code>greeter.ts</code>。</p>
+<pre><code class="null">tsc greeter.ts
+</code></pre>
+<p>这一步将ts代码编译为js代码了，因为helloworld实在太简单，所以ts和js应该是没有区别的，除了他会帮你自动格式化一下。这还不算ts，毕竟还没有引入静态类型呢。</p>
+<h2 id="加上一点点类型信息"><a href="#加上一点点类型信息" class="headerlink" title="加上一点点类型信息"></a>加上一点点类型信息</h2><pre><code class="null">function greeter(person: string) {
+    return "Hello, " + person;
+}
+var user = [0, 1, 2];
+document.body.innerHTML = greeter(user);
+</code></pre>
+<p>还没运行呢，编辑器就报错了，类型不对。Number[]无法适用于string。不写参数也算错。虽然tsc依然会生成js代码，但似乎不保证js代码运行的正确。</p>
+<h2 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a>其他插件</h2><pre><code class="null">npm install -g typings
+typings install dt~node –global
+</code></pre>
+<p>typings是一个自动补全的工具，除了对语法块（snippet）补全之外，还可以对其他模块，其他包的内容进行分析，并提供自动补全的候选。</p>
+<h2 id="创建一个完整的项目"><a href="#创建一个完整的项目" class="headerlink" title="创建一个完整的项目"></a>创建一个完整的项目</h2><pre><code class="null">mkdir ts_demo
+cd ts_demo
+</code></pre>
+<p>然后创建一个tsconfig.json文件，一般这个文件都是用来写ts项目的配置文件的。</p>
+<pre><code class="null">{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true
+    }
+}
+</code></pre>
+<p>然后写一个java风格的HelloWorld。</p>
+<pre><code class="null">class Startup {
+    public static main(): number {
+        console.log('Hello World');
+        return 0;
+    }
+}
+
+Startup.main();
+</code></pre>
+<p>再然后，调处vscode的命令<code>Configure Task Runner</code>，选择<code>TypeScript - tsconfig.json</code>，他会在.vscode目录下新建一个task.json文件，文件内容如下：</p>
+<pre><code class="null">{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "tsc",
+    "isShellCommand": true,
+    "args": ["-p", "."],
+    "showOutput": "silent",
+    "problemMatcher": "$tsc"
+}
+</code></pre>
+<p>这个文件描述的应该是把ts文件转换为js文件的操作。只要新建就可以了，不需要修改什么。保存一下以后，Ctrl+Shift+B会转换当前文件夹下的所有ts文件为js文件，然后用node运行相应的js文件即可。</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2017/07/11/typescript-1/">Typescript 简述，安装，开发环境配置</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2017/07/11/typescript-1/">http://www.kherrisan.cn/2017/07/11/typescript-1/</a></li>
+            <li><strong>发布时间：</strong>2017-07-11</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/Typescript/" rel="tag">Typescript</a>, <a class="has-link-grey -link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/07/11/typescript-2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Typescript 类型和变量</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2017/06/25/first/">
+                <span class="level-item">首</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#简述">
+        <span class="has-mr-6">1</span>
+        <span>简述</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#安装">
+        <span class="has-mr-6">1.1</span>
+        <span>安装</span>
+        </a></li><li>
+        <a class="is-flex" href="#Hello-World">
+        <span class="has-mr-6">1.2</span>
+        <span>Hello World</span>
+        </a></li><li>
+        <a class="is-flex" href="#加上一点点类型信息">
+        <span class="has-mr-6">1.3</span>
+        <span>加上一点点类型信息</span>
+        </a></li><li>
+        <a class="is-flex" href="#其他插件">
+        <span class="has-mr-6">1.4</span>
+        <span>其他插件</span>
+        </a></li><li>
+        <a class="is-flex" href="#创建一个完整的项目">
+        <span class="has-mr-6">1.5</span>
+        <span>创建一个完整的项目</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="Typescript 简述，安装，开发环境配置" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

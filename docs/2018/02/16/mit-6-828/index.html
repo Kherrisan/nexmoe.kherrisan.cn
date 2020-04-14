@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping - Kherrisan</title>
+
+
+    <meta name="description" content="Boot a PC 熟悉汇编语言，由于去年学过IO，问题应该不大。这里就不复习了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/02/16/mit-6-828/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="Boot a PC 熟悉汇编语言，由于去年学过IO，问题应该不大。这里就不复习了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-02-16T15:41:27.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.113Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="MIT_6.828">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-02-16T15:41:27.000Z"><i class="far fa-calendar-alt"> </i>2018-02-16</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.113Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/MIT-6-828/">MIT_6.828</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    28 分钟 读完 (大约 4152 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1 id="Boot-a-PC"><a href="#Boot-a-PC" class="headerlink" title="Boot a PC"></a>Boot a PC</h1><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-18-06.jpg" alt> 熟悉汇编语言，由于去年学过IO，问题应该不大。这里就不复习了。</p>
+<a id="more"></a>
+
+<h2 id="PC的物理地址空间"><a href="#PC的物理地址空间" class="headerlink" title="PC的物理地址空间"></a>PC的物理地址空间</h2><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_09-54-55.jpg" alt> 一台PC的物理内存大致是如上图所示分布的。第一台PC（16bit的8088）的可以直接访问的内存只有1MB，可用的就只有图上的Low Memory中的那一部分。然后是显卡的缓冲区，然后是一些设备，最后是BIOS。虽然后来的计算机内存早已超过了1MB，但是为了前向兼容内存较小的机器，1MB的内存的区域还是维持了原来的布局。</p>
+<h2 id="ROM-BIOS"><a href="#ROM-BIOS" class="headerlink" title="ROM BIOS"></a>ROM BIOS</h2><p>开两个shell，一个运行<code>make qemu-gdb</code>，另一个运行<code>gdb</code>，这样就可以在gdb里面调试OS的指令的执行操作了。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_10-13-04.jpg" alt> 其中：</p>
+<ol>
+<li><code>[f000:fff0]</code>是这条指令的逻辑地址，f000是段地址，fff0是段内偏移量，由于第一条指令是代码，在CS段内，所以可以说成CS=f000，IP=fff0。</li>
+<li>下一条即将执行的指令是<code>ljmp ....,....</code>，这个单步执行的回显和C++调试是差不多的，都显示了下一条即将执行的语句。这是一个远跳转指令，能够跳转到当前段的0-64KB范围内。</li>
+<li>即便是PC开机，第一条执行的指令也并不是在内存的开始位置，而是在<code>0xffff0</code>，因为之前说过BOIS在0xf000-0x100000之间。当然这个第一条指令地址也是在BIOS区的特别靠后的地方了，<strong>如果顺序执行，也就剩16条语句了。</strong>显然是不够的，所以要跳转。</li>
+</ol>
+<p>现在还处于_实模式_状态下，所谓实模式就是说<strong>物理地址=16*段地址+段内偏移</strong>。这样，一个16位的地址左移四位，变成了20bit，范围1MB。 当BIOS运行的时候，他会初始化中断描述符表，并初始化所有设备，包括VGA显示器，PCI总线，然后是硬盘，CD，最后找一个可以用的boot loader，一旦找到，就会把控制权转移给他。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-18-17.jpg" alt> 熟悉使用gdb进行调试的操作，跟着bios走一走，也没什么可说的。</p>
+<h1 id="Boot-Loader"><a href="#Boot-Loader" class="headerlink" title="Boot Loader"></a>Boot Loader</h1><p>Bootloader的主要功能：</p>
+<ol>
+<li>从实模式切换到32bit保护模式。</li>
+<li>通过IO指令直接从硬盘读Kernel到内存中。</li>
+</ol>
+<p>然后来阅读代码，boot/boot.S和boot/main.c。 先看boot.S，我觉得最重要的是下面这段： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_13-30-57.jpg" alt> 首先从offset读8个sector，正好是一个page（4K），读到一个elf header中去。这个offset的值是0，也就是从硬盘的最开始的位置读1个页。 有个问题是：如果这个bootloader是存放在硬盘的最开始的位置，那为何还要从offset为0的地方再读1个page呢，这个offset为0的地方存放的是什么呢？ 根据代码的语义，这一个page中的数据按照elf格式排布，先读一个page，读到了header就可以获取到整个program的大小，然后就可以通过一个for循环把program的每个segment都读进来了。</p>
+<blockquote>
+<p>一般的 ELF 文件包括三个索引表：</p>
+<ol>
+<li>ELF header：在文件的开始，保存了路线图，描述了该文件的组织情况。</li>
+<li>Program header table：告诉系统如何创建进程映像。用来构造进程映像的目标文件必须具有程序头部表，可重定位文件不需要这个表。</li>
+<li>Section header table ：包含了描述文件节区的信息，每个节区在表中都有一项，每一项给出诸如节区名称、节区大小这类信息。用于链接的目标文件必须包含节区头部表，其他目标文件可以有，也可以没有这个表。</li>
+</ol>
+</blockquote>
+<p>根据课程网站的解释和代码前的注释，这一段bootloader代码是从硬盘读取kernel程序的，也就是elf是指的kernel。 通过linux的readelf工具可以读取一个elf程序的头部，当然也可以读elf中的program的header。</p>
+<pre><code class="null">readelf -h obj/kernel/kernal
+</code></pre>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-18-23.jpg" alt> 针对Exercise3的四个问题：</p>
+<ol>
+<li>具体是何时从实模式切换到保护模式的？</li>
+<li>bootloader的最后一条指令是什么，kernel的第一条指令是什么？</li>
+<li>kernel的第一条指令在哪里？</li>
+<li>boot loader是怎么知道kernel有多大，有多少个sector要读取的？</li>
+</ol>
+<p>给出自己的回答：</p>
+<ol>
+<li>如果说要精确到一条指令的话，应该是一个ljmp。</li>
+</ol>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_14-41-02.jpg" alt></p>
+<ol>
+<li>bootloader最后一条指令是<code>((void (*)(void)) (ELFHDR->e_entry))();</code>，kernel的第一条指令是<code>movw $0x1234,0x472</code>。</li>
+<li>kernel的第一条指令在kern/entry.S中。</li>
+<li>kernel是elf结构的，读一个头部就对整个kernel的结构一清二楚了。</li>
+</ol>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_15-03-27.jpg" alt></p>
+<blockquote>
+<p><em>但是又有一个问题了，只不过是跳转了一个地址，处理器怎么就知道该进入保护模式了呢，难道仅仅是因为这个地址是1MB之外的地址吗？因为第一次进入了1MB之外的区间，所以就进了保护模式？</em></p>
+</blockquote>
+<h2 id="Loading-the-kernel"><a href="#Loading-the-kernel" class="headerlink" title="Loading the kernel"></a>Loading the kernel</h2><p>首先课程网站建议熟悉一下c语言中的指针操作，强烈监狱补全一下K&R，然后脑补一下pointer.c中程序的执行过程。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-18-31.jpg" alt> 我觉得pointer.c中的关于指针和数组的操作都挺简单的，就我个人而言唯一不太熟悉的就是变量在内存中的布局，大端小端，补码反码，指针的强制类型转换等等，所以我自己写了个c程序练练手。</p>
+<pre><code class="null">#include<stdio.h>
+
+typedef struct {
+    int i;
+    char ch;
+}Em;
+
+int main(){
+    int a[6]={1,2,4,8,16,1<<15}; int *i; char *ch; em *emptr; i="&a[5];" ch="(char" *)i; printf("256 converted to ptr:%d\n",*ch); printf("16 printf("then let ptr increment.now ptr:%d\n",*(++ch)); em; em.i="256;" em.ch="64;" emptr="&em;" *)emptr; printf("the size of struct(int,char) is %d\n",sizeof(em)); first byte struct(int:256,char:64) %d\n",*ch); second %d\n",*(++ch)); third forth last return 0; } < code></15};></stdio.h></code></pre>
+<p>运行结果如下： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-41-20.jpg" alt></p>
+<ol>
+<li>首先是大端小端的问题，如果一个变量的长度超过一个字节，在我这台PC机的架构上，低字节存放在低地址。上述程序中让一个字符指针指向一个整数1<<15的第一个字节，是0，说明是低字节。< li>
+<li>对于结构体和对象的内存对齐，可以看到本来5个byte的结构体占了8个byte。虽然我程序的输出中最后一行说的是last byte，但其实这并不是最后一个，而是倒数第4个，后面还有3个byte。</li>
+</15的第一个字节，是0，说明是低字节。<></li></ol>
+<p>再回到kernel，从代码的语义中不难看出，kernel是一段elf格式的程序，elf的格式这里就不详细的研究了。</p>
+<pre><code class="null">objdump -h obj/kern/kernel
+</code></pre>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-01-30_18-59-28.jpg" alt> 上图罗列的是程序中的各个段的地址，我们主要关心的有三个:.text,.rodata,.data。其中text是要执行的代码段，rodata是只读数据段，data是数据段。 每个段都有LMA和VMA两个项，其中</p>
+<ul>
+<li>LMA:load address，标记这个段要加载到内存里的哪个位置中去。</li>
+<li>VMA:link address，标记这个段中的指令要从哪里执行。</li>
+</ul>
+<p>一般来说VMA和LMA是一样的。 课程网站介绍说，BIOS会默认把bootloader加载到0x7c00的位置，那么这个7c00是个典型值呢还是特殊值呢？经过百度： <a href="http://blog.csdn.net/bkxiaoc/article/details/50380835" title="为何在x86构架中 BIOS 会将 MBR 装载到 0x7c00地址处?">为何在x86构架中 BIOS 会将 MBR 装载到 0x7c00地址处?</a> 总之就是有这么个地址，既不是芯片厂商决定的，也不是操作系统厂商决定的，就一直沿用至今了。 BIOS总是将boot sector加载到7c00，按照正常思路bootloader也应该从7c00开始运行（也就是说LMA也应是7c00），那么如果把link address改成别的地址会发生什么呢？ <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-07_19-45-42.jpg" alt> 变成死循环了，跳不出来了。Emmmmmmm，然我换一个7f00再换一个值试一下。改为7d00。 还是死循环，说明这个地址有问题，跳转语句跳转不到或者是别的什么原因。 另外，bootloader中加载全局描述符表寄存器的指令（lgdt）的操作数是一个错误的地址，同样导致了运行的错误。那么这是为什么呢，为什么只有ljmp和lgdt这两个指令受到了影响呢。我觉得有两个原因：</p>
+<ol>
+<li>指令是顺序执行的，从7c00开始一条一条往下走，只要不是多一行少一行就不会有错。</li>
+<li>链接的时候，链接器会把符号（如全局变量、函数等等）根据VMA替换成地址。指令后面的操作数是立即数或绝对地址或者寄存器的话，就不会被替换，自然不会受到影响；如果是标号，比如跳转语句，就可能会受到影响。</li>
+</ol>
+<p>可以看到，lgdt和ljmp这两句指令的操作数都是有符号地址的。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-07_20-28-50.jpg" alt> 为什么在刚刚进入bootloader和刚刚进入kernel的时候，0x1000000处的数据不一样？ 我一开始以为是保护模式下和实模式下，这个地址代表不同的含义。然而真正的原因是这样的： kernel的VMA是0x00100000，所以bootloader会把kernel载入到这个位置，所以前后的数据是不一样的，而刚刚进入kernel的时候100000存放的肯定是kernel的text段的第一条指令了。</p>
+<h1 id="The-Kernel"><a href="#The-Kernel" class="headerlink" title="The Kernel"></a>The Kernel</h1><h2 id="Using-virtual-memory-to-work-around-position-dependence"><a href="#Using-virtual-memory-to-work-around-position-dependence" class="headerlink" title="Using virtual memory to work around position dependence"></a>Using virtual memory to work around position dependence</h2><p>操作系统内核往往会载入到教高的内存中，为的是把更多的较低的部分保留给用户的应用程序。比如JOS中，kernel的VMA（link address，即开始执行的地址）是0xf01000000。但是并不是每台电脑都有这么大的主存空间。 为了屏蔽这样的问题，就需要处理器的内存管理硬件来对这样的地址做一个转换（如把VMA转换到LMA）。 现在，我们将要使用手写的、静态初始化的页目录和页表来实现映射4MB物理内存空间的功能。在这个功能启动之前，内存地址都是按照线性地址来处理的，启动之后，所有地址都会经过虚拟内存管理硬件来处理，转换成物理地址。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-08_15-12-08.jpg" alt></p>
+<h2 id="Formatted-Printing-to-the-Console"><a href="#Formatted-Printing-to-the-Console" class="headerlink" title="Formatted Printing to the Console"></a>Formatted Printing to the Console</h2><p>关于格式化输出printf的底层实现的内容。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-08_15-46-42.jpg" alt> Lab要求回答下面几个问题：</p>
+<h3 id="1-printf-c和console-c的关系，console-c提供了哪些函数。"><a href="#1-printf-c和console-c的关系，console-c提供了哪些函数。" class="headerlink" title="1.printf.c和console.c的关系，console.c提供了哪些函数。"></a>1.printf.c和console.c的关系，console.c提供了哪些函数。</h3><p>printf.c提供的函数是能够直接供用户调用的<code>printf("%d%d",a,b)</code>，console.c中的函数负责与设备以及设备的端口（设备中的寄存器）进行IO交互，其中比较重要的函数有：</p>
+<ol>
+<li>cga_putc：把单个字符输出到屏幕上，包含\转移的特殊字符的处理，同时负责维护一个缓冲区。</li>
+<li>serial_putc：把单个字符传到串口设备。</li>
+<li>lpt_putc：把单个字符传到并口设备。</li>
+</ol>
+<h3 id="2-解释下面的代码的作用。"><a href="#2-解释下面的代码的作用。" class="headerlink" title="2.解释下面的代码的作用。"></a>2.解释下面的代码的作用。</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-08_15-59-10.jpg" alt> crt_buf数组代表了显示器的缓冲区，显示器的屏幕大小是固定的，只能显示多少行多少列，这个最大的字符个数就是CRT_SIZE变量，如果要显示的长度超过最大字符个数，说明要把屏幕向上滚动，即原来的第0行的内容消失，原来的第1行内容显示在第0行，原来的第2行显示到现在的第1行，以此类推，现在的最后一行全部为空。</p>
+<h3 id="3-cons-putc-va-arg-and-vcprintf"><a href="#3-cons-putc-va-arg-and-vcprintf" class="headerlink" title="3.cons_putc, va_arg, and vcprintf"></a>3.cons_putc, va_arg, and vcprintf</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-08_16-31-13.jpg" alt> fmt指向的应该是前面的字符串，pa指向的应该是后面的参数列表。从编译后的代码可以看到，gcc的传参方式是先压参数列表尾部的参数到栈中，再压前部的参数，即倒序的压栈。</p>
+<pre><code class="null">vcprintf("x %d, y %x, z %d\n",va_list(1,2,3));
+cons_putc('x');
+cons_putc(' ');
+var_arg(va_list(1,2,3),int)
+cons_putc('1');
+cons_putc(',');
+cons_putc(' ');
+cons_putc('y');
+cons_putc(' ');
+var_arg(va_list(1,2,3),unsigned int)
+cons_putc('3');
+cons_putc(',');
+cons_putc(' ');
+cons_putc('z');
+cons_putc(' ');
+var_arg(va_list(1,2,3),int)
+cons_putc('4');
+</code></pre>
+<h3 id="4-运行代码"><a href="#4-运行代码" class="headerlink" title="4.运行代码"></a>4.运行代码</h3><p>要求运行下面这段代码，我本来是自己编写了一个c文件来编译运行这个代码，发现提示cprintf是个undefined reference，据说是这个函数无法直接使用。</p>
+<p>int x = 1, y = 3, z = 4;<br>cprintf(“x %d, y %x, z %d\n”, x, y, z);</p>
+<p>因此就在kern\monitor.c里添加了一条指令来运行这段代码。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-07_22-19-18.jpg" alt> 具体的调用过程这里就不写了。 为什么输出的是He110 World呢，原因是57616转换为16进制为e11o，x86是小端顺序的，也就是低地址存放串的尾部，高地址存放串的首部，从低地址开始遍历0x00646c72，先输出的是0x72（注意还是16进制的），然后是0x6c，0x64，0x00，由于是%s的参数，所以每一个字节都会被当作char处理，输出字符串为rld\0，最后的\0是不输出的，仅仅是为了帮助判断跳出循环。 如果架构变为大端存储，57616不需要变，因为输出数字时打印字符的顺序肯定是从数字高位向地位输出的。大端存储，低地址存放串的首部，需要rld，那么就要0x726c6400。</p>
+<h3 id="5-va-arg宏实际上执行的是出栈操作"><a href="#5-va-arg宏实际上执行的是出栈操作" class="headerlink" title="5.va_arg宏实际上执行的是出栈操作"></a>5.va_arg宏实际上执行的是出栈操作</h3><p>如果cprintf的变长参数不够填充格式化字符串，那会打印什么？即ap中存储的参数小于等于格式化字符串中的占位符个数，那么打印的字符应该是不确定的，取决于栈里面存放的下一个内容是什么。</p>
+<h3 id="6-如果GCC按照参数列表顺序压栈"><a href="#6-如果GCC按照参数列表顺序压栈" class="headerlink" title="6.如果GCC按照参数列表顺序压栈"></a>6.如果GCC按照参数列表顺序压栈</h3><p>当然，格式化字符串和边长参数列表始终是分离的，不会因为压栈顺序而产生影响，但是要从变长参数列表中取出变量的时候，就和压栈顺序有关了。我的想法是给cprintf添加一个参数，表示需要输出的变量的个数，这样可以先一次性全部得到（出栈）需要使用的变量，然后逆序输出。</p>
+<h1 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h1><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-08_16-24-25.jpg" alt> 进入了test_backtrace(5)之后，esp是0xf010ffc8，ebp是0xf010ffd8。 从汇编代码可以看到，ebp和ebx是肯定被压入栈了，占2个字长，参数5肯定也被压栈了，占一个字长，</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/02/16/mit-6-828/">MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/02/16/mit-6-828/">http://www.kherrisan.cn/2018/02/16/mit-6-828/</a></li>
+            <li><strong>发布时间：</strong>2018-02-16</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/MIT-6-828/" rel="tag">MIT_6.828</a>, <a class="has-link-grey -link" href="/tags/OS/" rel="tag">OS</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/02/16/jvm-mm/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">JVM——内存区域和内存溢出异常</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/02/14/java-collection-hashmap/">
+                <span class="level-item">Java Collection——HashMap</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#Boot-a-PC">
+        <span class="has-mr-6">1</span>
+        <span>Boot a PC</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#PC的物理地址空间">
+        <span class="has-mr-6">1.1</span>
+        <span>PC的物理地址空间</span>
+        </a></li><li>
+        <a class="is-flex" href="#ROM-BIOS">
+        <span class="has-mr-6">1.2</span>
+        <span>ROM BIOS</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Boot-Loader">
+        <span class="has-mr-6">2</span>
+        <span>Boot Loader</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Loading-the-kernel">
+        <span class="has-mr-6">2.1</span>
+        <span>Loading the kernel</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#The-Kernel">
+        <span class="has-mr-6">3</span>
+        <span>The Kernel</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Using-virtual-memory-to-work-around-position-dependence">
+        <span class="has-mr-6">3.1</span>
+        <span>Using virtual memory to work around position dependence</span>
+        </a></li><li>
+        <a class="is-flex" href="#Formatted-Printing-to-the-Console">
+        <span class="has-mr-6">3.2</span>
+        <span>Formatted Printing to the Console</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-printf-c和console-c的关系，console-c提供了哪些函数。">
+        <span class="has-mr-6">3.2.1</span>
+        <span>1.printf.c和console.c的关系，console.c提供了哪些函数。</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-解释下面的代码的作用。">
+        <span class="has-mr-6">3.2.2</span>
+        <span>2.解释下面的代码的作用。</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-cons-putc-va-arg-and-vcprintf">
+        <span class="has-mr-6">3.2.3</span>
+        <span>3.cons_putc, va_arg, and vcprintf</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-运行代码">
+        <span class="has-mr-6">3.2.4</span>
+        <span>4.运行代码</span>
+        </a></li><li>
+        <a class="is-flex" href="#5-va-arg宏实际上执行的是出栈操作">
+        <span class="has-mr-6">3.2.5</span>
+        <span>5.va_arg宏实际上执行的是出栈操作</span>
+        </a></li><li>
+        <a class="is-flex" href="#6-如果GCC按照参数列表顺序压栈">
+        <span class="has-mr-6">3.2.6</span>
+        <span>6.如果GCC按照参数列表顺序压栈</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#Stack">
+        <span class="has-mr-6">4</span>
+        <span>Stack</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

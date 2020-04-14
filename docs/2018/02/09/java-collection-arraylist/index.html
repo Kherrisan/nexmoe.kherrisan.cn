@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Java Collection——ArrayList - Kherrisan</title>
+
+
+    <meta name="description" content="public class ArrayList extends AbstractList          implements List, RandomAccess, Cloneable, java.io.Serializable {}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Collection——ArrayList">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/02/09/java-collection-arraylist/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="public class ArrayList extends AbstractList          implements List, RandomAccess, Cloneable, java.io.Serializable {}">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-02-09T18:18:05.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.109Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="Java Collection——ArrayList" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>Java Collection——ArrayList
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-02-09T18:18:05.000Z"><i class="far fa-calendar-alt"> </i>2018-02-09</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.109Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/Java-Collection/">Java Collection</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    21 分钟 读完 (大约 3137 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <pre><code class="null">public class ArrayList<e> extends AbstractList<e> 
+        implements List<e>, RandomAccess, Cloneable, java.io.Serializable
+{}
+</e></e></e></code></pre>
+<a id="more"></a>
+
+<p>ArrayList继承了AbstractList，实现了List、RandomAccess、Cloneable、Serializable接口。 RandomAccess接口定义里没有函数，他只是一个标记。如果一个实现了List接口的类支持快速的随机访问（一般是常数时间的），那就要用实现这个接口。或者说如果</p>
+<pre><code class="null">for (int i=0, n=list.size(); i < n; i++)
+    list.get(i);
+</code></pre>
+<p>比</p>
+<pre><code class="null">for (Iterator i=list.iterator(); i.hasNext(); )
+    i.next();
+</code></pre>
+<p>快，那么就要实现该接口。对于使用该类的开发人员来说，在需要遍历一个List的时候，可以通过instanceOf判断是不是RandomAccess，如果是的话，用<code>get(i)</code>遍历更快，如果不是，用迭代器<code>next()</code>遍历更快。 ArrayList类似于C++中的vector，表示在内存中顺序存放的一组元素组成的数组。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>比较重要的属性有：</p>
+<ol>
+<li>Object[] elementDat：实际存放数组元素的数组。</li>
+<li>DEFAULT_CAPACITY：默认的数组大小。</li>
+<li>size：数组中实际存放的元素个数（不一定等于数组大小）。</li>
+</ol>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>有三个构造函数，如果在构造函数中注明存放的元素个数，就会new一个这么大的数组；如果不注明元素个数，那么就不new数组，而是直接用一个静态空数组来表示存放内容；如果在构造函数中传入另一个collection对象，则会把所有的那个collection对象中的所有元素拷贝一份，作为本对象的存放内容。 常用的几个方法有：</p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>随机修改数组元素，只需要常数时间。</p>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>随机访问数组元素，只需要常数时间。</p>
+<h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><p>添加一个元素，可以以null为参数。</p>
+<h4 id="add-1"><a href="#add-1" class="headerlink" title="add"></a>add</h4><p>如果在数组末尾添加元素，只需要常数时间，如果是在数组中部插入新元素，需要让插入位置以后的所有元素都向后挪动，所以就需要线性时间了。 在数组的末尾或者指定位置添加一个元素，在添加之前会先检查容量是否满足需求，即capacity是不是比size大1，如果放不下，就要考虑扩容到指定长度的问题了。</p>
+<h4 id="ensureCapacityInternal"><a href="#ensureCapacityInternal" class="headerlink" title="ensureCapacityInternal"></a>ensureCapacityInternal</h4><p>具体而言，判断的逻辑是这样的：先手动指定一个数组最小长度（比如，在add之前，指定这个数组最小长度为size+1），看这个数组是不是默认大小的空数组，如果是的话，取指定数组长度和10（默认空间大小）的较大值；如果不是默认大小的空数组，就直接取指定的数组长度。这个值作为新的capacity，如果新的capacity比当前的capacity大的话，就要扩大数组了。但并不是直接扩大到新的capacity，而是看当前的capacity的1.5倍和新的capacity谁大，取较大的那个值作为最终扩容的数组长度。 同时扩容的时候会检查扩容后的数组长度是不是比最大长度大（MAX_ARRAY_SIZE），如果是，检查指定的数组长度是不是溢出了，如果是，就抛出异常，如果没有溢出并且指定的数组长度比MAX_ARRAY_SIZE，就取Integer.MAX_VALUE作为新的数组长度，否则就取MAX_ARRAY_SIZE作为新的数组长度。也就是说在数组长度较大的时候，长度要么是Integer.MAX_VALUE，要么是MAX_ARRAY_SIZE。</p>
+<pre><code class="null">private void grow(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
+        newCapacity = hugeCapacity(minCapacity);
+    // minCapacity is usually close to size, so this is a win:
+    elementData = Arrays.copyOf(elementData, newCapacity);
+}
+</code></pre>
+<p>比如：如果我调用默认构造函数，那得到的数组的capacity=0，size=0，如果我再add一次，那么我需要的size应该是1，但是由于当前数组是默认空数组，情况比较特殊，新的capacity是10，10>capacity，要扩容，capacity=0，1.5倍还是0，显然是10比较大，所以最终的数组长度就为1，并且把新的元素加add到最后一个。 如果现在有个ArrayList，size=20，capacity=32，add一个新的元素，需要的最小数组长度应该是20+1=21，21比32小，那就不用扩容了。 如果有个ArrayList，size=20，capacity=20，add一个新的元素，需要的最小数组长度应该是21，21>capacity，要扩容，扩容到30。</p>
+<h4 id="addAll"><a href="#addAll" class="headerlink" title="addAll"></a>addAll</h4><p>同样要检查数组长度，有必要的话需要扩容，既可以在数组末尾添加元素，也可以在某个位置添加，显然需要线性时间，因为需要深拷贝。 <strong>添加元素的顺序即为参数Collection的迭代器的顺序。</strong></p>
+<h3 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h3><p>删除某个位置的元素，或者删除数组中的某个对象。二者都需要线性时间。可以以null为参数。 remove(Object)会通过equals从数组中找到第一个和参数相等的元素，然后移除他。 值得注意的是，remove中并没有数组缩容的逻辑，也就是说ArrayList只会变大不会变小。这点值得再继续研究一下。 写了一小段代码来测试一下ArrayList扩容的原理，因为elementData是protected的，所以要用反射才能获取到capacity。</p>
+<pre><code class="null">package collection;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by intellij IDEA.But customed by hand of Dokyme.
+ *
+ * @author dokym
+ * @date 2018/2/9-13:07
+ * Description:
+ */
+public class LearnArrayList {
+    private static Class arrayListClass;
+    private static Field elementDataField;
+
+    public static void main(String[] args) {
+        try {
+            arrayListClass = Class.forName("java.util.ArrayList");
+            elementDataField = arrayListClass.getDeclaredField("elementData");
+            elementDataField.setAccessible(true);
+            List<listelement> elements = new ArrayList<>();
+            for (int i = 0; i < 100 ; i++){
+                elements.add(new ListElement("Dokyme"));
+                printListCapacity(elements);
+            }
+            for (int i = 0; i < 80; i++) {
+                elements.remove(elements.size() - 1);
+                printListCapacity(elements);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+
+    private static void printListCapacity(List<listelement> listElements) throws Exception {
+        System.out.println("Capacity is " + ((Object[]) elementDataField.get(listElements)).length);
+    }
+}
+</listelement></listelement></code></pre>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_15-26-44.jpg" alt> 在测试的的过程中的确没有发现缩容的现象。</p>
+<h4 id="batchRemove-Collection"><a href="#batchRemove-Collection" class="headerlink" title="batchRemove(Collection)"></a>batchRemove(Collection)</h4><p>能够批量删除本数组中所有出现在参数中的元素。</p>
+<h3 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h3><p>查询一次需要线性的时间复杂度，可以以null为参数。</p>
+<h3 id="forEach、removeIf、replaceAll"><a href="#forEach、removeIf、replaceAll" class="headerlink" title="forEach、removeIf、replaceAll"></a>forEach、removeIf、replaceAll</h3><p>为函数式编程提供了支持。</p>
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><p>调用Arrays.sort方法进行排序。排序算法今天暂时先不研究了。。。</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>ArrayList有两个迭代器的内部类，一个是Itr，一个是ListItr，后者比前者的方法多一些。 Itr实现了next()、hasNext()、remove()、forEachRemaining()这些方法。 ListItr在Itr的基础上，多了add()、set()、previous()、xxxIndex()等方法。 <strong>ArrayList的方法中没有出现对并发访问的控制，基本上没有见过哪里抛出了<code>ConcurrentModificationException</code>，但是在迭代器的方法中却经常见到抛出这个异常的代码。 会导致这个异常的最经典的场景就是在一个<code>for</code>循环中一边用迭代器遍历数组（或者用增强for循环）一边给数组添加或删除元素。</strong></p>
+<h3 id="ConcurrentModificationException"><a href="#ConcurrentModificationException" class="headerlink" title="ConcurrentModificationException"></a>ConcurrentModificationException</h3><p>ArrayList在add和remove的时候会自增一个modCount，这个modCount属性记录的是本对象的结构被修改的次数。迭代器也有一个相同功能的expectedModCount，在构造迭代器的时候，expectedModCount和modCount的值是相等的，一旦在循环体中调用了ArrayList的remove(index)或remove(Object)方法，使数组结构发生了变化，两个modCount就不一样了。 next函数的第一行就是检查两个modCount是否一致，不一致就抛出异常了。</p>
+<pre><code class="null">    @SuppressWarnings("unchecked")
+    public E next() {
+        checkForComodification();
+        int i = cursor;
+        if (i >= size)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i + 1;
+        return (E) elementData[lastRet = i];
+    }
+
+    public boolean hasNext() {
+        return cursor != size;
+    }
+
+    public void remove() {
+        if (lastRet < 0)
+            throw new IllegalStateException();
+        checkForComodification();
+
+        try {
+            ArrayList.this.remove(lastRet);
+            cursor = lastRet;
+            lastRet = -1;
+            expectedModCount = modCount;
+        } catch (IndexOutOfBoundsException ex) {
+            throw new ConcurrentModificationException();
+        }
+    }
+
+    final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+</code></pre>
+<p>以上是java中ArrayList的迭代器Itr的几个函数的定义，其中hasNext就可能因为一边遍历一边修改数组导致返回值出现错误。 但也并不是就不能一边遍历一边添加删除元素了，Itr提供了remove方法，用于删除迭代器当前指向的元素，这个remove方法实际上是调用了ArrayList的remove方法，并修改expectedModCount到与modCount一致的状态。 当然，Itr的remove方法是要有条件的，就是在remove之前至少要有一次next方法，否则lastRet无法得到正确的值，使得迭代器删掉了这个元素之后不知道该指向哪个元素了。 当然，一边遍历一边添加删除数组还有另一种写法，就是依靠ArrayList的remove函数和传统的for循环，不使用增强的for循环或迭代器。 又写了一段代码测试remove的特性。 10个元素，分别是0-9，四次不同的循环，分别删除3，4，5，6。</p>
+<pre><code class="null">package collection;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Created by intellij IDEA.But customed by hand of Dokyme.
+ *
+ * @author dokym
+ * @date 2018/2/9-13:07
+ * Description:
+ */
+public class LearnArrayList {
+
+    private static void testTraditionalForLoop(List<listelement> listElements) {
+        try {
+            //iterate using traditional for loop
+            for (int i = 0; i < listElements.size(); i++) {
+                ListElement cursor = listElements.get(i);
+                if (cursor.getName().equals("3")) {
+                    listElements.remove(i);
+                }
+            }
+            System.out.println("testTraditionalForLoop");
+            System.out.println(listElements);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void testForEachLoop(List<listelement> listElements) {
+        try {
+            //iterator using foreach loop
+            for (ListElement cursor : listElements) {
+                if (cursor.getName().equals("4")) {
+                    listElements.remove(cursor);
+                }
+            }
+            System.out.println("testForEachLoop");
+            System.out.println(listElements);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void testIteratorRemove(List<listelement> listElements) {
+        try {
+            //iterate using iterator,remove using iterator.remove
+            Iterator<listelement> iterator = listElements.iterator();
+            while (iterator.hasNext()) {
+                ListElement current = iterator.next();
+                if (current.getName().equals("5")) {
+                    iterator.remove();
+                }
+            }
+            System.out.println("testIteratorRemove");
+            System.out.println(listElements);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void testIteratorRemove2(List<listelement> listElements) {
+        try {
+            //iterate using iterator,remove using ArrayList.remove
+            Iterator<listelement> iterator = listElements.iterator();
+            while (iterator.hasNext()) {
+                ListElement current = iterator.next();
+                if (current.getName().equals("6")) {
+                    listElements.remove(current);
+                }
+            }
+            System.out.println("testIteratorRemove2");
+            System.out.println(listElements);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            List<listelement> listElements = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                listElements.add(new ListElement("" + i));
+            }
+            testTraditionalForLoop(listElements);
+            testForEachLoop(listElements);
+            testIteratorRemove(listElements);
+            testIteratorRemove2(listElements);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+}
+</listelement></listelement></listelement></listelement></listelement></listelement></listelement></code></pre>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_20-05-15-1.jpg" alt> 实验的结果是，使用传统for循环+ArrayList.remove，删除和遍历都没有问题；使用增强for循环和ArrayList.remove，删除成功，但是抛出了ConcurrentModificationException；使用迭代器循环+迭代器remove，遍历成功并且正确删除了5；使用迭代器循环+ArrayList.remove，抛出了ConcurrentModificationException。</p>
+<h3 id="ListItr"><a href="#ListItr" class="headerlink" title="ListItr"></a>ListItr</h3><p>继承了Itr，并提过了几个额外的方法:previous,set,add。这个add是可以配合迭代器对象在遍历过程中添加元素的。但是同样有前提条件：lastRet必须有效，即在add之前必须调用一次next。</p>
+<h3 id="lastRet"><a href="#lastRet" class="headerlink" title="lastRet"></a>lastRet</h3><p>这个变量很有意思，cursor代表写一个元素的index，那么上一个不就是cursor-1吗，为什么还要专门找一个变量来表示上一个变量的index呢？？？ 注意：Itr还是ListItr，都可以通过ArrayList的方法获得。</p>
+<h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="SubList"><a href="#SubList" class="headerlink" title="SubList"></a>SubList</h3><p>代表ArrayList的一部分，奇怪的是，没有继承ArrayList，而是直接继承AbstractList并实现了RandomAccess。概念类似于数据库中的视图，即把ArrayList中的内容截取一段，ArrayList和SubList中的数组元素实际上是相同的。任何一处修改，另一处也会更随着变化。 提供的数个方法和ArrayList相差无几（set、get、size、add、remove、addAll），区别在于要比ArrayList的对应方法多一步：检查comidification。 SubList也提供了自己的迭代器，是一个继承了ListIterator的匿名内部类。</p>
+<h3 id="ArrayListSplitter"><a href="#ArrayListSplitter" class="headerlink" title="ArrayListSplitter"></a>ArrayListSplitter</h3><blockquote>
+<p>Spliterator是一个可分割迭代器(splitable iterator)，可以和iterator顺序遍历迭代器一起看。jdk1.8发布后，对于并行处理的能力大大增强，Spliterator就是为了并行遍历元素而设计的一个迭代器，jdk1.8中的集合框架中的数据结构都默认实现了spliterator。</p>
+</blockquote>
+<p>jdk8的新特性，暂不研究。。。</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/02/09/java-collection-arraylist/">Java Collection——ArrayList</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/02/09/java-collection-arraylist/">http://www.kherrisan.cn/2018/02/09/java-collection-arraylist/</a></li>
+            <li><strong>发布时间：</strong>2018-02-09</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/java/" rel="tag">java</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/02/10/java-collection-linkedlist/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java Collection——LinkedList</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/02/09/java-collection-overview/">
+                <span class="level-item">Java Collection——总览</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#属性">
+        <span class="has-mr-6">1</span>
+        <span>属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法">
+        <span class="has-mr-6">2</span>
+        <span>方法</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#set">
+        <span class="has-mr-6">2.1</span>
+        <span>set</span>
+        </a></li><li>
+        <a class="is-flex" href="#get">
+        <span class="has-mr-6">2.2</span>
+        <span>get</span>
+        </a></li><li>
+        <a class="is-flex" href="#add">
+        <span class="has-mr-6">2.3</span>
+        <span>add</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#add-1">
+        <span class="has-mr-6">2.3.1</span>
+        <span>add</span>
+        </a></li><li>
+        <a class="is-flex" href="#ensureCapacityInternal">
+        <span class="has-mr-6">2.3.2</span>
+        <span>ensureCapacityInternal</span>
+        </a></li><li>
+        <a class="is-flex" href="#addAll">
+        <span class="has-mr-6">2.3.3</span>
+        <span>addAll</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#remove">
+        <span class="has-mr-6">2.4</span>
+        <span>remove</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#batchRemove-Collection">
+        <span class="has-mr-6">2.4.1</span>
+        <span>batchRemove(Collection)</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#indexOf">
+        <span class="has-mr-6">2.5</span>
+        <span>indexOf</span>
+        </a></li><li>
+        <a class="is-flex" href="#forEach、removeIf、replaceAll">
+        <span class="has-mr-6">2.6</span>
+        <span>forEach、removeIf、replaceAll</span>
+        </a></li><li>
+        <a class="is-flex" href="#sort">
+        <span class="has-mr-6">2.7</span>
+        <span>sort</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#迭代器">
+        <span class="has-mr-6">3</span>
+        <span>迭代器</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#ConcurrentModificationException">
+        <span class="has-mr-6">3.1</span>
+        <span>ConcurrentModificationException</span>
+        </a></li><li>
+        <a class="is-flex" href="#ListItr">
+        <span class="has-mr-6">3.2</span>
+        <span>ListItr</span>
+        </a></li><li>
+        <a class="is-flex" href="#lastRet">
+        <span class="has-mr-6">3.3</span>
+        <span>lastRet</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#其他内部类">
+        <span class="has-mr-6">4</span>
+        <span>其他内部类</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#SubList">
+        <span class="has-mr-6">4.1</span>
+        <span>SubList</span>
+        </a></li><li>
+        <a class="is-flex" href="#ArrayListSplitter">
+        <span class="has-mr-6">4.2</span>
+        <span>ArrayListSplitter</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="Java Collection——ArrayList" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

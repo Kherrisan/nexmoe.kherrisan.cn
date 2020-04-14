@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>K2-PandoraBox-IPV6（教育网）配置过程 - Kherrisan</title>
+
+
+    <meta name="description" content="坐标：东南大学九龙湖校区梅园4C某宿舍 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K2-PandoraBox-IPV6（教育网）配置过程">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="坐标：东南大学九龙湖校区梅园4C某宿舍 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-11-25T18:06:38.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.109Z">
+<meta property="article:author" content="Kherrisan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="K2-PandoraBox-IPV6（教育网）配置过程" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>K2-PandoraBox-IPV6（教育网）配置过程
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-25T18:06:38.000Z"><i class="far fa-calendar-alt"> </i>2018-11-25</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.109Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    9 分钟 读完 (大约 1372 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p><strong>坐标：东南大学九龙湖校区梅园4C某宿舍</strong> 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。</p>
+<a id="more"></a>
+
+<h1 id="K2固件相关工作"><a href="#K2固件相关工作" class="headerlink" title="K2固件相关工作"></a>K2固件相关工作</h1><ol>
+<li>刷<strong>breed</strong>不死鸟固件。</li>
+<li>刷<strong>PandoraBox</strong>固件。</li>
+</ol>
+<h2 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h2><p>在浏览器中打开<code>192.168.1.1</code>，输入默认密码<code>admin</code>，进入<code>PandoraBox</code>管理页面。 由于我此时已经将<code>IPV6</code>网口与路由去<code>WAN</code>口相连，因此在网络-接口界面可以看到<code>WAN6</code>口已经通过<code>DHCP</code>从上游路由器（DHCP服务器）得到了IPV6网址。 如果插入了<code>IPV6</code>网线，但页面上没有<code>IPV6</code>地址，可以尝试点击“连接”按钮重新连接上游路由器，并等待1分钟左右，一般就可以获得<code>IPV6</code>地址了。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-11-24_13-35-37.png" alt></p>
+<h2 id="下载所需程序"><a href="#下载所需程序" class="headerlink" title="下载所需程序"></a>下载所需程序</h2><p>打开一个控制台，通过ssh连到路由器上，<strong>密码默认为admin</strong>：</p>
+<pre><code>ssh root@192.168.1.1
+</code></pre><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-11-24_13-37-31.png" alt> 路由器的操作系统也是Linux的一种，因此熟悉PC端Linux操作的人应该不会有太大困难。</p>
+<pre><code>opkg update
+......
+opkg install ip6tables kmod-ipt-nat6
+</code></pre><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-11-24_13-38-30.png" alt> 安装2个程序，装好了之后回到浏览器。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>进入网络-接口-LAN-DHCP服务器页面，勾选<strong>总是通告默认路由</strong>。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/3adea32eb5cb208d4e481e3321a0b88d.png" alt> 进入网络-防火墙-自定义规则页面，添加一条规则，并<strong>重启防火墙</strong>。</p>
+<pre><code>ip6tables -t nat -A POSTROUTING -o eth0.2 -j MASQUERADE
+</code></pre><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/2ade23d4f609146101a4df4396b8621f.png" alt> 回到路由器终端，找出IPV6的默认路由网关地址，然后添加一条新的路由规则：</p>
+<pre><code>ip -6 route | grep default
+假设输出的地址为xxxx::xxxx
+route -A inet6 add default gw xxxx::xxxx dev eth0.2
+</code></pre><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/339f07f8fd170d0765c79ed2027d2105.png" alt> 最后，重启一下相关服务。</p>
+<pre><code>/etc/init.d/firewall restart
+/etc/init.d/network restart
+</code></pre><h2 id="测试连通性"><a href="#测试连通性" class="headerlink" title="测试连通性"></a>测试连通性</h2><p>重启结束之后，PC就可以<code>ping</code>通谷歌了，如果<code>ping</code>不通，可以重连一下路由器的<code>Wifi</code>。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/259f944fc4663699a06f4f8ef77f6022.png" alt></p>
+<h2 id="打开网页"><a href="#打开网页" class="headerlink" title="打开网页"></a>打开网页</h2><p>离终点只有一步之遥了：由于<strong>chrome</strong>浏览器采用的策略是IPV6和IPV4共存，解析网址的<code>IPV6</code>和<code>IPV4</code>地址，然后优先与<code>IPV6</code>地址发起连接，当连接的时间超过300ms（具体数值不清楚）时，说明链路中的<code>IPV6</code>机制有问题，就会切换到<code>IPV4</code>地址发起<code>TCP</code>连接，最后发送<code>HTTP</code>请求报文。 这样的流程对于国内想要通过<code>IPV6</code>翻墙的用户而言是不合适的，因为连接远程主机的延迟一般会比较高，导致链路正常联通的<code>IPV6</code>链路被浏览器舍弃，转而尝试去访问无法连接的<code>IPV4</code>地址。 而我们希望的理想的过程是，浏览器先解析IPV6地址，只要<code>IPV6</code>地址存在，就直接去连接该地址，不要去管<code>IPV4</code>地址是多少。或者说串行地去请求做<code>IPV6</code>和<code>IPV4</code>地址的<code>DNS</code>解析操作。在<code>DNS</code>协议中，<code>IPV6</code>和<code>IPV4</code>对应报文头部的<code>type</code>值分别为<code>AAAA</code>和<code>A</code>。此外，需要在本机配置<code>DNS</code>服务器地址为本机地址。 我在Github上找到了这么一个好东西： <a href="https://github.com/adamyi/v6dns">adamyi/v6dns</a> 这是一个<code>DNS</code>服务的中继程序，会在某个端口上监听所有<code>DNS</code>报文，并按照下面的逻辑运行： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/fafa577fd8ba1491f759bc03e039eacb.png" alt> 为了解决<code>IPV4/6</code>优先级的问题，可以这么做：在本地运行v6dns程序，监听本机的53端口，并设置<code>DNS</code>查询服务器为某个远程的<code>DNS</code>服务器地址。这样，如果能够查询到某个网站的<code>IPV6</code>地址，那就直接发起连接，如果查不到，就再查询其<code>IPV4</code>地址。</p>
+<h2 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h2><p>本文介绍了在教育网环境下使用K2的PandoraBox固件进行配置最终访问<code>IPV6</code>网站的过程，其中最核心的步骤就是配置<code>NAT6</code>，<code>NAT6</code>是基于<code>IPV6</code>的网络地址转换，目的是将上游<code>DHCP6</code>分配的一个<code>IPV6</code>地址转换成内网的多个地址分配给多个主机。 最终测试的效果不佳，在Youtube上看视频时常常出现卡顿的现象，记忆中原来看视频能够达到4K画质，并且帧率为60fps的网速水准。推测原因如下：</p>
+<ol>
+<li>K2路由器不够稳定。</li>
+<li>PandoraBox固件或NAT6机制不够成熟。</li>
+</ol>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/">K2-PandoraBox-IPV6（教育网）配置过程</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/">http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/</a></li>
+            <li><strong>发布时间：</strong>2018-11-25</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/24/netty-nioeventloop/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Netty——NioEventLoop(1)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/15/netty/">
+                <span class="level-item">Netty——下载、编译、调试源码</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#K2固件相关工作">
+        <span class="has-mr-6">1</span>
+        <span>K2固件相关工作</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#联网">
+        <span class="has-mr-6">1.1</span>
+        <span>联网</span>
+        </a></li><li>
+        <a class="is-flex" href="#下载所需程序">
+        <span class="has-mr-6">1.2</span>
+        <span>下载所需程序</span>
+        </a></li><li>
+        <a class="is-flex" href="#配置">
+        <span class="has-mr-6">1.3</span>
+        <span>配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#测试连通性">
+        <span class="has-mr-6">1.4</span>
+        <span>测试连通性</span>
+        </a></li><li>
+        <a class="is-flex" href="#打开网页">
+        <span class="has-mr-6">1.5</span>
+        <span>打开网页</span>
+        </a></li><li>
+        <a class="is-flex" href="#最终总结">
+        <span class="has-mr-6">1.6</span>
+        <span>最终总结</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="K2-PandoraBox-IPV6（教育网）配置过程" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

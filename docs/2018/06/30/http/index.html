@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>HTTP协议详解 - Kherrisan</title>
+
+
+    <meta name="description" content="HTTP协议应该是如今互联网中使用范围最广的协议了。现在对HTTP协议进行一个全面的分析，力求能够把常用的协议功能都覆盖到。 1 概述HTTP协议全名为超文本传输协议，英文名为Hypertext Transfer Protocol，不出意外也是一个外国人发明的网络传输协议。这个协议大概在1960年左右被构思出来，后来经过多方合作，不断地被修改和完善，最终进入RFC，成为互联网标准之一，应该是和TC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议详解">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/06/30/http/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="HTTP协议应该是如今互联网中使用范围最广的协议了。现在对HTTP协议进行一个全面的分析，力求能够把常用的协议功能都覆盖到。 1 概述HTTP协议全名为超文本传输协议，英文名为Hypertext Transfer Protocol，不出意外也是一个外国人发明的网络传输协议。这个协议大概在1960年左右被构思出来，后来经过多方合作，不断地被修改和完善，最终进入RFC，成为互联网标准之一，应该是和TC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-06-30T20:45:00.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.109Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="HTTP协议详解" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>HTTP协议详解
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-06-30T20:45:00.000Z"><i class="far fa-calendar-alt"> </i>2018-06-30</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.109Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/HTTP/">HTTP</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    18 分钟 读完 (大约 2682 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>HTTP协议应该是如今互联网中使用范围最广的协议了。现在对HTTP协议进行一个全面的分析，力求能够把常用的协议功能都覆盖到。</p>
+<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>HTTP协议全名为超文本传输协议，英文名为Hypertext Transfer Protocol，不出意外也是一个外国人发明的网络传输协议。这个协议大概在1960年左右被构思出来，后来经过多方合作，不断地被修改和完善，最终进入RFC，成为互联网标准之一，应该是和TCP协议重要性相当的。  </p>
+<a id="more"></a>
+
+<p><a href="https://tools.ietf.org/html/rfc1945">RFC 1945 - HTTP1.0</a><a href="https://tools.ietf.org/html/rfc2616">RFC 2616 - HTTP1.1</a>  </p>
+<p>HTTP协议被广泛运用于浏览器访问Web网页的场景中，当然其灵活性也使得它能够在其他领域发挥优势比如API、RPC。</p>
+<h2 id="1-1-协议栈"><a href="#1-1-协议栈" class="headerlink" title="1.1 协议栈"></a>1.1 协议栈</h2><p>如今互联网绝大多数主机使用的是TCP/IP协议，这个协议有5层，分别是：物理层、链路层、网络层、传输层和应用层，所谓的4G、5G、WIFI为物理层技术；链路层常用协议有以太网、X.25、令牌环等（实际上除了以太网之外其他的链路层协议都已经基本上不存在了，只是在计算机网络课上介绍过而已）；网络层协议为IP；传输层协议为TCP或UDP；到了应用层，协议就多种多样了，常用的有FTP、HTTP，任何一个基于Socket编写的应用程序都可以说是实现了一个应用层协议，或者说工作在应用层上。  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_20-37-53.jpg" alt></p>
+<p>HTTP协议属于典型的应用层协议，其工作在应用层之上，屏蔽了TCP层的接口，同时应用程序可以直接使用HTTP协议进行通讯。虽然HTTP协议看起来不复杂，用起来也挺方便，但是要时刻记住它还是基于TCP/IP协议运作的，只是将下层的细节屏蔽了而已，但是真正运行起来它还是要遵循下层协议的规则，如TCP层的拥塞控制、IP层的报文分段（MSS）、IP寻址等等。  </p>
+<p>如今将HTTP协议置于TLS层之上，变为HTTPS，也是一种较为流行的加密网络通讯协议。有关HTTPS协议的细节以后再谈，今天只看HTTP明文通讯。</p>
+<h2 id="1-2-运作流程"><a href="#1-2-运作流程" class="headerlink" title="1.2 运作流程"></a>1.2 运作流程</h2><p>以浏览器地址栏输入<a href="http://www.baidu.com并回车为例，一次典型的HTTP协议通讯过程如下：">www.baidu.com并回车为例，一次典型的HTTP协议通讯过程如下：</a>  </p>
+<p>1. 浏览器通过DNS协议解析得到baidu.com主机的IP地址（有关DNS的细节这里也不谈）。  </p>
+<p>2. 浏览器于该IP地址建立TCP连接，即Socket连接，HTTP服务一般是运行在80端口上，即本地的一个随机端口和远程服务器的80端口进行连接，需要进行3次握手（SYN、SYN+ACK、ACK）。  </p>
+<p>3. 在发送了三次握手的最后一次ACK报文之后，正式开始发送HTTP请求，这里可以先把请求理解为一个字符串，或者一个比特流，在该比特流外部包裹TCP头部、IP头部、以太网头部，然后经过网线发送给服务器。  </p>
+<p>4. 服务器逐层拆包，得到真正的HTTP请求内容后，根据请求内容中的具体信息，从服务器的硬盘或者内存中读取HTTP请求中所明确的具体资源（百度首页的html文件）作为响应内容，再次以比特流的形式，逐层打包，返回给客户端浏览器。  </p>
+<p>5. 浏览器逐层拆包，得到响应内容，经过浏览器渲染进而呈现出来。  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_20-57-34.jpg" alt></p>
+<p>以上是使用浏览器访问<a href="http://www.sina.com的过程中与服务器之间往返的数据。可以看到第四个报文才是HTTP请求报文，三次握手大概用了0.1s的时间，从HTTP请求到收到响应大概用了0.26s的时间，延迟还是很小的。当然到了HTTPS，由于交换证书和协商密钥的需要，又要花费更多的时间来建立连接（2-3个RTT）。">www.sina.com的过程中与服务器之间往返的数据。可以看到第四个报文才是HTTP请求报文，三次握手大概用了0.1s的时间，从HTTP请求到收到响应大概用了0.26s的时间，延迟还是很小的。当然到了HTTPS，由于交换证书和协商密钥的需要，又要花费更多的时间来建立连接（2-3个RTT）。</a></p>
+<h1 id="2-HTTP协议格式"><a href="#2-HTTP协议格式" class="headerlink" title="2 HTTP协议格式"></a>2 HTTP协议格式</h1><p>远程协议，最重要的就是协议格式，以太网、IP、TCP都有一套相当严格但又可扩展的格式，HTTP也有。</p>
+<h2 id="2-1-请求-响应格式"><a href="#2-1-请求-响应格式" class="headerlink" title="2.1 请求/响应格式"></a>2.1 请求/响应格式</h2><p>请求和响应统称为HTTP消息，他们的格式其实这么形容：  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-16-03.jpg" alt></p>
+<p>首先是一个开始行，然后是消息头（包含0个或多个，每个头部以回车换行结尾），接着是一个CRLF（回车换行），最后是消息体（可选）。  </p>
+<p>消息头部中有一些头部字段是请求和响应都可以使用的，称为通用头部。</p>
+<h3 id="2-1-1-通用头-GeneralHeader"><a href="#2-1-1-通用头-GeneralHeader" class="headerlink" title="2.1.1 通用头 GeneralHeader"></a>2.1.1 通用头 GeneralHeader</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-25-03.jpg" alt></p>
+<p>Cache-Control：指定缓存机制，请求和响应头中都可以使用该字段。请求头：no-cache、no-store、max-age、max-stale、min-fresh、only-if-cached，响应头：public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age。  </p>
+<p>Connection：由于HTTP1.1默认使用长连接，因此如果要拒绝使用长连接，可以将该字段设为false。只要有一方的头部的false就不会使用长连接。  </p>
+<p>Via：报文经过的中间节点，网关或者代理。  </p>
+<p>Trailer：有一些字段的值可能是随着发送动态生成的，比如Expire，Date，Trailer允许指定某个字段的值被推迟到某个响应体的数据块的尾部。  </p>
+<p>Upgrade：希望升级的协议信息。</p>
+<h2 id="2-2-请求格式"><a href="#2-2-请求格式" class="headerlink" title="2.2 请求格式"></a>2.2 请求格式</h2><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-28-36.jpg" alt></p>
+<h3 id="2-2-1-请求行"><a href="#2-2-1-请求行" class="headerlink" title="2.2.1 请求行"></a>2.2.1 请求行</h3><h4 id="2-2-1-1-URI"><a href="#2-2-1-1-URI" class="headerlink" title="2.2.1.1 URI"></a>2.2.1.1 URI</h4><p>全名为统一资源定位符，明确指定了一个资源或者多个资源的所在的位置。URI可以是相对的也可以是绝对的，如之前访问sina的请求中URI就是相对的，即服务器根目录，而具体的主机地址则在请求头的Host字段中。</p>
+<h4 id="2-2-1-2-Method"><a href="#2-2-1-2-Method" class="headerlink" title="2.2.1.2 Method"></a>2.2.1.2 Method</h4><p>如今流行一种成为Restful风格的后端API设计风格，这其中就充分利用了Method字段，Method字段描述了这个HTTP请求的动作意图，是查询数据（GET）、提交数据（POST），还是删除数据（DELETE），甚至是只请求响应的头部而不要响应体（HEAD）。从语义上来说Method字段并没有明确的规范，如果你同时负责了客户端和服务器端的开发，那你完全可以随意约定，只需要保证一致性即可。当然尽量符合语义来总归是好的。</p>
+<h4 id="2-2-1-3-HTTP-Version"><a href="#2-2-1-3-HTTP-Version" class="headerlink" title="2.2.1.3 HTTP-Version"></a>2.2.1.3 HTTP-Version</h4><p>采用的HTTP协议的版本号，常用的有1.0、1.1、2.0，不同的版本号代表客户端可以接受的HTTP协议版本，版本越低功能越low。</p>
+<h3 id="2-2-2-请求头-RequestHeader"><a href="#2-2-2-请求头-RequestHeader" class="headerlink" title="2.2.2 请求头 RequestHeader"></a>2.2.2 请求头 RequestHeader</h3><p>除了通用头部之外，请求头还可以使用如下字段：  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-38-17.jpg" alt></p>
+<p>Accept：请求方希望接收的数据类型，常见的有text/html，application/json，以及通配符<em>/</em>。  </p>
+<p>Expect：客户端在发起请求前可以在该字段中注明将要进行的操作，然后将这个请求发给服务器作为一个握手信息，等到服务器返回接受后再发送真正的请求。在POST大对象的时候常常使用此字段来避免传输无效的流量。  </p>
+<p>Host：主机名。  </p>
+<p>Range：请求方希望接收的是完整响应文件的某一段数据，那么可以通过该字段来指定第一个字节和最后一个字节的偏移，这个字段常常用于HTTP断点续传。  </p>
+<p>Referer：从哪个链接过来的。服务器通过限制该字段可以防盗链。  </p>
+<p>User-Agent：标识了浏览器相关信息。服务器可以通过该字段来判断访问的是PC还是移动设备，或者根据更加详细的信息来返回充分适配的网页资源。</p>
+<h3 id="2-2-3-实体头-EntityHeader"><a href="#2-2-3-实体头-EntityHeader" class="headerlink" title="2.2.3 实体头 EntityHeader"></a>2.2.3 实体头 EntityHeader</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_13-45-00.jpg" alt></p>
+<p>Allow：严格限定该URL能够接受的method。  </p>
+<p>Content-Encoding：编码方式，如gzip、x-gzip压缩。  </p>
+<p>Content-Length：数据实体的大小，用十进制整数表示。注意这个数字是数据实体的大小，和是否压缩无关。  </p>
+<p>Content-Type：数据实体的媒体类型，格式为 Type/SubType，如 text/html。  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_13-53-09.jpg" alt></p>
+<p>Expires：一个时间。既然HTTP是一个远程协议，那就会出现分布式系统中一定会出现的数据一致性的问题。Expire字段用于标识该资源的有效期，客户端能够在该有效期内缓存该资源。  </p>
+<p>Last-Modified：该资源上次被修改的时间，类似于文件属性的修改时间。当然如果资源实体的类型不同，也能够表示成别的意思，如某个数据表的某一行被修改的时间，某个实体的某个组件被修改的时间。</p>
+<h3 id="2-2-4-请求体"><a href="#2-2-4-请求体" class="headerlink" title="2.2.4 请求体"></a>2.2.4 请求体</h3><p>请求也是可以</p>
+<h2 id="2-3-响应格式"><a href="#2-3-响应格式" class="headerlink" title="2.3 响应格式"></a>2.3 响应格式</h2><p>响应格式其实和请求格式大同小异。  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_14-10-34.jpg" alt></p>
+<h3 id="2-3-1-状态行"><a href="#2-3-1-状态行" class="headerlink" title="2.3.1 状态行"></a>2.3.1 状态行</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_22-24-20.jpg" alt></p>
+<p>响应报文的状态行的格式为HTTP版本+状态码+ReasonPhrase，  </p>
+<p>其中最重要的就是状态码。  </p>
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_22-26-26-1.jpg" alt></p>
+<p>RFC认为应用程序不必完全理解每一个状态码，但是必须能够区分状态码是什么类型的。</p>
+<h3 id="2-3-2-响应头"><a href="#2-3-2-响应头" class="headerlink" title="2.3.2 响应头"></a>2.3.2 响应头</h3><h3 id="2-3-3-响应体"><a href="#2-3-3-响应体" class="headerlink" title="2.3.3 响应体"></a>2.3.3 响应体</h3><h1 id="3-字段重新整理"><a href="#3-字段重新整理" class="headerlink" title="3 字段重新整理"></a>3 字段重新整理</h1><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/HTTP%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5.png" alt></p>
+<h2 id="X-常见问题"><a href="#X-常见问题" class="headerlink" title="X 常见问题"></a>X 常见问题</h2><p>X.1 GET和POST有什么区别</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/06/30/http/">HTTP协议详解</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/06/30/http/">http://www.kherrisan.cn/2018/06/30/http/</a></li>
+            <li><strong>发布时间：</strong>2018-06-30</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/HTTP/" rel="tag">HTTP</a>, <a class="has-link-grey -link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/07/05/dell-xps/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Dell XPS 9360上安装Ubuntu 18.04失败的情况</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/07/javaee-spring-framework/">
+                <span class="level-item">Spring Framework——概览及目录</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#1-概述">
+        <span class="has-mr-6">1</span>
+        <span>1 概述</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-1-协议栈">
+        <span class="has-mr-6">1.1</span>
+        <span>1.1 协议栈</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-2-运作流程">
+        <span class="has-mr-6">1.2</span>
+        <span>1.2 运作流程</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-HTTP协议格式">
+        <span class="has-mr-6">2</span>
+        <span>2 HTTP协议格式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#2-1-请求-响应格式">
+        <span class="has-mr-6">2.1</span>
+        <span>2.1 请求/响应格式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#2-1-1-通用头-GeneralHeader">
+        <span class="has-mr-6">2.1.1</span>
+        <span>2.1.1 通用头 GeneralHeader</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-2-请求格式">
+        <span class="has-mr-6">2.2</span>
+        <span>2.2 请求格式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#2-2-1-请求行">
+        <span class="has-mr-6">2.2.1</span>
+        <span>2.2.1 请求行</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-2-2-请求头-RequestHeader">
+        <span class="has-mr-6">2.2.2</span>
+        <span>2.2.2 请求头 RequestHeader</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-2-3-实体头-EntityHeader">
+        <span class="has-mr-6">2.2.3</span>
+        <span>2.2.3 实体头 EntityHeader</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-2-4-请求体">
+        <span class="has-mr-6">2.2.4</span>
+        <span>2.2.4 请求体</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-3-响应格式">
+        <span class="has-mr-6">2.3</span>
+        <span>2.3 响应格式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#2-3-1-状态行">
+        <span class="has-mr-6">2.3.1</span>
+        <span>2.3.1 状态行</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-3-2-响应头">
+        <span class="has-mr-6">2.3.2</span>
+        <span>2.3.2 响应头</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-3-3-响应体">
+        <span class="has-mr-6">2.3.3</span>
+        <span>2.3.3 响应体</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#3-字段重新整理">
+        <span class="has-mr-6">3</span>
+        <span>3 字段重新整理</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#X-常见问题">
+        <span class="has-mr-6">3.1</span>
+        <span>X 常见问题</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="HTTP协议详解" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Netty——Pipeline(1) - Kherrisan</title>
+
+
+    <meta name="description" content=")Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 Pipeline的继承结构：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty——Pipeline(1)">
+<meta property="og:url" content="http://www.kherrisan.cn/2019/01/08/netty-pipeline/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content=")Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 Pipeline的继承结构：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2019-01-08T22:25:02.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.113Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="Netty——Pipeline(1)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>Netty——Pipeline(1)
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-01-08T22:25:02.000Z"><i class="far fa-calendar-alt"> </i>2019-01-08</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.113Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/Netty/">Netty</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    15 分钟 读完 (大约 2291 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 <code>Pipeline</code>的继承结构： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/e1fb7cb818b3cd0d10e25e3905f0efcb.png" alt></p>
+<a id="more"></a>
+
+<h1 id="第一个Pipeline"><a href="#第一个Pipeline" class="headerlink" title="第一个Pipeline"></a>第一个Pipeline</h1><p>同样的，还是先寻找第一个<code>Pipeline</code>是在什么地方创建并初始化的。从我对Netty的了解来看，应该是<code>Channel</code>和<code>Pipline</code>之间关联较大，可能会具有一对一的关系。要么是<code>NioServerSocketChannel</code>，要么是它的某个父类。最终在<code>AbstractChannel</code>中找到了它：</p>
+<pre><code class="java">private final DefaultChannelPipeline pipeline;
+</code></pre>
+<p>倒也是直接，声明类型就是<code>DefaultChannelPipeline</code>，没有声明为其父类，说明<code>Pipeline</code>可能没有较多的多态特性需要表现出来。</p>
+<pre><code class="java">    protected AbstractChannel(Channel parent) {
+        this.parent = parent;
+        id = newId();
+        unsafe = newUnsafe();
+        pipeline = newChannelPipeline();
+    }
+</code></pre>
+<pre><code class="java">    protected DefaultChannelPipeline newChannelPipeline() {
+        return new DefaultChannelPipeline(this);
+    }
+</code></pre>
+<p>每个<code>AbstractChannel</code>对象都有一个属于自己的<code>Pipeline</code>，并且在它的构造函数中实例化pipeline对象。</p>
+<pre><code class="java">    protected DefaultChannelPipeline(Channel channel) {
+        this.channel = channel;
+        ......
+
+        tail = new TailContext(this);
+        head = new HeadContext(this);
+
+        head.next = tail;
+        tail.prev = head;
+    }
+</code></pre>
+<p>至此第一个<code>Pipeline</code>诞生，这个<code>Pipeline</code>中只有两个节点：head和tail。<code>Pipeline</code>中的节点以双向链表的形式相连。</p>
+<h1 id="第一次插入节点"><a href="#第一次插入节点" class="headerlink" title="第一次插入节点"></a>第一次插入节点</h1><p>下面来探索第一次向该<code>Pipeline</code>中插入节点的场景。在netty启动的过程中，<code>AbstractBootstrap</code>的<code>initAndRegister</code>方法会调用<code>ServerBootstrap</code>中的<code>init</code>方法，该方法第一次向<code>Pipeline</code>中插入元素。</p>
+<pre><code class="java">    @Override
+    void init(Channel channel) throws Exception {
+            ......
+            p.addLast(new ChannelInitializer<channel>() {
+            @Override
+            public void initChannel(final Channel ch) throws Exception {
+                final ChannelPipeline pipeline = ch.pipeline();
+                ChannelHandler handler = config.handler();
+                if (handler != null) {
+                    pipeline.addLast(handler);
+                }
+
+                ch.eventLoop().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        pipeline.addLast(new ServerBootstrapAcceptor(
+                                ch, currentChildGroup, currentChildHandler, currentChildOptions, currentChildAttrs));
+                    }
+                });
+            }
+        });
+    }
+</channel></code></pre>
+<p><code>init</code>方法的参数<code>channel</code>是刚刚通过反射创建出来的<code>NioServerSocketChannel</code>对象，该对象具有一个<code>Pipeline</code>对象，现在在这个pipeline的尾部插入一个<code>ChannelInitializer</code>，并且在将来的某个时候，会调用这个initializer的<code>initChannel</code>方法，执行重写的代码。 暂时不去理会重写的代码什么时候执行，先搞清楚<code>addLast</code>方法做了什么事情。在深入了几个重载函数之后，看到了<code>addLast</code>的真身：</p>
+<pre><code class="java">    @Override
+    public final ChannelPipeline addLast(EventExecutorGroup group, String name, ChannelHandler handler) {
+        final AbstractChannelHandlerContext newCtx;
+        synchronized (this) {
+            checkMultiplicity(handler);
+
+            newCtx = newContext(group, filterName(name, handler), handler);
+
+            addLast0(newCtx);
+
+            // If the registered is false it means that the channel was not registered on an eventloop yet.
+            // In this case we add the context to the pipeline and add a task that will call
+            // ChannelHandler.handlerAdded(...) once the channel is registered.
+            if (!registered) {
+                newCtx.setAddPending();
+                callHandlerCallbackLater(newCtx, true);
+                return this;
+            }
+
+            EventExecutor executor = newCtx.executor();
+            if (!executor.inEventLoop()) {
+                newCtx.setAddPending();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        callHandlerAdded0(newCtx);
+                    }
+                });
+                return this;
+            }
+        }
+        callHandlerAdded0(newCtx);
+        return this;
+    }
+</code></pre>
+<pre><code class="java">    private static void checkMultiplicity(ChannelHandler handler) {
+            ChannelHandlerAdapter h = (ChannelHandlerAdapter) handler;
+            if (!h.isSharable() && h.added) {
+                throw new ChannelPipelineException();
+            }
+            h.added = true;
+    }
+</code></pre>
+<pre><code class="java">    private AbstractChannelHandlerContext newContext(EventExecutorGroup group, String name, ChannelHandler handler) {
+        return new DefaultChannelHandlerContext(this, childExecutor(group), name, handler);
+    }
+</code></pre>
+<p><code>addLast</code>并不仅仅是将新的handler插入到链表中，还做了一些其他的事情：</p>
+<ol>
+<li><code>checkMultiplicity</code>，检查该handler对象有没有被插入过，不管是该pipeline还是其他的pipeline。在netty中，只有被<code>@Sharable</code>注解的handler才可以被复用到pipeline中，否则一个handler对象只能出现在一处。这么做是为了保证状态变量的线程安全。</li>
+<li><code>newContext</code>，用一个<code>ChannelHandlerContext</code>对象来包裹这个handler。</li>
+<li><code>addLast0</code>，在链表中插入这个<code>ChannelHandlerContext</code>。</li>
+<li>检查pipeline有没有完成到某个<code>NioEventloop</code>的注册，即channel有没有注册到<code>NioEventloop</code>。 3.1. 如果没有注册，那么<code>handlerAdded</code>的回调函数是不能立刻调用的，因为还没有eventloop线程实体与之绑定——在netty中各种事件的回调函数都是在<code>NioEventloop</code>中调用的，在以后还会遇到很多体现这个特征的场景。 3.2. 如果已经注册过了，在eventloop中调用<code>callHandlerAdded0</code>。</li>
+</ol>
+<p>这里遇到了一个类<code>DefaultChannelHandlerContext</code>，这个类的地位十分重要，承担了维系pipeline和handler的工作。</p>
+<pre><code class="java">    DefaultChannelHandlerContext(
+            DefaultChannelPipeline pipeline, EventExecutor executor, String name, ChannelHandler handler) {
+        super(pipeline, executor, name, isInbound(handler), isOutbound(handler));
+        if (handler == null) {
+            throw new NullPointerException("handler");
+        }
+        this.handler = handler;
+    }
+</code></pre>
+<pre><code class="java">    AbstractChannelHandlerContext(DefaultChannelPipeline pipeline, EventExecutor executor, String name,
+                                  boolean inbound, boolean outbound) {
+        this.name = ObjectUtil.checkNotNull(name, "name");
+        this.pipeline = pipeline;
+        this.executor = executor;
+        this.inbound = inbound;
+        this.outbound = outbound;
+        // Its ordered if its driven by the EventLoop or the given Executor is an instanceof OrderedEventExecutor.
+        ordered = executor == null || executor instanceof OrderedEventExecutor;
+    }
+</code></pre>
+<p><code>AbstractChannelHandlerContext</code>维护了pipeline对象，表明他是属于这个pipeline的一个节点，以后若是有需要可以直接通过这个pipeline成员调用其方法。netty中的handler可以分为两类：<code>inbound</code>和<code>outbound</code>（当然有的handler可以同时具有这两种特性），为了区分包含的handler的方向，<code>AbstractChannelHandlerContext</code>使用了两个boolean，由于之前括号里的情况存在，显然一个boolean是不够的。此外，<code>AbstractChannelHandlerContext</code>还有一个executor，这个executor是pipeline通过<code>childExecutor</code>方法分配给他的，这里先不谈分配方式。 再来看<code>addLast0</code>:</p>
+<pre><code class="java">    private void addLast0(AbstractChannelHandlerContext newCtx) {
+        AbstractChannelHandlerContext prev = tail.prev;
+        newCtx.prev = prev;
+        newCtx.next = tail;
+        prev.next = newCtx;
+        tail.prev = newCtx;
+    }
+</code></pre>
+<p>有数据结构基础的人都能够很快理解这段代码，对于没有学过数据结构的人来说双向链表的插入操作也不是很难。 停！现在来给pipeline拍一张快照： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/44464b519546afc2bfeed5d917c1cd5f.png" alt> 现在pipeline中有三个节点，其中<code>HeadContext</code>和<code>TailContext</code>都是没有handler的，中间的<code>HandlerContext</code>包含一个<code>ChannelInitializer</code>。 在链表中插入了新的handlerContext之后，需要决定是否需要调用它的<code>handlerAdded</code>方法。如果暂时不调用回调方法的话：</p>
+<pre><code class="java">    private void callHandlerCallbackLater(AbstractChannelHandlerContext ctx, boolean added) {
+        PendingHandlerCallback task = added ? new PendingHandlerAddedTask(ctx) : new PendingHandlerRemovedTask(ctx);
+        PendingHandlerCallback pending = pendingHandlerCallbackHead;
+        if (pending == null) {
+            pendingHandlerCallbackHead = task;
+        } else {
+            while (pending.next != null) {
+                pending = pending.next;
+            }
+            pending.next = task;
+        }
+    }
+</code></pre>
+<p>handlerContext会被包装成一个<code>PendingHandlerCallback</code>，插入到由pipeline维护的<code>PendingHandlerCallback</code>的链表的末尾。 如果我们在pipeline注册到eventloop之前，在pipeline中插入多个handler，那么这些handler的<code>handlerAdded</code>方法都会被包装成pendingTask，接续到链表后。同样的，如果是在注册之前删除某个handler，它的<code>handlerRemoved</code>也会被包装，并插入链表。 <strong>我认为这么做的目的是保证在注册前发生的add和remove操作都会导致其对应事件的回调函数能够被正确的调用，这里的正确指的是按照正确的顺序在eventloop中调用。不能因为某个handler先被add然后被remove就认为它从没有出现过。</strong> 当然了，也有可能注册得比较早，那么<code>handlerAdded</code>方法可以立刻执行，没有必要等什么。</p>
+<pre><code class="java">            EventExecutor executor = newCtx.executor();
+            if (!executor.inEventLoop()) {
+                newCtx.setAddPending();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        callHandlerAdded0(newCtx);
+                    }
+                });
+                return this;
+            }
+            callHandlerAdded0(newCtx);
+</code></pre>
+<pre><code class="java">    private void callHandlerAdded0(final AbstractChannelHandlerContext ctx) {
+            ......
+            ctx.handler().handlerAdded(ctx);
+            ......
+    }
+</code></pre>
+<p>现在，把时间轴向前推进，直接走到<code>initChannel</code>调用之前：</p>
+<pre><code class="java">        private void register0(ChannelPromise promise) {
+            try {
+                doRegister();
+                pipeline.invokeHandlerAddedIfNeeded();
+                safeSetSuccess(promise);
+                ......
+            } catch (Throwable t) {
+                ......
+            }
+        }
+</code></pre>
+<p><code>invokeHandlerAddedIfNeeded</code>就是专门用来触发之前pending的<code>handlerAdded</code>事件的。</p>
+<pre><code class="java">    final void invokeHandlerAddedIfNeeded() {
+        assert channel.eventLoop().inEventLoop();
+        if (firstRegistration) {
+            firstRegistration = false;
+            callHandlerAddedForAllHandlers();
+        }
+    }
+</code></pre>
+<p><code>callHandlerAddedForAllHandlers</code>也的确只会被调用一次，就是在这里。在其他地方，handler的added事件不会延迟执行，是即时的。</p>
+<pre><code class="java">    private void callHandlerAddedForAllHandlers() {
+        ......
+        PendingHandlerCallback task = pendingHandlerCallbackHead;
+        while (task != null) {
+            task.execute();
+            task = task.next;
+        }
+    }
+</code></pre>
+<p>沿着pendingTask的链表，逐个执行<code>handlerAdded</code>和<code>handlerRemoved</code>回调事件。当然这里的<code>execute</code>方法会保证在当前的eventloop中执行<code>handlerAdded</code>或<code>handlerRemoved</code>回调函数的代码。 <strong>也就是说，为了让handler的added和removed事件不遗漏、不乱序、串行地得到执行，netty采用将added和removed事件包装成pendingTask的方式，在pipeline注册到某个eventloop后，再在一个方法中去逐个回调pendingTask。</strong> 回到<code>ChannelInitializer</code>中，它的<code>handlerAdded</code>实现如下：</p>
+<pre><code class="java">    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        if (ctx.channel().isRegistered()) {
+            initChannel(ctx);
+        }
+    }
+</code></pre>
+<p><code>ChannelInitializer</code>作为一种特殊的handler，主要用于在channel启动时做一些初始化工作，为了达成这样的效果，它的做法是在它自身被插入到pipeline之后立即做<code>initChannel</code>操作。</p>
+<pre><code class="java">    private boolean initChannel(ChannelHandlerContext ctx) throws Exception {
+            try {
+                initChannel((C) ctx.channel()); // 调用重写的initChannel方法
+            } catch (Throwable cause) {
+                ......
+            } finally {
+                remove(ctx); // 把自己从pipeline中删掉
+            }
+        }
+    }
+</code></pre>
+<p>在<code>ServerBootstrap</code>中见到的<code>ChannelInitializer</code>匿名内部类的<code>initChannel</code>做了这些事情：</p>
+<pre><code class="java">                final ChannelPipeline pipeline = ch.pipeline();
+                ChannelHandler handler = config.handler();
+                if (handler != null) {
+                    pipeline.addLast(handler);
+                }
+
+                ch.eventLoop().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        pipeline.addLast(new ServerBootstrapAcceptor(
+                                ch, currentChildGroup, currentChildHandler, currentChildOptions, currentChildAttrs));
+                    }
+                });
+</code></pre>
+<ol>
+<li>从<code>config()</code>中取出一个handler，添加到pipeline的末尾。从调试时的结果来看，这是一个<code>LoggingHandler</code>（估计就是专门负责打日志的）。</li>
+<li>异步地在pipeline末尾插入一个<code>ServerBootstrapAcceptor</code>。</li>
+</ol>
+<p>再给pipeline拍一张快照： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/1d0c5dc9d01a99fbdf25dadaac0b36d9.png" alt></p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2019/01/08/netty-pipeline/">Netty——Pipeline(1)</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2019/01/08/netty-pipeline/">http://www.kherrisan.cn/2019/01/08/netty-pipeline/</a></li>
+            <li><strong>发布时间：</strong>2019-01-08</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/Netty/" rel="tag">Netty</a>, <a class="has-link-grey -link" href="/tags/java/" rel="tag">java</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/01/24/test/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">这是一个测试页</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/01/06/jlink/">
+                <span class="level-item">JLink——借助JLink打包Java程序为可执行程序</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#第一个Pipeline">
+        <span class="has-mr-6">1</span>
+        <span>第一个Pipeline</span>
+        </a></li><li>
+        <a class="is-flex" href="#第一次插入节点">
+        <span class="has-mr-6">2</span>
+        <span>第一次插入节点</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="Netty——Pipeline(1)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

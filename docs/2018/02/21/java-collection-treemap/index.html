@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Java Collection——TreeMap - Kherrisan</title>
+
+
+    <meta name="description" content="TreeMap继承了AbstractMap抽象类，实现了NavigableMap接口。这个接口是HashMap和LinkedHashMap的定义中都没有见过的，从字面意思上来看，应该是“可导航Map”，到底是怎么个导航法，需要先了解一下这个接口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Collection——TreeMap">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/02/21/java-collection-treemap/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="TreeMap继承了AbstractMap抽象类，实现了NavigableMap接口。这个接口是HashMap和LinkedHashMap的定义中都没有见过的，从字面意思上来看，应该是“可导航Map”，到底是怎么个导航法，需要先了解一下这个接口。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-02-21T14:12:22.000Z">
+<meta property="article:modified_time" content="2020-04-14T06:59:03.109Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="http://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="http://oss.kherrisan.cn/logo.jpg" alt="Java Collection——TreeMap" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>Java Collection——TreeMap
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-02-21T14:12:22.000Z"><i class="far fa-calendar-alt"> </i>2018-02-21</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-14T06:59:03.109Z"><i class="far fa-calendar-check"> </i>2020-04-14</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/Java-Collection/">Java Collection</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    8 分钟 读完 (大约 1251 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-21_14-15-34.jpg" alt> TreeMap继承了AbstractMap抽象类，实现了NavigableMap接口。这个接口是HashMap和LinkedHashMap的定义中都没有见过的，从字面意思上来看，应该是“可导航Map”，到底是怎么个导航法，需要先了解一下这个接口。 </p>
+<a id="more"></a>
+
+<p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-21_14-21-43.jpg" alt> NavigableMap也不是一个顶级的接口，它实现了SortedMap接口。SortedMap接口描述了Map的排列方式的一种特殊情形：所有的Key-Value对都是按照Key的大小一致升序或者降序排列，这里的大小指的就是Comparable接口。降序或者升序集中体现在遍历该Map的时候。有了这个特性，就可以提供一些其他的功能。如给定一个key，返回所有的大于这个key的Key-value组成的Map（视图），或者所有小于这个key的key-value组成的Map（视图）。 NavigableMap在SortedMap提供有序key-value的基础上拓展了一些功能，能够提供离某个key最近的entry，可以以目标key为上界，也可以之为下界。有点类似于向上取整和向下取整的意思。 再回到TreeMap，根据它的注释，可知TreeMap是基于红黑树实现的Map（注释中还特别强调了是算法导论中的红黑树hhh），基本的增删改查需要log(n)的时间复杂度，这比HashMap慢一些，因为HashMap使用的是散列表，访问元素只需要线性时间。 TreeMap是一个相当复杂的类，不仅仅是在算法的实现上，更在于类结构的设计上。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>一个Comparator，用于记录比较运算符。如果key实现了Comparable方法，就不需要这个Comparator。 一个Entry，用于记录根节点。 一个size，用于记录元素个数。 一个modCount，用于检查conModification。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="getEntry"><a href="#getEntry" class="headerlink" title="getEntry"></a>getEntry</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-21_15-04-14.jpg" alt> 从代码中可以看到，如果没有comparator，那么key是不允许为null的，否则可以通过comparator来实现对于null键的判断规则，即便是根节点，也可以是null。而在HashMap中，null键是可以插入、查询的。</p>
+<h3 id="getEntryUsingComparator"><a href="#getEntryUsingComparator" class="headerlink" title="getEntryUsingComparator"></a>getEntryUsingComparator</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-21_15-19-06.jpg" alt> getEntry和getEntryUsingComparator的实现思路是相同的，都是从树根出发，向左或向右行走，直到找到相等的节点。两个方法的区别在于一个是通过comparator做比较，一个是通过key的compareTo方法。在注释中解释说把getEntryUsingComparator方法抽取出来的目的在于提高效率。</p>
+<h3 id="put"><a href="#put" class="headerlink" title="put"></a>put</h3><p>put方法用于向TreeMap中插入新元素，或者修改原有的key的值。由于使用的是红黑树，因此插入元素可能涉及一些对于红黑树结构的修改。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-21_15-31-19.jpg" alt> 插入新节点后调用fixAfterInsertion方法插入新元素并调整树结构。 这里先跳过红黑树相关操作的实现。</p>
+<h3 id="getCeilingEntry"><a href="#getCeilingEntry" class="headerlink" title="getCeilingEntry"></a>getCeilingEntry</h3><p>找到某个key对应的entry，如果找不到，就取比这个key大并且紧邻着这个key的entry，类似于向上取整。根据二叉搜索树的性质，需要向下遍历。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-23_13-44-25.jpg" alt> 如果给定的key比此节点的key大，就向右子树走，如果没有右子树，沿父节点回溯，直到某个节点是其父节点的左儿子，返回其父节点；如果给定的key比此节点的key小，就向左子树走（显然右子树的节点都会比此节点的key大），如果没有左子树，就取这个节点。</p>
+<h3 id="getHigherEntry"><a href="#getHigherEntry" class="headerlink" title="getHigherEntry"></a>getHigherEntry</h3><p>和getCeilingEntry类似，区别在于不找相等的key对应的entry，而是直接命中比给定key大并且紧邻着这个key的entry。</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><h3 id="PrivateEntryIterator"><a href="#PrivateEntryIterator" class="headerlink" title="PrivateEntryIterator"></a>PrivateEntryIterator</h3><p>这是一个其他迭代器类的父类，实现了Iterator接口及其方法，同样控制了modCount，保证在遍历的时候map的结构不发生改变。</p>
+<h3 id="EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator"><a href="#EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator" class="headerlink" title="EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator"></a>EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator</h3><p>分别是针对Entry、Value、Key的四个具体的迭代器。</p>
+<h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h3><p>TreeMap的静态内部类，定义了一个Key-Value对的节点。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-23_14-40-47.jpg" alt> 此内部类只有寥寥数个方法，都是setter和getter方法，没有什么特别的。唯一有些特殊的是hashCode，这个函数根据key和value计算出hashCode，方法是将key的hashCode异或value的hashCode。</p>
+<h3 id="NavigableSubMap"><a href="#NavigableSubMap" class="headerlink" title="NavigableSubMap"></a>NavigableSubMap</h3><h3 id="Values、EntrySet"><a href="#Values、EntrySet" class="headerlink" title="Values、EntrySet"></a>Values、EntrySet</h3><p>定义了两个视图。</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/02/21/java-collection-treemap/">Java Collection——TreeMap</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/02/21/java-collection-treemap/">http://www.kherrisan.cn/2018/02/21/java-collection-treemap/</a></li>
+            <li><strong>发布时间：</strong>2018-02-21</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/java/" rel="tag">java</a>, <a class="has-link-grey -link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/18/gradle/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Gradle——从groovy语法角度理解Project</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/02/19/java-collection-linkedhashset/">
+                <span class="level-item">Java Collection——LinkedHashSet</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-96x96 has-mb-6">
+                        <img class src="http://oss.kherrisan.cn/logo.jpg" alt="Kherrisan">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Kherrisan
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        科瑞杉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国-江苏-常州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        70
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        36
+                    </p>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i>  关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Kherrisan">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="QQ" href="/">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Wechat" href="/">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Telegram" href="/">
+                
+                <i class="fab fa-telegram"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content" style="max-height:calc(100vh - 22px);overflow:scroll">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#属性">
+        <span class="has-mr-6">1</span>
+        <span>属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法">
+        <span class="has-mr-6">2</span>
+        <span>方法</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#getEntry">
+        <span class="has-mr-6">2.1</span>
+        <span>getEntry</span>
+        </a></li><li>
+        <a class="is-flex" href="#getEntryUsingComparator">
+        <span class="has-mr-6">2.2</span>
+        <span>getEntryUsingComparator</span>
+        </a></li><li>
+        <a class="is-flex" href="#put">
+        <span class="has-mr-6">2.3</span>
+        <span>put</span>
+        </a></li><li>
+        <a class="is-flex" href="#getCeilingEntry">
+        <span class="has-mr-6">2.4</span>
+        <span>getCeilingEntry</span>
+        </a></li><li>
+        <a class="is-flex" href="#getHigherEntry">
+        <span class="has-mr-6">2.5</span>
+        <span>getHigherEntry</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#迭代器">
+        <span class="has-mr-6">3</span>
+        <span>迭代器</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#PrivateEntryIterator">
+        <span class="has-mr-6">3.1</span>
+        <span>PrivateEntryIterator</span>
+        </a></li><li>
+        <a class="is-flex" href="#EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator">
+        <span class="has-mr-6">3.2</span>
+        <span>EntryIterator、ValueIterator、KeyIterator、DescendingKeyIterator</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#其他内部类">
+        <span class="has-mr-6">4</span>
+        <span>其他内部类</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Entry">
+        <span class="has-mr-6">4.1</span>
+        <span>Entry</span>
+        </a></li><li>
+        <a class="is-flex" href="#NavigableSubMap">
+        <span class="has-mr-6">4.2</span>
+        <span>NavigableSubMap</span>
+        </a></li><li>
+        <a class="is-flex" href="#Values、EntrySet">
+        <span class="has-mr-6">4.3</span>
+        <span>Values、EntrySet</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="http://oss.kherrisan.cn/logo.jpg" alt="Java Collection——TreeMap" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
