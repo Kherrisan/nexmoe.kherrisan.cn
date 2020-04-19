@@ -12,12 +12,13 @@ var path = require('path');
 const { series } = require('gulp');
 
 var CACHE = {};
-var EXCLUDES = ['animation.js', 'MathJax','fontawesome'];
+var EXCLUDES = ['animation.js', 'MathJax', 'fontawesome', 'lightgallery'];
 
 function inline(raw, inlineOpen, inlineClose) {
     return replace(raw, function (match, src, offset, string) {
         for (ex of EXCLUDES) {
             if (src.indexOf(ex) != -1) {
+                console.debug("ignore " + src)
                 return match
             }
         }
@@ -25,7 +26,7 @@ function inline(raw, inlineOpen, inlineClose) {
             try {
                 var cached = CACHE[src];
                 if (!cached) {
-                    console.debug("get "+src+" from remote")
+                    console.debug("get " + src + " from remote")
                     var res = request('GET', addhttp(src));
                     cached = res.body.toString();
                     if (!cached) {
@@ -48,7 +49,7 @@ function inline(raw, inlineOpen, inlineClose) {
                 try {
                     var file_exists = fs.existsSync(local_path);
                     if (file_exists) {
-                        console.debug("get "+src+" from local fs")
+                        console.debug("get " + src + " from local fs")
                         var cached = fs.readFileSync(local_path);
                         CACHE[local_path] = cached;
                     }
