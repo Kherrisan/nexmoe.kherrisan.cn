@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>JUC——CopyOnWriteArrayList - Kherrisan</title>
+
+
+    <meta name="description" content="ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。  光看这个类的原型好像还挺简单的。 属性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC——CopyOnWriteArrayList">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/02/11/java-collection-copyonwritearraylist/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。  光看这个类的原型好像还挺简单的。 属性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-02-11T06:08:44.000Z">
+<meta property="article:modified_time" content="2020-04-13T14:17:36.059Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+<link rel="alternative" href="atom.xml" title="JUC——CopyOnWriteArrayList" type="application/atom+xml">
+
+
+
+<link rel="icon" href="https://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://oss.kherrisan.cn/logo.jpg" alt="JUC——CopyOnWriteArrayList" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>JUC——CopyOnWriteArrayList
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-02-11T06:08:44.000Z"><i class="far fa-calendar-alt"> </i>2018-02-11</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-13T14:17:36.059Z"><i class="far fa-calendar-check"> </i>2020-04-13</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/JUC/">JUC</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    12 分钟 读完 (大约 1785 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_12-06-22.jpg" alt> 光看这个类的原型好像还挺简单的。</p>
+<p>属性</p>
+<a id="more"></a>
+
+<p>–</p>
+<p>就两个属性：一把ReentrantLock（可重入锁），一个Object数组（violatile修饰）。 在多线程的情景下，由于每个线程都有一个自己的工作内存（类似于高速缓存），在多个线程访问同一个变量的时候，可能会出现缓存不一致的问题，如线程1和线程2都把变量a读入到自己的工作内存中，线程1对a执行自增，线程2对a执行自增，这时候本来应该自增两次的a由于缓存不一致只自增了一次。 violatile关键字保证了不同线程对该变量的可见性，即一个线程修改了这个值，其他线程能够立即可见。 ReentrantLock：同一个线程可以多次获取一把锁，但是也需要释放多次，全部释放之后其他线程才能获得这把锁。因为还没有深入研究他的源码，所以这里就一笔带过了。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>由于构造函数不太可能会受到多线程环境的影响，因此CopyOnWriteArrayList的构造函数和ArrayList的构造函数差不多，没有针对多线程的特殊处理。</p>
+<h3 id="所有只读操作"><a href="#所有只读操作" class="headerlink" title="所有只读操作"></a>所有只读操作</h3><p>由于只读操作不会修改数组中的元素，因此也没有必要针对多线程进行特殊处理。 CopyOnWriteArrayList提供的只读操作包括：</p>
+<ul>
+<li>size()</li>
+<li>isEmpty()</li>
+<li>contains(Object)</li>
+<li>indexOf(Object)</li>
+<li>toArray()</li>
+<li>get(index)</li>
+</ul>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>光看CopyOnWriteArrayList的实现，好像也就比ArrayList多了一个获取锁和释放锁的步骤。 下图是CopyOnWriteArrayList的set。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_13-15-44.jpg" alt> 区别： 0. 先获得锁，在finally中释放锁。 1. CopyOnWriteArrayList没有对index做检查，可能会出现数组越界。 2. CopyOnWriteArrayList是先拷贝了一个副本，然后在副本上修改，最后setArray设置对象的属性。这么做的原因可能是因为violetile对于引用类型只能使得引用指向不同的对象时其他线程可见，如果引用的对象的某个属性变了，或者引用的数组的某个元素变了，是不会触发对其他线程中该引用的变化可见的（和final的概念有点类似）。所以为了修改数组元素之后对其他线程变化可见，只能修改引用的数组。 这就是CopyOnWrite的名字的由来吧。 但这样，开发者可能就会担心效率问题了，毕竟每次简单的修改都要对数组拷贝一遍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">package collection;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by intellij IDEA.But customed by hand of Dokyme.</span><br><span class="line"> *</span><br><span class="line"> * @author dokym</span><br><span class="line"> * @date 2018/2/11-12:00</span><br><span class="line"> * Description:</span><br><span class="line"> */</span><br><span class="line">public class LearnCopyOnWriteArrayList {</span><br><span class="line">    private List<string> copyOnWriteList = new CopyOnWriteArrayList<>();</string></span><br><span class="line">    private List<string> arrayList = new ArrayList<>();</string></span><br><span class="line"></span><br><span class="line">    private static final int testCount = 1000000;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) {</span><br><span class="line">        new LearnCopyOnWriteArrayList().run();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public void run() {</span><br><span class="line">        testCopyOnWriteList();</span><br><span class="line">        testArrayList();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public void testCopyOnWriteList() {</span><br><span class="line">        System.out.println("testCopyOnWriteList");</span><br><span class="line">        long start, end;</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i < testCount; i++) {</span><br><span class="line">            copyOnWriteList.add("" + i);</span><br><span class="line">        }</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println("Timespan: " + (end - start));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public void testArrayList() {</span><br><span class="line">        System.out.println("testArrayList");</span><br><span class="line">        long start, end;</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i < testCount; i++) {</span><br><span class="line">            arrayList.add("" + i);</span><br><span class="line">        }</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println("Timespan: " + (end - start));</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_13-37-59.jpg" alt> 类似的写操作还有：</p>
+<ul>
+<li>add(index,object)及其他addXXX，虽然也是使用的数组，但是和ArrayList相比，逻辑相当直接，没有采用1.5倍扩容的策略。</li>
+<li>remove(index)及其他removeXXX</li>
+</ul>
+<p>以remove(index)为例，详细分析一下他的代码： <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_14-14-10.jpg" alt> 首先得到一个snapshot（其实就是记录一下引用，称不上快照），接着寻找对应需要被删除的那个object的index，再调用下一个remove函数。 下一个remove函数首先加锁，接着判断快照和当前的引用是不是同一个对象，如果不是，说明有其他线程在indexOf的过程中修改了数组，进入findIndex语句块。 findIndex语句块中首先在current中找有没有和要删除的object相同的，并且这个object的位置已经发生了变化的。如果在current中找到了，就删掉他。如果没有找到，下面有三个if。 如果current的长度比index小了，由于current已经被全部遍历过了，没有object，说明object已经在其他线程中被删掉了，那就直接返回。 如果current的长度比index大，index之前的已经全都找过了，没有object，那再看index处是不是object，如果是，就直接删除。 最后再在current中调用indexOf函数找一遍object，删掉它。 这段代码考虑了object在两个版本的数组中位置有没有发生变化，是否因为其他线程的修改导致object消失等因素。 做类似处理的还有addIfAbsent，其实只要让加锁的范围大一些就不需要写这么复杂的代码了，可能还是处于性能的考虑吧。</p>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p>forEach没有实现CopyOnWrite，也就是说通过forEach修改某个元素的值在其他线程是不可见的。当然forEach只能得到每个元素的引用，但是不能修改引用。 <strong>实际上，通过get方法得到某个元素，然后修改那个元素的属性，这样的行为，对于其他线程也是不可见的。可以说，这个可见性不应该是COWArrayList所应该负责的。</strong></p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>不同于ArrayList和迭代器类，COWIterator是一个静态内部类，也就是不需要外部类的实例存在也可以实例化的内部类。 虽然该迭代器的形式和ArrayList的迭代器有所区别，但它不是线程安全的。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>因为是静态内部类，无法接触外部的实例变量，因此有一个COWArrayList的snapshot（一个Object数组）。 此外还有一个cursor记录下一个元素的index。 构造函数负责初始化snapshot。</p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><p>只支持hasNext,hasPrevious,next,previous,nextIndex,previousIndex,forEachRemaining。修改数组元素的方法在这个层面一律不支持。 由于不支持修改，也就没必要实现checkConmodification了。 <strong>实际上COWArrayList也并没有记录modCount。</strong></p>
+<h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><p>COWSubList，作为COWArrayList的视图，也是静态内部类，但是手都持有了以恶搞COWArrayList的实例变量，修改时调用COWArrayList的方法进行修改，如果说COWArrayList是线程安全的话，SubList也应该是安全的。</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/02/11/java-collection-copyonwritearraylist/">JUC——CopyOnWriteArrayList</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/02/11/java-collection-copyonwritearraylist/">http://www.kherrisan.cn/2018/02/11/java-collection-copyonwritearraylist/</a></li>
+            <li><strong>发布时间：</strong>2018-02-11</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/java/" rel="tag">java</a>, <a class="has-link-grey -link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/02/14/java-collection-vector/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java Collection——Vector</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/02/10/java-collection-linkedlist/">
+                <span class="level-item">Java Collection——LinkedList</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#方法">
+        <span class="has-mr-6">1</span>
+        <span>方法</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#构造函数">
+        <span class="has-mr-6">1.1</span>
+        <span>构造函数</span>
+        </a></li><li>
+        <a class="is-flex" href="#所有只读操作">
+        <span class="has-mr-6">1.2</span>
+        <span>所有只读操作</span>
+        </a></li><li>
+        <a class="is-flex" href="#set">
+        <span class="has-mr-6">1.3</span>
+        <span>set</span>
+        </a></li><li>
+        <a class="is-flex" href="#forEach">
+        <span class="has-mr-6">1.4</span>
+        <span>forEach</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#迭代器">
+        <span class="has-mr-6">2</span>
+        <span>迭代器</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#属性">
+        <span class="has-mr-6">2.1</span>
+        <span>属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#方法-1">
+        <span class="has-mr-6">2.2</span>
+        <span>方法</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#其他内部类">
+        <span class="has-mr-6">3</span>
+        <span>其他内部类</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://oss.kherrisan.cn/logo.jpg" alt="JUC——CopyOnWriteArrayList" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-start" style="text-align: center;">
+                <p>苏ICP备17065958号-2</p>
+                <div style="width:300px;margin:0 auto; ">
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="http://www.beian.gov.cn/portal/download?token=370b7ed0-073e-4335-afbe-51db4baf355a" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">苏公网安备 32040202000292号</p></a>
+                </div>
+            
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

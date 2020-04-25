@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>JVM——内存区域和内存溢出异常 - Kherrisan</title>
+
+
+    <meta name="description" content="内存区域作为VM，Java Virtual Machine模拟了操作系统的一些功能，其中之一就是对内存进行管理。JVM内存大致分为下面几个区域：   方法区，是线程共享的。用于存储已被JVM加载的类信息、常量、静态变量、编译后的代码等数据。过去开发者常常称这个区域为“永久代”，因为Hotspot虚拟机GC在管理方法区的时候是采用永久代的方式。当然Hotspot以及开始逐渐放弃永久代。本来垃圾回收（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM——内存区域和内存溢出异常">
+<meta property="og:url" content="http://www.kherrisan.cn/2018/02/16/jvm-mm/index.html">
+<meta property="og:site_name" content="Kherrisan">
+<meta property="og:description" content="内存区域作为VM，Java Virtual Machine模拟了操作系统的一些功能，其中之一就是对内存进行管理。JVM内存大致分为下面几个区域：   方法区，是线程共享的。用于存储已被JVM加载的类信息、常量、静态变量、编译后的代码等数据。过去开发者常常称这个区域为“永久代”，因为Hotspot虚拟机GC在管理方法区的时候是采用永久代的方式。当然Hotspot以及开始逐渐放弃永久代。本来垃圾回收（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.kherrisan.cn/images/og_image.png">
+<meta property="article:published_time" content="2018-02-16T08:00:32.000Z">
+<meta property="article:modified_time" content="2020-04-13T14:17:36.078Z">
+<meta property="article:author" content="Kherrisan">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.kherrisan.cn/images/og_image.png">
+
+
+
+
+
+<link rel="alternative" href="atom.xml" title="JVM——内存区域和内存溢出异常" type="application/atom+xml">
+
+
+
+<link rel="icon" href="https://oss.kherrisan.cn/logo.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://oss.kherrisan.cn/logo.jpg" alt="JVM——内存区域和内存溢出异常" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>JVM——内存区域和内存溢出异常
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-02-16T08:00:32.000Z"><i class="far fa-calendar-alt"> </i>2018-02-16</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-04-13T14:17:36.078Z"><i class="far fa-calendar-check"> </i>2020-04-13</time>
+                
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i> 
+                <a class="has-link-grey -link" href="/categories/JVM/">JVM</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i> 
+                    
+                    
+                    8 分钟 读完 (大约 1269 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <h2 id="内存区域"><a href="#内存区域" class="headerlink" title="内存区域"></a>内存区域</h2><p>作为VM，Java Virtual Machine模拟了操作系统的一些功能，其中之一就是对内存进行管理。JVM内存大致分为下面几个区域： <a href="https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg"><img src="https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg" alt></a></p>
+<ol>
+<li>方法区，是线程共享的。用于存储已被JVM加载的类信息、常量、静态变量、编译后的代码等数据。过去开发者常常称这个区域为“永久代”，因为Hotspot虚拟机GC在管理方法区的时候是采用永久代的方式。当然Hotspot以及开始逐渐放弃永久代。本来垃圾回收（GC）在方法区就是较为少见，且较为令人满意的，这区域的内存的主要回收目标是常量池的回收和类的卸载，但这个区域的回收是十分有必要的。当内存无法满足需要时也会抛出OutOfMemoryError。</li>
+</ol>
+<a id="more"></a>
+
+<ol start="2">
+<li>虚拟机栈，是线程私有的，因为每个线程的函数调用情况可能各不相同。每个方法在执行的同时会创建一个栈帧（frame），用于存储局部变量表、操作数、动态链接、方法出口等信息。在JVM规范中，VM栈可能会因为线程请求过多的栈（函数调用过多）导致抛出StackOverflowError，也有可能因为VM动态扩展VM栈的时候无法申请到足够的内存导致抛出OutOfMemoryError。</li>
+<li>本地方法栈，和虚拟机栈类似，是线程私有的，区别在于虚拟机栈保存的是字节码指令的栈，而本地方法栈保存的是本地方法服务。Hotspot中本地方法栈和VM栈是合一的。</li>
+<li>堆（heap），是线程共享的。和数据结构中的堆不同，这个堆就是用来描述内存中的一块区域的名字。一般来说堆是各个区域中最大的一块。JVM规范中指出：<strong>所有的对象实例以及数组都要在堆上分配</strong>。但是随着JIT编译器的发展与逃逸分析技术的成熟，栈上分配、标量替换优化技术将会导致这样的分配也不是绝对的了。堆在物理内存中可以是不连续的也可以是连续的。在堆无法扩展时（new对象过多）会抛出OutOfMemoryError。</li>
+<li>程序计数器。计算机组成原理中一个很重要的概念就是存储程序，其中用来标记指令执行的进度、保持或改变指令执行顺序的就是程序计数器（Program Counter简称PC，或Instruction Pointer简称IP）。到了JVM中，也有程序计数器。由于每个线程都有自己的程序运行情况，因此每个线程都要由一个自己的PC，指向字节码指令的地址。JVM中的PC占用的内存空间很小，几乎可以忽略不计，也不会抛出OutOfMemoryError。</li>
+</ol>
+<p>此外，还有两个概念。</p>
+<ol>
+<li>运行时常量池。是方法区的一部分，用于存放编译期生成的各种字面量和符号引用。</li>
+<li>直接内存。物理内存（当然还是在操作系统管理之下的）而不是JVM中的内存。</li>
+</ol>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E7%BB%98%E5%9B%BE1.jpg" alt></p>
+<h3 id="对象内存布局"><a href="#对象内存布局" class="headerlink" title="对象内存布局"></a>对象内存布局</h3><p><img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E7%BB%98%E5%9B%BE4.jpg" alt></p>
+<h3 id="对象锁状态"><a href="#对象锁状态" class="headerlink" title="对象锁状态"></a>对象锁状态</h3><p>对象处于不同的状态时，对象头的布局也会产生变化，对象头的格式并不是像TCP报文头这样子一直不变的。 <img src="https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-05_17-53-42.jpg" alt> 锁有重有轻，有乐观有悲观，从这么多角度来将锁的概念分类并区分设计，目的就是为了应对不同的并发场景，最大程度提升系统性能。</p>
+<h3 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h3><p>目前主流的访问方式有两种：句柄和直接指针。</p>
+<ol>
+<li>句柄：在JVM堆中会有一个句柄池，引用变量存储的就是句柄在句柄池中的地址，句柄在存放实例池中的对象实例数据以及方法区的对象类型数据。当对象在JVM堆中被移动的时候，不需要改变引用变量的值，只需要改变句柄中的值即可。</li>
+<li>直接指针：引用变量直接存储JVM堆中对象实例地址，对象实例数据中保留一个指针指向方法区中的对象类型数据。速度比使用句柄更快一些。</li>
+</ol>
+<p>Hotspot使用的是第二种。</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.kherrisan.cn/2018/02/16/jvm-mm/">JVM——内存区域和内存溢出异常</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.kherrisan.cn">Kherrisan</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.kherrisan.cn/2018/02/16/jvm-mm/">http://www.kherrisan.cn/2018/02/16/jvm-mm/</a></li>
+            <li><strong>发布时间：</strong>2018-02-16</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i> 
+                    <a class="has-link-grey -link" href="/tags/java/" rel="tag">java</a>, <a class="has-link-grey -link" href="/tags/jvm/" rel="tag">jvm</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+<div class="sharethis-inline-share-buttons"></div>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e91d6779dee0c0012ab3bc6&product=inline-share-buttons&cms=website" async="async"></script>
+
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/alipay.JPG" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://oss.kherrisan.cn/wechatpay.JPG" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/02/17/java-collection-linkedhashmap/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java Collection——LinkedHashMap</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/02/16/mit-6-828/">
+                <span class="level-item">MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: '1AGA0PAY5WWIJSD1Pwy5SKf4-9Nh9j0Va',
+        app_key: 'yMd3tsz0IrFw5tuKWGhQiehm',
+        placeholder: '找个位子随便坐'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+
+    <div class="card widget column-left is-sticky" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#内存区域">
+        <span class="has-mr-6">1</span>
+        <span>内存区域</span>
+        </a></li><li>
+        <a class="is-flex" href="#对象">
+        <span class="has-mr-6">2</span>
+        <span>对象</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#对象的创建">
+        <span class="has-mr-6">2.1</span>
+        <span>对象的创建</span>
+        </a></li><li>
+        <a class="is-flex" href="#对象内存布局">
+        <span class="has-mr-6">2.2</span>
+        <span>对象内存布局</span>
+        </a></li><li>
+        <a class="is-flex" href="#对象锁状态">
+        <span class="has-mr-6">2.3</span>
+        <span>对象锁状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#对象的访问定位">
+        <span class="has-mr-6">2.4</span>
+        <span>对象的访问定位</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://oss.kherrisan.cn/logo.jpg" alt="JVM——内存区域和内存溢出异常" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                © 2020 Kherrisan 
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-start" style="text-align: center;">
+                <p>苏ICP备17065958号-2</p>
+                <div style="width:300px;margin:0 auto; ">
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="http://www.beian.gov.cn/portal/download?token=370b7ed0-073e-4335-afbe-51db4baf355a" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">苏公网安备 32040202000292号</p></a>
+                </div>
+            
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i> 
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i> 
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://www.kherrisan.cn',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

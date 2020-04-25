@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Kherrisan</title>
+  <icon>http://www.kherrisan.cn/icon.png</icon>
+  <subtitle> 科瑞杉</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.kherrisan.cn/"/>
+  <updated>2020-04-25T07:05:47.186Z</updated>
+  <id>http://www.kherrisan.cn/</id>
+  
+  <author>
+    <name>Kherrisan</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我理想的文档管理模式</title>
+    <link href="http://www.kherrisan.cn/2020/04/22/%E6%88%91%E7%90%86%E6%83%B3%E7%9A%84%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://www.kherrisan.cn/2020/04/22/%E6%88%91%E7%90%86%E6%83%B3%E7%9A%84%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-04-22T13:23:16.000Z</published>
+    <updated>2020-04-25T07:05:47.186Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;我理想的文档管理模式&quot;&gt;&lt;a href=&quot;#我理想的文档管理模式&quot; class=&quot;headerlink&quot; title=&quot;我理想的文档管理模式&quot;&gt;&lt;/a&gt;我理想的文档管理模式&lt;/h1&gt;&lt;h2 id=&quot;印象笔记&quot;&gt;&lt;a href=&quot;#印象笔记&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>新的主题</title>
+    <link href="http://www.kherrisan.cn/2020/04/10/%E6%96%B0%E7%9A%84%E4%B8%BB%E9%A2%98/"/>
+    <id>http://www.kherrisan.cn/2020/04/10/%E6%96%B0%E7%9A%84%E4%B8%BB%E9%A2%98/</id>
+    <published>2020-04-10T12:06:23.000Z</published>
+    <updated>2020-04-13T14:17:36.111Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;之前一直使用 Hexo 的 next 主题来呈现博客，最近觉得 next 太素了，想换一个花哨一些的~&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="博客" scheme="http://www.kherrisan.cn/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="主题" scheme="http://www.kherrisan.cn/tags/%E4%B8%BB%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年7月6日周记</title>
+    <link href="http://www.kherrisan.cn/2019/07/06/2019%E5%B9%B47%E6%9C%886%E6%97%A5%E5%91%A8%E8%AE%B0/"/>
+    <id>http://www.kherrisan.cn/2019/07/06/2019%E5%B9%B47%E6%9C%886%E6%97%A5%E5%91%A8%E8%AE%B0/</id>
+    <published>2019-07-06T11:56:39.000Z</published>
+    <updated>2020-04-13T14:17:36.048Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;a href=&quot;#2019年6月31日-2019年7月6日&quot; class=&quot;headerlink&quot; title=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;/a&gt;2019年6月31日-2019年7月6日&lt;/h2&gt;&lt;p&gt;离校了，宿舍里的东西全都搬到了家里，也都收拾好了。6月26日开始的为期三天的招生工作也宣告结束，不知道未来还有没有机会和计软的招生老师们一起去一中玩（zhuang）耍（bi）。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://www.kherrisan.cn/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="考研" scheme="http://www.kherrisan.cn/tags/%E8%80%83%E7%A0%94/"/>
+    
+      <category term="复习" scheme="http://www.kherrisan.cn/tags/%E5%A4%8D%E4%B9%A0/"/>
+    
+      <category term="记录" scheme="http://www.kherrisan.cn/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年6月消费情况总结及7月预算</title>
+    <link href="http://www.kherrisan.cn/2019/07/01/2019%E5%B9%B46%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A7%E6%9C%88%E9%A2%84%E7%AE%97/"/>
+    <id>http://www.kherrisan.cn/2019/07/01/2019%E5%B9%B46%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A7%E6%9C%88%E9%A2%84%E7%AE%97/</id>
+    <published>2019-07-01T01:34:36.000Z</published>
+    <updated>2020-04-13T14:17:36.047Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+&lt;h2 id=&quot;6月消费总结&quot;&gt;&lt;a href=&quot;#6月消费总结&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="消费分析" scheme="http://www.kherrisan.cn/categories/%E6%B6%88%E8%B4%B9%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="消费" scheme="http://www.kherrisan.cn/tags/%E6%B6%88%E8%B4%B9/"/>
+    
+      <category term="月记" scheme="http://www.kherrisan.cn/tags/%E6%9C%88%E8%AE%B0/"/>
+    
+      <category term="预算" scheme="http://www.kherrisan.cn/tags/%E9%A2%84%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年5月消费情况总结及6月预算</title>
+    <link href="http://www.kherrisan.cn/2019/06/02/2019%E5%B9%B45%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A6%E6%9C%88%E9%A2%84%E7%AE%97/"/>
+    <id>http://www.kherrisan.cn/2019/06/02/2019%E5%B9%B45%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A6%E6%9C%88%E9%A2%84%E7%AE%97/</id>
+    <published>2019-06-02T10:03:51.000Z</published>
+    <updated>2020-04-13T14:17:36.046Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;5月消费总结&quot;&gt;&lt;a href=&quot;#5月消费总结&quot; class=&quot;headerlink&quot; title=&quot;5月消费总结&quot;&gt;&lt;/a&gt;5月消费总结&lt;/h2&gt;&lt;p&gt;我在五月的消费非常地不按照常理出牌，收入方面：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在KXD的四月的实习工资到账，900。&lt;/li&gt;
+&lt;li&gt;毕业生退学费，1900.&lt;/li&gt;
+&lt;li&gt;把iPad Pro 10.5在闲鱼上卖掉了，3000.&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="消费分析" scheme="http://www.kherrisan.cn/categories/%E6%B6%88%E8%B4%B9%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="消费" scheme="http://www.kherrisan.cn/tags/%E6%B6%88%E8%B4%B9/"/>
+    
+      <category term="月记" scheme="http://www.kherrisan.cn/tags/%E6%9C%88%E8%AE%B0/"/>
+    
+      <category term="预算" scheme="http://www.kherrisan.cn/tags/%E9%A2%84%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年4月消费情况总结及5月预算</title>
+    <link href="http://www.kherrisan.cn/2019/04/29/2019%E5%B9%B44%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A5%E6%9C%88%E9%A2%84%E7%AE%97/"/>
+    <id>http://www.kherrisan.cn/2019/04/29/2019%E5%B9%B44%E6%9C%88%E6%B6%88%E8%B4%B9%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93%E5%8F%8A5%E6%9C%88%E9%A2%84%E7%AE%97/</id>
+    <published>2019-04-29T12:01:13.000Z</published>
+    <updated>2020-04-13T14:17:36.046Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够及时对”不堪回首“的消费记录进行分析和总结，并对下一个月的消费做出有效可行的预算，在此为消费单独开辟一个栏目。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="消费分析" scheme="http://www.kherrisan.cn/categories/%E6%B6%88%E8%B4%B9%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="消费" scheme="http://www.kherrisan.cn/tags/%E6%B6%88%E8%B4%B9/"/>
+    
+      <category term="月记" scheme="http://www.kherrisan.cn/tags/%E6%9C%88%E8%AE%B0/"/>
+    
+      <category term="预算" scheme="http://www.kherrisan.cn/tags/%E9%A2%84%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年4月29日周记</title>
+    <link href="http://www.kherrisan.cn/2019/04/29/2019%E5%B9%B44%E6%9C%8829%E6%97%A5%E5%91%A8%E8%AE%B0/"/>
+    <id>http://www.kherrisan.cn/2019/04/29/2019%E5%B9%B44%E6%9C%8829%E6%97%A5%E5%91%A8%E8%AE%B0/</id>
+    <published>2019-04-29T11:56:39.000Z</published>
+    <updated>2020-04-13T14:17:36.044Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;a href=&quot;#2019年4月22日-2019年4月28日&quot; class=&quot;headerlink&quot; title=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;/a&gt;2019年4月22日-2019年4月28日&lt;/h2&gt;&lt;p&gt;本周是开始考研复习的第三周，实际上只复习了一天。在周一经过小伙伴提醒五一之后要交论文初稿，因此周一之后的所有时间都用来写论文了。但是论文进度比想象的慢，写作效率不高，可以形容为”&lt;strong&gt;以写论文的名义划水&lt;/strong&gt;“。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://www.kherrisan.cn/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="考研" scheme="http://www.kherrisan.cn/tags/%E8%80%83%E7%A0%94/"/>
+    
+      <category term="复习" scheme="http://www.kherrisan.cn/tags/%E5%A4%8D%E4%B9%A0/"/>
+    
+      <category term="记录" scheme="http://www.kherrisan.cn/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2019年4月19日周记</title>
+    <link href="http://www.kherrisan.cn/2019/04/19/2019%E5%B9%B44%E6%9C%8819%E6%97%A5%E5%91%A8%E8%AE%B0/"/>
+    <id>http://www.kherrisan.cn/2019/04/19/2019%E5%B9%B44%E6%9C%8819%E6%97%A5%E5%91%A8%E8%AE%B0/</id>
+    <published>2019-04-19T14:55:29.000Z</published>
+    <updated>2020-04-13T14:17:36.043Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够记录自己平时的学习和生活，并进行一些有益的反思，我开始尝试写周记，同时也真心希望自己能够坚持下去。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://www.kherrisan.cn/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="考研" scheme="http://www.kherrisan.cn/tags/%E8%80%83%E7%A0%94/"/>
+    
+      <category term="复习" scheme="http://www.kherrisan.cn/tags/%E5%A4%8D%E4%B9%A0/"/>
+    
+      <category term="记录" scheme="http://www.kherrisan.cn/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apple产品体验</title>
+    <link href="http://www.kherrisan.cn/2019/04/06/Apple%E4%BA%A7%E5%93%81%E4%BD%93%E9%AA%8C/"/>
+    <id>http://www.kherrisan.cn/2019/04/06/Apple%E4%BA%A7%E5%93%81%E4%BD%93%E9%AA%8C/</id>
+    <published>2019-04-06T07:58:00.000Z</published>
+    <updated>2020-04-13T14:17:36.048Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;（挖坑待填）&lt;/p&gt;
+
+        
+      
+    
+    </summary>
+    
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>休息一年，然后回来</title>
+    <link href="http://www.kherrisan.cn/2019/04/06/%E4%BC%91%E6%81%AF%E4%B8%80%E5%B9%B4%EF%BC%8C%E7%84%B6%E5%90%8E%E5%9B%9E%E6%9D%A5/"/>
+    <id>http://www.kherrisan.cn/2019/04/06/%E4%BC%91%E6%81%AF%E4%B8%80%E5%B9%B4%EF%BC%8C%E7%84%B6%E5%90%8E%E5%9B%9E%E6%9D%A5/</id>
+    <published>2019-04-06T06:32:26.000Z</published>
+    <updated>2020-04-13T14:17:36.106Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本来在大三时打定主意，本科毕业了之后就直接参加工作，迅速进入资本积累的人生阶段。结果在大四秋招之后对职业生涯却产生了新的理解和认识。人生应该不至于此，我决定参加2019年考研。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+      <category term="日常" scheme="http://www.kherrisan.cn/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+      <category term="成长" scheme="http://www.kherrisan.cn/tags/%E6%88%90%E9%95%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何看待江苏要南京提高首位度？</title>
+    <link href="http://www.kherrisan.cn/2019/01/27/%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E6%B1%9F%E8%8B%8F%E8%A6%81%E5%8D%97%E4%BA%AC%E6%8F%90%E9%AB%98%E9%A6%96%E4%BD%8D%E5%BA%A6%EF%BC%9F/"/>
+    <id>http://www.kherrisan.cn/2019/01/27/%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E6%B1%9F%E8%8B%8F%E8%A6%81%E5%8D%97%E4%BA%AC%E6%8F%90%E9%AB%98%E9%A6%96%E4%BD%8D%E5%BA%A6%EF%BC%9F/</id>
+    <published>2019-01-27T12:31:04.000Z</published>
+    <updated>2020-04-13T14:17:36.109Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个主题来自&lt;a href=&quot;https://www.zhihu.com/question/266051194&quot;&gt;知乎&lt;/a&gt;，今天在回家的高铁上偶然刷到。作为一个在南京生活了3年半的土生土长的常州人，我想围绕这个主体就知乎上的一些回答给出我自己的些许看法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>这是一个测试页</title>
+    <link href="http://www.kherrisan.cn/2019/01/24/test/"/>
+    <id>http://www.kherrisan.cn/2019/01/24/test/</id>
+    <published>2019-01-24T05:46:26.000Z</published>
+    <updated>2020-04-13T14:17:36.101Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Markdown语法渲染&quot;&gt;&lt;a href=&quot;#Markdown语法渲染&quot; class=&quot;headerlink&quot; title=&quot;Markdown语法渲染&quot;&gt;&lt;/a&gt;Markdown语法渲染&lt;/h2&gt;&lt;p&gt;这部分主要是为了测试Hexo渲染Markdown的编译器对常用记号的支持程度。&lt;/p&gt;
+&lt;p&gt;各级标题&lt;/p&gt;
+&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot; title=&quot;一级标题&quot;&gt;&lt;/a&gt;一级标题&lt;/h1&gt;&lt;h2 id=&quot;二级标题&quot;&gt;&lt;a href=&quot;#二级标题&quot; class=&quot;headerlink&quot; title=&quot;二级标题&quot;&gt;&lt;/a&gt;二级标题&lt;/h2&gt;&lt;h3 id=&quot;三级标题&quot;&gt;&lt;a href=&quot;#三级标题&quot; class=&quot;headerlink&quot; title=&quot;三级标题&quot;&gt;&lt;/a&gt;三级标题&lt;/h3&gt;
+    
+    </summary>
+    
+    
+      <category term="测试" scheme="http://www.kherrisan.cn/categories/%E6%B5%8B%E8%AF%95/"/>
+    
+    
+      <category term="测试" scheme="http://www.kherrisan.cn/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="Markdown" scheme="http://www.kherrisan.cn/tags/Markdown/"/>
+    
+      <category term="前端" scheme="http://www.kherrisan.cn/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="优化" scheme="http://www.kherrisan.cn/tags/%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Netty——Pipeline(1)</title>
+    <link href="http://www.kherrisan.cn/2019/01/08/netty-pipeline/"/>
+    <id>http://www.kherrisan.cn/2019/01/08/netty-pipeline/</id>
+    <published>2019-01-08T14:25:02.000Z</published>
+    <updated>2020-04-13T14:17:36.096Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 &lt;code&gt;Pipeline&lt;/code&gt;的继承结构： &lt;img src=&quot;https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/e1fb7cb818b3cd0d10e25e3905f0efcb.png&quot; alt&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/categories/Netty/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/tags/Netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JLink——借助JLink打包Java程序为可执行程序</title>
+    <link href="http://www.kherrisan.cn/2019/01/06/jlink/"/>
+    <id>http://www.kherrisan.cn/2019/01/06/jlink/</id>
+    <published>2019-01-06T11:38:54.000Z</published>
+    <updated>2020-04-13T14:17:36.076Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;JDK9中的模块化技术使得原本一两百兆的JRE能够被拆分成多个较小的模块，因此如果想要把Java程序打包成可执行程序，并在没有JRE环境的机器上运行，不再需要带上一个庞大的JRE，而只需要额外增加几个JDK中的module。 项目目录结构如下，仅仅是一个很简单的Hello World程序。代码中仅仅使用到了System.out.println这一个JDK中提供的函数。 &lt;img src=&quot;https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/b6fc620903896d3ef034f5bed269fcaa.png&quot; alt&gt; 最重要的是module-info.jar文件，这个文件是module的定义文件，声明了我所编写的这个模块需要依赖哪些模块，以及对外暴露哪些东西。 由于只依赖java.base模块，而这个模块是默认包含的，因此module-info的大括号内可以为空。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JavaSE" scheme="http://www.kherrisan.cn/categories/JavaSE/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Netty——NioEventLoop(2)</title>
+    <link href="http://www.kherrisan.cn/2019/01/05/netty-nioeventloop2/"/>
+    <id>http://www.kherrisan.cn/2019/01/05/netty-nioeventloop2/</id>
+    <published>2019-01-05T02:36:54.000Z</published>
+    <updated>2020-04-13T14:17:36.093Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Loop过程&quot;&gt;&lt;a href=&quot;#Loop过程&quot; class=&quot;headerlink&quot; title=&quot;Loop过程&quot;&gt;&lt;/a&gt;Loop过程&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NioEventLoop&lt;/code&gt;最核心的就是处理事件循环的&lt;code&gt;run&lt;/code&gt;方法。这个方法看起来不长，但实际上它承担了最重要的逻辑，并且对很多细节问题做了处理。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/categories/Netty/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/tags/Netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Netty——NioEventLoop(1)</title>
+    <link href="http://www.kherrisan.cn/2018/12/24/netty-nioeventloop/"/>
+    <id>http://www.kherrisan.cn/2018/12/24/netty-nioeventloop/</id>
+    <published>2018-12-24T12:41:23.000Z</published>
+    <updated>2020-04-13T14:17:36.092Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为Netty中最核心的概念之一，&lt;code&gt;NioEventLoop&lt;/code&gt;作为线程实体承载Netty中几乎所有代码的运行、所有事件的检测和触发。&lt;code&gt;EventLoop&lt;/code&gt;这个单词并不陌生。在很多的图形用户界面（GUI）程序中，都会使用较少的数个线程来运行代码，以应对用户操作事件。 由于Netty的线程模型基于Java的&lt;strong&gt;NIO&lt;/strong&gt;，而NIO又是通过&lt;strong&gt;IO多路复用&lt;/strong&gt;实现的。IO多路复用是底层技术，在其之上则是负责管理多路IO的线程模型。Reactor模式就是一种经典的多线程IO设计模型。 &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/categories/Netty/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/tags/Netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>K2-PandoraBox-IPV6（教育网）配置过程</title>
+    <link href="http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/"/>
+    <id>http://www.kherrisan.cn/2018/11/25/k2-pandorabox-ipv6/</id>
+    <published>2018-11-25T10:06:38.000Z</published>
+    <updated>2020-04-13T14:17:36.079Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;坐标：东南大学九龙湖校区梅园4C某宿舍&lt;/strong&gt; 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="未分类" scheme="http://www.kherrisan.cn/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Netty——下载、编译、调试源码</title>
+    <link href="http://www.kherrisan.cn/2018/11/15/netty/"/>
+    <id>http://www.kherrisan.cn/2018/11/15/netty/</id>
+    <published>2018-11-15T12:39:40.000Z</published>
+    <updated>2020-04-13T14:17:36.097Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Intellij，启动！&quot;&gt;&lt;a href=&quot;#Intellij，启动！&quot; class=&quot;headerlink&quot; title=&quot;Intellij，启动！&quot;&gt;&lt;/a&gt;Intellij，启动！&lt;/h1&gt;&lt;h2 id=&quot;参考资料：&quot;&gt;&lt;a href=&quot;#参考资料：&quot; class=&quot;headerlink&quot; title=&quot;参考资料：&quot;&gt;&lt;/a&gt;参考资料：&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/9160684f134b&quot;&gt;Netty分享之动态生成重复性的代码&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/categories/Netty/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/tags/Netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Netty——Bootstrap</title>
+    <link href="http://www.kherrisan.cn/2018/11/14/netty-bootstrap/"/>
+    <id>http://www.kherrisan.cn/2018/11/14/netty-bootstrap/</id>
+    <published>2018-11-14T12:24:36.000Z</published>
+    <updated>2020-04-13T14:17:36.090Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以netty-example中的Echo（Server）为例，分析Netty源码的结构与运行过程。 跳过SSL相关的部分。从下面这一行代码开始：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ChannelFuture f = b.bind(PORT).sync();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/categories/Netty/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="Netty" scheme="http://www.kherrisan.cn/tags/Netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JUC——ConcurrentHashMap</title>
+    <link href="http://www.kherrisan.cn/2018/10/14/juc-concurrenthashmap/"/>
+    <id>http://www.kherrisan.cn/2018/10/14/juc-concurrenthashmap/</id>
+    <published>2018-10-14T09:14:51.000Z</published>
+    <updated>2020-04-13T14:17:36.077Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/dbdcdc86ee06761292636a46d6fc8878.png&quot; alt&gt; 1.7中的ConcurrentHashMap使用分段锁来解决并发线程之间的同步竞争问题，本文总结1.8中的实现。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JUC" scheme="http://www.kherrisan.cn/categories/JUC/"/>
+    
+    
+      <category term="java" scheme="http://www.kherrisan.cn/tags/java/"/>
+    
+      <category term="并发" scheme="http://www.kherrisan.cn/tags/%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
+  
+</feed>
