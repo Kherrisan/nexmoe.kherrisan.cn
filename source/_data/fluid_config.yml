@@ -100,7 +100,7 @@ version:  # 主题版本相关
 # Header
 #---------------------------
 navbar:
-  blog_title: Fluid # 导航栏左侧的标题，为空则按 hexo config.title 显示
+  blog_title: Kherrisan # 导航栏左侧的标题，为空则按 hexo config.title 显示
   menu:  # 可自行增减，key 用来关联 languages/*.yml，如不存在关联则显示 key 本身的值；icon 是 css class，可以省略；增加 name 可以强制显示指定名称
     - { key: 'home', link: '/', icon: 'iconfont icon-home-fill' }
     - { key: 'archive', link: '/archives/', icon: 'iconfont icon-archive-fill' }
@@ -149,7 +149,8 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 # Index Page
 #---------------------------
 index:
-  banner_img:  https://oss.kherrisan.cn/7DD76037-6579-46D3-81C4-F3DD8E4D134A_1_105_c.jpeg  # 首页 Banner 头图，以下相同
+  banner_img: /img/default.png
+  # 首页 Banner 头图，以下相同
   banner_img_height: 100  # 头图高度，屏幕百分比，available: 0 - 100
   banner_mask_alpha: 0.3  # 头图黑色蒙版的透明度，available: 0 - 1.0， 0 是完全透明（无蒙版），1 是完全不透明
   post_default_img: '' # 默认的文章封面图，当没有指定 index_img 时会使用该图片，若都为空则不显示任何图片
@@ -308,7 +309,7 @@ category:
   banner_img: /img/default.png
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
-  subtitle: 就这么几个类别，别着急，慢慢找。(￣▽￣)"" # 打字机内容
+  subtitle: "就这么几个类别，别着急，慢慢找。(￣▽￣)" # 打字机内容
 
 #---------------------------
 # 标签归档页
@@ -316,7 +317,7 @@ category:
 #---------------------------
 tag:
   banner_img: /img/default.png
-  banner_img_height: 80  # available: 0 - 100
+  banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 🏷 是人类进步的阶梯:-) # 打字机内容
   tagcloud: # 标签云
@@ -335,14 +336,16 @@ about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.co
   banner_img: /img/default.png
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
-  subtitle: 害怕，你竟然在看这个页面。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
-  avatar: /img/avatar.png # 头像
+  subtitle: 害怕，你竟然到了这里。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
+  avatar: https://oss.kherrisan.cn/logo.jpg # 头像
   name: kherrisan
-  introduce: info / info / info # 支持 HTML
+  introduce: 金银妖瞳 / 疾风之狼  # 支持 HTML
   icons: # 更多图标可从 https://github.com/fluid-dev/static/blob/master/hexo-theme-fluid/iconfont.png 查找，class 代表图标的 css class
-    - { class: 'iconfont icon-github-fill', link: 'https://github.com' }
-    - { class: 'iconfont icon-douban-fill', link: 'https://douban.com' }
-    - { class: 'iconfont icon-wechat-fill', qrcode: '/img/favicon.png' }  # 添加 qrcode 后，点击不再跳转，而是悬浮二维码，需要指定 image
+    - { class: 'iconfont icon-github-fill', link: 'https://github.com/Kherrisan' }
+    - { class: 'iconfont icon-wechat-fill', qrcode: ' https://oss.kherrisan.cn/BF51DC42-AC16-4026-8C2A-C26F3E2B4EAE.jpeg' }
+    - { class: 'iconfont icon-weibo-fill', link: 'https://weibo.com/u/5593419409/home' }
+    - { class: 'iconfont icon-telegram-fill', link: 'https://t.me/kherrisan' }
+    - { class: 'iconfont icon-twitter-fill', link: 'https://twitter.com/Kherrisan' }  # 添加 qrcode 后，点击不再跳转，而是悬浮二维码，需要指定 image
 
 
 #---------------------------
