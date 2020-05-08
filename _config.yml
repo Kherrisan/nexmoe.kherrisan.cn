@@ -4,7 +4,7 @@
 
 # Site
 title: Kherrisan
-subtitle: ' 科瑞杉'
+subtitle: '科瑞杉'
 description: '正在从科瑞杉的折越节点向艾尔地表投放部队'
 keywords:
 author: Kherrisan
@@ -15,7 +15,7 @@ timezone: ''
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://www.kherrisan.cn
 root: /
-permalink: :year/:month/:day/:title/
+permalink: posts/:abbrlink/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -45,9 +45,9 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
-  line_number: true
-  auto_detect: true
+  enable: false
+  line_number: false
+  auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: icarus
+theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -101,14 +101,22 @@ deploy:
   type: ''
 
 feed:
-  type: atom
-  path: atom.xml
-  limit: 20
+  type: rss2
+  path: rss2.xml
+  limit: false
   hub:
-  content: true
-  content_limit: 140
-  content_limit_delim: ' '
-  order_by: -date
-  icon: icon.png
-  autodiscovery: true
-  template:
+
+node_sass:
+  outputStyle: nested
+  precision: 5
+  sourceComments: false
+
+# abbrlink config
+abbrlink:
+  alg: crc32  #support crc16(default) and crc32
+  rep: hex    #support dec(default) and hex
+
+all_minifier: false
+
+js_concator:
+  enable: false
