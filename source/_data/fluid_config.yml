@@ -91,7 +91,7 @@ aplayer:  # 音乐播放器，注意不能与 hexo-tag-aplayer 插件共用
   order: 'random'  # 播放顺序，可选值: 'list', 'random'
   theme: '#b7daff'  # 主题色
   songs:  # 歌曲列表，必须传入下列各参数，其中 url 与 cover 在本地需存于 source 目录，更多参数见文档：https://aplayer.js.org/#/zh-Hans/?id=%E5%8F%82%E6%95%B0
-    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: 'https://oss.kherrisan.cn/20200509132030.png' }
+    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: ' https://oss.kherrisan.cn/20200509135933.jpg' }
 
 version:  # 主题版本相关
   check: true  # 每次生成页面后，检测主题是否为最新版本
@@ -152,7 +152,7 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 # Index Page
 #---------------------------
 index:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   # 首页 Banner 头图，以下相同
   banner_img_height: 100  # 头图高度，屏幕百分比，available: 0 - 100
   banner_mask_alpha: 0.3  # 头图黑色蒙版的透明度，available: 0 - 1.0， 0 是完全透明（无蒙版），1 是完全不透明
@@ -171,7 +171,7 @@ index:
 # 通过 hexo new page 命令创建的页面
 # Custom Page
 page:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
 
@@ -180,7 +180,7 @@ page:
 # Post Page
 #---------------------------
 post:  # 部分配置同时控制自定义页面，注意备注
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 70  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   meta:  # 文章标题下方的信息
@@ -299,7 +299,7 @@ livere:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 要经得住历史的检验 # 打字机内容
@@ -309,7 +309,7 @@ archive:
 # Categories Page
 #---------------------------
 category:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: "就这么几个类别，别着急，慢慢找。(￣▽￣)" # 打字机内容
@@ -319,7 +319,7 @@ category:
 # Tags Page
 #---------------------------
 tag:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 🏷 是人类进步的阶梯:-) # 打字机内容
@@ -336,7 +336,7 @@ tag:
 # About Page
 #---------------------------
 about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E9%A1%B5
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 害怕，你竟然到了这里。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
@@ -356,7 +356,7 @@ about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.co
 # 404 Page
 #---------------------------
 page404:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 85  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: '404 荒野求生 d(･｀ω´･d*)'  # 打字机内容
@@ -367,7 +367,7 @@ page404:
 # Links Page
 #---------------------------
 links:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
