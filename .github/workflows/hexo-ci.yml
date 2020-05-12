@@ -57,4 +57,4 @@ jobs:
         # Source directory
         SOURCE: docs
         # Target directory
-        TARGET: /vaw/www/html
+        TARGET: /var/www/html
