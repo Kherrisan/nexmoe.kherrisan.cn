@@ -9,7 +9,11 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>正在从科瑞杉的折越节点向艾尔地表投放部队</description>
+<<<<<<< HEAD
     <pubDate>Mon, 11 May 2020 14:17:52 GMT</pubDate>
+=======
+    <pubDate>Tue, 12 May 2020 08:26:56 GMT</pubDate>
+>>>>>>> af5b8de7157d272205e53679cfc98b649e7c7d07
     <generator>http://hexo.io/</generator>
     
     <item>

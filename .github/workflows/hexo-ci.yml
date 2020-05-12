@@ -45,3 +45,16 @@ jobs:
       with:
         # Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}
         github_token: ${{ secrets.CI_TOKEN }}
+    - name: ssh deploy
+      uses: easingthemes/ssh-deploy@v2.1.2
+      with:
+        # Private Key
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        # Remote host
+        REMOTE_HOST: hw.kherrisan.cn
+        # Remote user
+        REMOTE_USER: root
+        # Source directory
+        SOURCE: docs
+        # Target directory
+        TARGET: /vaw/www/html
