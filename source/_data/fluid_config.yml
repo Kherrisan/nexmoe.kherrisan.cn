@@ -110,7 +110,7 @@ navbar:
     - { key: '项目', link: '/posts/a2c247c4/', icon: 'iconfont iconserver1' }
     - { key: 'links', link: '/links/', icon: 'iconfont icon-link-fill' }
     - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
-    - { key: '留言板', link: '/posts/fcad8979', icon: 'iconfont icon-user-fill' }
+    - { key: '留言板', link: '/posts/fcad8979/', icon: 'iconfont icon-user-fill' }
     #- { key: 'links', link: '/links/', icon: 'iconfont icon-link-fill' }  # 友链页，把前面#去掉即可展示
 
 search: # 搜索栏，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件。
@@ -153,7 +153,7 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 # Index Page
 #---------------------------
 index:
-  banner_img: https://oss.kherrisan.cn/20200511221522.jpg/webp
+  banner_img: /images/20200511221522.jpg
   # 首页 Banner 头图，以下相同
   banner_img_height: 100  # 头图高度，屏幕百分比，available: 0 - 100
   banner_mask_alpha: 0.3  # 头图黑色蒙版的透明度，available: 0 - 1.0， 0 是完全透明（无蒙版），1 是完全不透明
@@ -300,7 +300,7 @@ livere:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: https://oss.kherrisan.cn/20200511221520.jpeg
+  banner_img: /images/20200511221520.jpeg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 要经得住历史的检验 # 打字机内容
@@ -310,7 +310,7 @@ archive:
 # Categories Page
 #---------------------------
 category:
-  banner_img: https://oss.kherrisan.cn/20200511221525.jpg/webp
+  banner_img: /images/20200511221525.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: "就这么几个类别，别着急，慢慢找。(￣▽￣)" # 打字机内容
@@ -320,7 +320,7 @@ category:
 # Tags Page
 #---------------------------
 tag:
-  banner_img: https://oss.kherrisan.cn/20200511221527.jpg/webp
+  banner_img: /images/20200511221527.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 🏷 是人类进步的阶梯:-) # 打字机内容
@@ -337,7 +337,7 @@ tag:
 # About Page
 #---------------------------
 about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E9%A1%B5
-  banner_img: https://oss.kherrisan.cn/20200511221521.jpg/webp
+  banner_img: /images/20200511221521.jpg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 害怕，你竟然到了这里。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
@@ -368,7 +368,7 @@ page404:
 # Links Page
 #---------------------------
 links:
-  banner_img: https://oss.kherrisan.cn/20200511221526.jpeg
+  banner_img: /images/20200511221526.jpeg
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
