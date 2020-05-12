@@ -11,7 +11,7 @@
 # 全局
 # Site
 #---------------------------
-favicon: https://oss.kherrisan.cn/logo.jpg # 网站标签页的 icon
+favicon: https://oss.kherrisan.cn/logo.jpg/webp # 网站标签页的 icon
 
 apple_touch_icon: /img/apple-touch-icon.png # 用于苹果设备的 icon
 
@@ -91,7 +91,7 @@ aplayer:  # 音乐播放器，注意不能与 hexo-tag-aplayer 插件共用
   order: 'random'  # 播放顺序，可选值: 'list', 'random'
   theme: '#b7daff'  # 主题色
   songs:  # 歌曲列表，必须传入下列各参数，其中 url 与 cover 在本地需存于 source 目录，更多参数见文档：https://aplayer.js.org/#/zh-Hans/?id=%E5%8F%82%E6%95%B0
-    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: ' https://oss.kherrisan.cn/20200509135933.jpg' }
+    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: ' https://oss.kherrisan.cn/20200509135933.jpg/webp' }
 
 version:  # 主题版本相关
   check: true  # 每次生成页面后，检测主题是否为最新版本
@@ -153,7 +153,7 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 # Index Page
 #---------------------------
 index:
-  banner_img: https://oss.kherrisan.cn/20200511221522.jpg
+  banner_img: https://oss.kherrisan.cn/20200511221522.jpg/webp
   # 首页 Banner 头图，以下相同
   banner_img_height: 100  # 头图高度，屏幕百分比，available: 0 - 100
   banner_mask_alpha: 0.3  # 头图黑色蒙版的透明度，available: 0 - 1.0， 0 是完全透明（无蒙版），1 是完全不透明
@@ -310,7 +310,7 @@ archive:
 # Categories Page
 #---------------------------
 category:
-  banner_img: https://oss.kherrisan.cn/20200511221525.jpg
+  banner_img: https://oss.kherrisan.cn/20200511221525.jpg/webp
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: "就这么几个类别，别着急，慢慢找。(￣▽￣)" # 打字机内容
@@ -320,7 +320,7 @@ category:
 # Tags Page
 #---------------------------
 tag:
-  banner_img: https://oss.kherrisan.cn/20200511221527.jpg
+  banner_img: https://oss.kherrisan.cn/20200511221527.jpg/webp
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 🏷 是人类进步的阶梯:-) # 打字机内容
@@ -337,11 +337,11 @@ tag:
 # About Page
 #---------------------------
 about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E9%A1%B5
-  banner_img: https://oss.kherrisan.cn/20200511221521.jpg
+  banner_img: https://oss.kherrisan.cn/20200511221521.jpg/webp
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 害怕，你竟然到了这里。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
-  avatar: https://oss.kherrisan.cn/logo.jpg # 头像
+  avatar: https://oss.kherrisan.cn/logo.jpg/webp # 头像
   name: kherrisan
   introduce: 金银妖瞳 / 疾风之狼  # 支持 HTML
   icons: # 更多图标可从 https://github.com/fluid-dev/static/blob/master/hexo-theme-fluid/iconfont.png 查找，class 代表图标的 css class
