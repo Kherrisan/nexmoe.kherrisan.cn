@@ -47,7 +47,7 @@ jobs:
         github_token: ${{ secrets.CI_TOKEN }}
     - name: ssh deploy
       uses: easingthemes/ssh-deploy@v2.1.2
-      with:
+      env:
         # Private Key
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         # Remote host
@@ -57,4 +57,4 @@ jobs:
         # Source directory
         SOURCE: docs
         # Target directory
-        TARGET: /vaw/www/html
+        TARGET: /var/www/html
