@@ -21,7 +21,7 @@
     <link href="/posts/a2c247c4/"/>
     <url>/posts/a2c247c4/</url>
     
-    <content type="html"><![CDATA[<h1 id="Leetcode-陈列室"><a href="#Leetcode-陈列室" class="headerlink" title="Leetcode 陈列室"></a>Leetcode 陈列室</h1><p><img src="https://oss.kherrisan.cn/20200509202553.png" srcset="/img/loading.gif" alt></p><center class="third">    <img src="https://img.shields.io/github/workflow/status/Kherrisan/leetcode-viewer/Daily%20CI?label=Daily%20CI&style=for-the-badge" srcset="/img/loading.gif">    <img src="https://raw.githubusercontent.com/Kherrisan/leetcode-viewer/master/cloc.svg" srcset="/img/loading.gif">    <img src="https://img.shields.io/badge/Lang-Vue.JS-%234FC08D?style=for-the-badge&logo=vue.js" srcset="/img/loading.gif"></center><p>在 Github 上一个项目上改了改，能用。</p><p><a href="https://leetcode.kherrisan.cn" target="_blank" rel="noopener">点此访问</a></p><p><a href="https://github.com/Kherrisan/leetcode-viewer" target="_blank" rel="noopener">代码仓库</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Leetcode-陈列室"><a href="#Leetcode-陈列室" class="headerlink" title="Leetcode 陈列室"></a>Leetcode 陈列室</h1><p><img src="/images/20200509202553.png" srcset="/img/loading.gif" alt></p><center class="third">    <img src="https://img.shields.io/github/workflow/status/Kherrisan/leetcode-viewer/Daily%20CI?label=Daily%20CI&style=for-the-badge" srcset="/img/loading.gif">    <img src="https://raw.githubusercontent.com/Kherrisan/leetcode-viewer/master/cloc.svg" srcset="/img/loading.gif">    <img src="https://img.shields.io/badge/Lang-Vue.JS-%234FC08D?style=for-the-badge&logo=vue.js" srcset="/img/loading.gif"></center><p>在 Github 上一个项目上改了改，能用。</p><p><a href="https://leetcode.kherrisan.cn" target="_blank" rel="noopener">点此访问</a></p><p><a href="https://github.com/Kherrisan/leetcode-viewer" target="_blank" rel="noopener">代码仓库</a></p>]]></content>
     
     
     
@@ -84,7 +84,7 @@
     <link href="/posts/25678d68/"/>
     <url>/posts/25678d68/</url>
     
-    <content type="html"><![CDATA[<h1 id="我理想的文档管理模式"><a href="#我理想的文档管理模式" class="headerlink" title="我理想的文档管理模式"></a>我理想的文档管理模式</h1><h2 id="印象笔记"><a href="#印象笔记" class="headerlink" title="印象笔记"></a>印象笔记</h2><p><img src="https://oss.kherrisan.cn/20200422220756.png" srcset="/img/loading.gif" alt></p><p>在我把电脑换成了 Macbook Pro 之后，我开始尝试用<a href>印象笔记</a>来进行文档管理。现在，我的印象笔记不仅用来存放我平时的所有正式和非正式的书写，包括零碎的草稿和阅读笔记，还承载了<strong>稍后阅读、文件归档（证书、发票、说明书）</strong>这两大功能。</p><ol><li>通过 <strong>ios 的分享、MacOS Safari 的剪藏插件</strong>，可以将网页（准确地说是 URL）的内容存放在印象笔记中，虽说有时剪藏得到的网页内容并不完整，但也算可用。</li><li>得益于印象笔记优秀的<strong>中文全文搜索功能</strong>，那些需要长期保存的文件也被我放在了印象笔记中，方便随手检索。而 Alfred 的<a href>印象笔记 Workflow</a>，更是让文档的检索更加快捷方便。</li></ol><p>但是我也发现了一些问题，例如</p><ol><li>印象笔记的文档和 MacOS 的本地文件（先不论是不是 iCloud）的管辖范围在某些程度上会产生重合。</li><li>印象笔记虽然在笔记领域还是比较成熟的，但是 MacOS 端的客户端体验并不完美，有一些很气的小问题：<ol><li>在某个笔记包含较多的图片时，上下滑动不平滑，一卡一卡。</li><li>对 Markdown 格式支持不完整。</li></ol></li><li>要钱（虽说穷是我的问题）。</li></ol><h2 id="Devonthink"><a href="#Devonthink" class="headerlink" title="Devonthink"></a>Devonthink</h2><p><img src="https://oss.kherrisan.cn/20200422220915.png" srcset="/img/loading.gif" alt></p><p>在少数派的文章中了解到了 <a href>Devonthink</a> 这款软件。Devonthink 是个非常专业的文档管理工具，他本身的存储从文件系统的角度看是和 MacOS 的图库一样的，有一个专门的数据库文件，需要把文件加入到 Devonthink 数据库里进行整理，但 Devonthink 支持引用而不拷贝文件，这样就不会出现两个副本的问题。Devonthink 不仅是从文件的归类整理、检索来说都是非常专业的，唯一的问题在于这个软件<strong>太贵了</strong>！！！</p><h2 id="Onedrive-amp-amp-VSCode"><a href="#Onedrive-amp-amp-VSCode" class="headerlink" title="Onedrive && VSCode"></a>Onedrive && VSCode</h2><p>我最近挖掘了一种新的文档管理模式。</p><ul><li>使用 Onedrive 进行多设备同步。Onedrive 的云同步和版本管理还是很可靠的。</li><li>使用 VScode 进行 Markdown 的写作。</li></ul><p>在 iPhone 和 iPad 上都有 Onedrive 的客户端，可以直接搜索、阅读 pdf、word 等格式文件，唯一美中不足的是 iPad 上的 Onedrive 在打开 Markdown 文件时会出现乱码，导致该文件上的全文搜索索引失效，因此搜素 Markdown 文件中的内容算是废了。</p><p>Onedrive 对于 Office 套件的文件格式的搜索倒是支持地很不错。</p><h2 id="理想的文件管理"><a href="#理想的文件管理" class="headerlink" title="理想的文件管理"></a>理想的文件管理</h2><p>我理想的文件管理模式有以下的特征：</p><ol><li>有快捷的全文检索，尤其是要对中文有良好的支持。对于扫描版的 PDF 要能够进行 OCR 扫描后进行检索，对于可编辑的 PDF 也要能够进行检索。</li><li>多终端同步，最好能够跨平台，因为未来我还是有可能用到 Windows 生态的。如果不能跨平台的话最好有 WEB 端。</li><li>优秀的 Markdown 撰写体验，对于其他的文档格式（word、excel、pdf）要能够支持阅读。</li></ol><p>目前还未找到完全符合我要求的文档管理软件，目测需要我自己开发。等我有空了就自己去写一个~</p><h2 id="如果需要我来开发这个软件的话"><a href="#如果需要我来开发这个软件的话" class="headerlink" title="如果需要我来开发这个软件的话"></a>如果需要我来开发这个软件的话</h2><p>APP 的形式和大多数的笔记 APP 类似。</p><ol><li>多格式阅读。</li><li>Markdown 格式写作。</li><li>借助于 Onedrive（或者 Dropbox、iCloud）的的跨平台同步。</li><li>全文检索。</li><li>其他高级的文档组织功能，例如标签、关联等。</li></ol>]]></content>
+    <content type="html"><![CDATA[<h1 id="我理想的文档管理模式"><a href="#我理想的文档管理模式" class="headerlink" title="我理想的文档管理模式"></a>我理想的文档管理模式</h1><h2 id="印象笔记"><a href="#印象笔记" class="headerlink" title="印象笔记"></a>印象笔记</h2><p><img src="/images/20200422220756.png" srcset="/img/loading.gif" alt></p><p>在我把电脑换成了 Macbook Pro 之后，我开始尝试用<a href>印象笔记</a>来进行文档管理。现在，我的印象笔记不仅用来存放我平时的所有正式和非正式的书写，包括零碎的草稿和阅读笔记，还承载了<strong>稍后阅读、文件归档（证书、发票、说明书）</strong>这两大功能。</p><ol><li>通过 <strong>ios 的分享、MacOS Safari 的剪藏插件</strong>，可以将网页（准确地说是 URL）的内容存放在印象笔记中，虽说有时剪藏得到的网页内容并不完整，但也算可用。</li><li>得益于印象笔记优秀的<strong>中文全文搜索功能</strong>，那些需要长期保存的文件也被我放在了印象笔记中，方便随手检索。而 Alfred 的<a href>印象笔记 Workflow</a>，更是让文档的检索更加快捷方便。</li></ol><p>但是我也发现了一些问题，例如</p><ol><li>印象笔记的文档和 MacOS 的本地文件（先不论是不是 iCloud）的管辖范围在某些程度上会产生重合。</li><li>印象笔记虽然在笔记领域还是比较成熟的，但是 MacOS 端的客户端体验并不完美，有一些很气的小问题：<ol><li>在某个笔记包含较多的图片时，上下滑动不平滑，一卡一卡。</li><li>对 Markdown 格式支持不完整。</li></ol></li><li>要钱（虽说穷是我的问题）。</li></ol><h2 id="Devonthink"><a href="#Devonthink" class="headerlink" title="Devonthink"></a>Devonthink</h2><p><img src="/images/20200422220915.png" srcset="/img/loading.gif" alt></p><p>在少数派的文章中了解到了 <a href>Devonthink</a> 这款软件。Devonthink 是个非常专业的文档管理工具，他本身的存储从文件系统的角度看是和 MacOS 的图库一样的，有一个专门的数据库文件，需要把文件加入到 Devonthink 数据库里进行整理，但 Devonthink 支持引用而不拷贝文件，这样就不会出现两个副本的问题。Devonthink 不仅是从文件的归类整理、检索来说都是非常专业的，唯一的问题在于这个软件<strong>太贵了</strong>！！！</p><h2 id="Onedrive-amp-amp-VSCode"><a href="#Onedrive-amp-amp-VSCode" class="headerlink" title="Onedrive && VSCode"></a>Onedrive && VSCode</h2><p>我最近挖掘了一种新的文档管理模式。</p><ul><li>使用 Onedrive 进行多设备同步。Onedrive 的云同步和版本管理还是很可靠的。</li><li>使用 VScode 进行 Markdown 的写作。</li></ul><p>在 iPhone 和 iPad 上都有 Onedrive 的客户端，可以直接搜索、阅读 pdf、word 等格式文件，唯一美中不足的是 iPad 上的 Onedrive 在打开 Markdown 文件时会出现乱码，导致该文件上的全文搜索索引失效，因此搜素 Markdown 文件中的内容算是废了。</p><p>Onedrive 对于 Office 套件的文件格式的搜索倒是支持地很不错。</p><h2 id="理想的文件管理"><a href="#理想的文件管理" class="headerlink" title="理想的文件管理"></a>理想的文件管理</h2><p>我理想的文件管理模式有以下的特征：</p><ol><li>有快捷的全文检索，尤其是要对中文有良好的支持。对于扫描版的 PDF 要能够进行 OCR 扫描后进行检索，对于可编辑的 PDF 也要能够进行检索。</li><li>多终端同步，最好能够跨平台，因为未来我还是有可能用到 Windows 生态的。如果不能跨平台的话最好有 WEB 端。</li><li>优秀的 Markdown 撰写体验，对于其他的文档格式（word、excel、pdf）要能够支持阅读。</li></ol><p>目前还未找到完全符合我要求的文档管理软件，目测需要我自己开发。等我有空了就自己去写一个~</p><h2 id="如果需要我来开发这个软件的话"><a href="#如果需要我来开发这个软件的话" class="headerlink" title="如果需要我来开发这个软件的话"></a>如果需要我来开发这个软件的话</h2><p>APP 的形式和大多数的笔记 APP 类似。</p><ol><li>多格式阅读。</li><li>Markdown 格式写作。</li><li>借助于 Onedrive（或者 Dropbox、iCloud）的的跨平台同步。</li><li>全文检索。</li><li>其他高级的文档组织功能，例如标签、关联等。</li></ol>]]></content>
     
     
     
@@ -818,9 +818,9 @@
     
     <tags>
       
-      <tag>HTTP</tag>
-      
       <tag>网络</tag>
+      
+      <tag>HTTP</tag>
       
     </tags>
     
@@ -1450,9 +1450,9 @@
     
     <tags>
       
-      <tag>网络</tag>
-      
       <tag>TCP/IP</tag>
+      
+      <tag>网络</tag>
       
     </tags>
     
@@ -1496,9 +1496,9 @@
     
     <tags>
       
-      <tag>网络</tag>
-      
       <tag>TCP/IP</tag>
+      
+      <tag>网络</tag>
       
     </tags>
     
@@ -1627,9 +1627,9 @@
     
     <tags>
       
-      <tag>网络</tag>
-      
       <tag>TCP/IP</tag>
+      
+      <tag>网络</tag>
       
     </tags>
     
@@ -1654,9 +1654,9 @@
     
     <tags>
       
-      <tag>网络</tag>
-      
       <tag>TCP/IP</tag>
+      
+      <tag>网络</tag>
       
     </tags>
     
@@ -1735,9 +1735,9 @@
     
     <tags>
       
-      <tag>网络</tag>
-      
       <tag>TCP/IP</tag>
+      
+      <tag>网络</tag>
       
     </tags>
     
