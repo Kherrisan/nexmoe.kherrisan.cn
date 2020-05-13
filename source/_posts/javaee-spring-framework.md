@@ -13,7 +13,7 @@ abbrlink: 2591264a
 date: 2018-05-07 18:49:19
 ---
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-06_10-45-57.png) SpringFramework由十多个模块组成，其中最最核心的模块有：
+![](https://oss.kherrisan.cn/Snipaste_2018-08-06_10-45-57.png) SpringFramework由十多个模块组成，其中最最核心的模块有：
 
 1.  Beans：包括BeanFactory，负责生成Java Bean
 2.  Core：负责DI和AOP，重中之重。

@@ -12,7 +12,7 @@ abbrlink: c1bdaf6f
 date: 2018-02-11 14:08:44
 ---
 
-ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_12-06-22.jpg) 光看这个类的原型好像还挺简单的。
+ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-11_12-06-22.jpg) 光看这个类的原型好像还挺简单的。
 
 属性
 
@@ -42,7 +42,7 @@ ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一�
 
 ### set
 
-光看CopyOnWriteArrayList的实现，好像也就比ArrayList多了一个获取锁和释放锁的步骤。 下图是CopyOnWriteArrayList的set。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_13-15-44.jpg) 区别： 0\. 先获得锁，在finally中释放锁。 1. CopyOnWriteArrayList没有对index做检查，可能会出现数组越界。 2. CopyOnWriteArrayList是先拷贝了一个副本，然后在副本上修改，最后setArray设置对象的属性。这么做的原因可能是因为violetile对于引用类型只能使得引用指向不同的对象时其他线程可见，如果引用的对象的某个属性变了，或者引用的数组的某个元素变了，是不会触发对其他线程中该引用的变化可见的（和final的概念有点类似）。所以为了修改数组元素之后对其他线程变化可见，只能修改引用的数组。 这就是CopyOnWrite的名字的由来吧。 但这样，开发者可能就会担心效率问题了，毕竟每次简单的修改都要对数组拷贝一遍。
+光看CopyOnWriteArrayList的实现，好像也就比ArrayList多了一个获取锁和释放锁的步骤。 下图是CopyOnWriteArrayList的set。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-11_13-15-44.jpg) 区别： 0\. 先获得锁，在finally中释放锁。 1. CopyOnWriteArrayList没有对index做检查，可能会出现数组越界。 2. CopyOnWriteArrayList是先拷贝了一个副本，然后在副本上修改，最后setArray设置对象的属性。这么做的原因可能是因为violetile对于引用类型只能使得引用指向不同的对象时其他线程可见，如果引用的对象的某个属性变了，或者引用的数组的某个元素变了，是不会触发对其他线程中该引用的变化可见的（和final的概念有点类似）。所以为了修改数组元素之后对其他线程变化可见，只能修改引用的数组。 这就是CopyOnWrite的名字的由来吧。 但这样，开发者可能就会担心效率问题了，毕竟每次简单的修改都要对数组拷贝一遍。
 
 ```null
 package collection;
@@ -98,12 +98,12 @@ public class LearnCopyOnWriteArrayList {
 
 ```
 
-运行结果如下： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_13-37-59.jpg) 类似的写操作还有：
+运行结果如下： ![](https://oss.kherrisan.cn/Snipaste_2018-02-11_13-37-59.jpg) 类似的写操作还有：
 
 *   add(index,object)及其他addXXX，虽然也是使用的数组，但是和ArrayList相比，逻辑相当直接，没有采用1.5倍扩容的策略。
 *   remove(index)及其他removeXXX
 
-以remove(index)为例，详细分析一下他的代码： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-11_14-14-10.jpg) 首先得到一个snapshot（其实就是记录一下引用，称不上快照），接着寻找对应需要被删除的那个object的index，再调用下一个remove函数。 下一个remove函数首先加锁，接着判断快照和当前的引用是不是同一个对象，如果不是，说明有其他线程在indexOf的过程中修改了数组，进入findIndex语句块。 findIndex语句块中首先在current中找有没有和要删除的object相同的，并且这个object的位置已经发生了变化的。如果在current中找到了，就删掉他。如果没有找到，下面有三个if。 如果current的长度比index小了，由于current已经被全部遍历过了，没有object，说明object已经在其他线程中被删掉了，那就直接返回。 如果current的长度比index大，index之前的已经全都找过了，没有object，那再看index处是不是object，如果是，就直接删除。 最后再在current中调用indexOf函数找一遍object，删掉它。 这段代码考虑了object在两个版本的数组中位置有没有发生变化，是否因为其他线程的修改导致object消失等因素。 做类似处理的还有addIfAbsent，其实只要让加锁的范围大一些就不需要写这么复杂的代码了，可能还是处于性能的考虑吧。
+以remove(index)为例，详细分析一下他的代码： ![](https://oss.kherrisan.cn/Snipaste_2018-02-11_14-14-10.jpg) 首先得到一个snapshot（其实就是记录一下引用，称不上快照），接着寻找对应需要被删除的那个object的index，再调用下一个remove函数。 下一个remove函数首先加锁，接着判断快照和当前的引用是不是同一个对象，如果不是，说明有其他线程在indexOf的过程中修改了数组，进入findIndex语句块。 findIndex语句块中首先在current中找有没有和要删除的object相同的，并且这个object的位置已经发生了变化的。如果在current中找到了，就删掉他。如果没有找到，下面有三个if。 如果current的长度比index小了，由于current已经被全部遍历过了，没有object，说明object已经在其他线程中被删掉了，那就直接返回。 如果current的长度比index大，index之前的已经全都找过了，没有object，那再看index处是不是object，如果是，就直接删除。 最后再在current中调用indexOf函数找一遍object，删掉它。 这段代码考虑了object在两个版本的数组中位置有没有发生变化，是否因为其他线程的修改导致object消失等因素。 做类似处理的还有addIfAbsent，其实只要让加锁的范围大一些就不需要写这么复杂的代码了，可能还是处于性能的考虑吧。
 
 ### forEach
 

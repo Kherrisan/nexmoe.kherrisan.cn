@@ -25,4 +25,4 @@ Intellij，启动！
 完整过程
 ----
 
-我选择直接通过Intellij来clone Netty在Github上的源码，这样就不需要再另外起一个控制台了。Github地址如下： [https://github.com/netty/netty.git](https://github.com/netty/netty.git) ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/fa1ea85ae614f8195aa96fe0f42e82df.png) 好了，现在就可以运行example中的程序了，直接点Intellij的运行就行。
+我选择直接通过Intellij来clone Netty在Github上的源码，这样就不需要再另外起一个控制台了。Github地址如下： [https://github.com/netty/netty.git](https://github.com/netty/netty.git) ![](https://oss.kherrisan.cn/fa1ea85ae614f8195aa96fe0f42e82df.png) 好了，现在就可以运行example中的程序了，直接点Intellij的运行就行。

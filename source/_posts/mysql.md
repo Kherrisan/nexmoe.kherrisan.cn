@@ -28,7 +28,7 @@ date: 2018-04-30 20:09:58
 内存分配
 ====
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-04-29_16-28-05.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-04-29_16-28-05.jpg)
 
 ```null
 used_Mem =

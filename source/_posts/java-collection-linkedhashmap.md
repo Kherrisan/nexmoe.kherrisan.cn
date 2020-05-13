@@ -12,11 +12,11 @@ abbrlink: c2915911
 date: 2018-02-17 14:31:56
 ---
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-17_12-14-56.jpg) LinkedHashMap和HashMap的区别在于前者在HashMap的基础上还维护了一个贯穿所有节点的双向链表，该链表决定了遍历的顺序，形如一个队列。 当然，这个链表并不会影响HashMap的结构，和HashMap的table或者链表或者红黑树是完全独立的一个结构。该链表的顺序可以是插入元素的顺序也可以是访问元素的顺序，具体选择何种顺序取决于accessOrder属性是true还是false。 在hashmap中预留了几个抽象方法，并在put和get等操作内调用了这些方法，为子类提供了可扩展的点。**我认为这是“模板方法模式”的体现。** 
+![](https://oss.kherrisan.cn/Snipaste_2018-02-17_12-14-56.jpg) LinkedHashMap和HashMap的区别在于前者在HashMap的基础上还维护了一个贯穿所有节点的双向链表，该链表决定了遍历的顺序，形如一个队列。 当然，这个链表并不会影响HashMap的结构，和HashMap的table或者链表或者红黑树是完全独立的一个结构。该链表的顺序可以是插入元素的顺序也可以是访问元素的顺序，具体选择何种顺序取决于accessOrder属性是true还是false。 在hashmap中预留了几个抽象方法，并在put和get等操作内调用了这些方法，为子类提供了可扩展的点。**我认为这是“模板方法模式”的体现。** 
 
 <!-- more -->
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/4d2e73e200c8762093663515560758e2.png) 在HashMap的Node中，就已经提供了next属性，但没有用到。在LinkedHashMap中，每个节点的next属性根据访问或者插入顺序连接下一个节点。
+![](https://oss.kherrisan.cn/4d2e73e200c8762093663515560758e2.png) 在HashMap的Node中，就已经提供了next属性，但没有用到。在LinkedHashMap中，每个节点的next属性根据访问或者插入顺序连接下一个节点。
 
 属性
 --
@@ -28,19 +28,19 @@ date: 2018-02-17 14:31:56
 
 ### afterNodeRemoval
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/6f431e4c3251e60f0ba1376cb918b5d4.png) 在HashMap的removeNode方法中被调用。这个方法在一个节点被删除之后，删除该节点存在的前向和后向链接，并将该节点的前驱的后向链接和后继节点的前向链接重新设置。
+![](https://oss.kherrisan.cn/6f431e4c3251e60f0ba1376cb918b5d4.png) 在HashMap的removeNode方法中被调用。这个方法在一个节点被删除之后，删除该节点存在的前向和后向链接，并将该节点的前驱的后向链接和后继节点的前向链接重新设置。
 
 ### afterNodeInsertion
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/0e70b312ef4a5d30d59b107fbafcaa59.png) 在HashMap的putVal方法中被调用。在插入新的节点之后，根据需求判断是否需要把最老的节点删掉，如果需要，就调用HashMap的removeNode方法。默认的判断结果为false。
+![](https://oss.kherrisan.cn/0e70b312ef4a5d30d59b107fbafcaa59.png) 在HashMap的putVal方法中被调用。在插入新的节点之后，根据需求判断是否需要把最老的节点删掉，如果需要，就调用HashMap的removeNode方法。默认的判断结果为false。
 
 ### aftetNodeAccess
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-17_13-14-41.jpg) 在HashMap的putVal方法中被使用到。在访问某个节点后（比如通过put修改该节点的值），把该节点移动到链表的最后。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-17_13-14-41.jpg) 在HashMap的putVal方法中被使用到。在访问某个节点后（比如通过put修改该节点的值），把该节点移动到链表的最后。
 
 ### transferLinks
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-17_13-34-35.jpg) 拷贝src节点的链接情况到dst节点上。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-17_13-34-35.jpg) 拷贝src节点的链接情况到dst节点上。
 
 ### put
 

@@ -30,7 +30,7 @@ HTTP协议被广泛运用于浏览器访问Web网页的场景中，当然其灵�
 
 如今互联网绝大多数主机使用的是TCP/IP协议，这个协议有5层，分别是：物理层、链路层、网络层、传输层和应用层，所谓的4G、5G、WIFI为物理层技术；链路层常用协议有以太网、X.25、令牌环等（实际上除了以太网之外其他的链路层协议都已经基本上不存在了，只是在计算机网络课上介绍过而已）；网络层协议为IP；传输层协议为TCP或UDP；到了应用层，协议就多种多样了，常用的有FTP、HTTP，任何一个基于Socket编写的应用程序都可以说是实现了一个应用层协议，或者说工作在应用层上。  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_20-37-53.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_20-37-53.jpg)
 
   
  
@@ -54,7 +54,7 @@ HTTP协议属于典型的应用层协议，其工作在应用层之上，屏蔽�
 
 5\. 浏览器逐层拆包，得到响应内容，经过浏览器渲染进而呈现出来。  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_20-57-34.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_20-57-34.jpg)
 
   
  
@@ -71,7 +71,7 @@ HTTP协议属于典型的应用层协议，其工作在应用层之上，屏蔽�
 
 请求和响应统称为HTTP消息，他们的格式其实这么形容：  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-16-03.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_21-16-03.jpg)
 
   
  
@@ -82,7 +82,7 @@ HTTP协议属于典型的应用层协议，其工作在应用层之上，屏蔽�
 
 ### 2.1.1 通用头 GeneralHeader
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-25-03.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_21-25-03.jpg)
 
   
  
@@ -100,7 +100,7 @@ Upgrade：希望升级的协议信息。
 2.2 请求格式
 --------
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-28-36.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_21-28-36.jpg)
 
 ### 2.2.1 请求行
 
@@ -120,7 +120,7 @@ Upgrade：希望升级的协议信息。
 
 除了通用头部之外，请求头还可以使用如下字段：  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-06-30_21-38-17.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-06-30_21-38-17.jpg)
 
   
  
@@ -139,7 +139,7 @@ User-Agent：标识了浏览器相关信息。服务器可以通过该字段来�
 
 ### 2.2.3 实体头 EntityHeader
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_13-45-00.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-07-31_13-45-00.jpg)
 
   
  
@@ -152,7 +152,7 @@ Content-Length：数据实体的大小，用十进制整数表示。注意这个
 
 Content-Type：数据实体的媒体类型，格式为 Type/SubType，如 text/html。  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_13-53-09.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-07-31_13-53-09.jpg)
 
   
  
@@ -170,11 +170,11 @@ Last-Modified：该资源上次被修改的时间，类似于文件属性的修�
 
 响应格式其实和请求格式大同小异。  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_14-10-34.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-07-31_14-10-34.jpg)
 
 ### 2.3.1 状态行
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_22-24-20.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-07-31_22-24-20.jpg)
 
   
  
@@ -183,7 +183,7 @@ Last-Modified：该资源上次被修改的时间，类似于文件属性的修�
 
 其中最重要的就是状态码。  
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-07-31_22-26-26-1.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-07-31_22-26-26-1.jpg)
 
   
  
@@ -197,7 +197,7 @@ RFC认为应用程序不必完全理解每一个状态码，但是必须能够�
 3 字段重新整理
 ========
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/HTTP头部字段.png)
+![](https://oss.kherrisan.cn/HTTP头部字段.png)
 
 X 常见问题
 ------

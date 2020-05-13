@@ -32,7 +32,7 @@ JVM可以输出GC日志供开发者分析GC过程。 -XX:+PrintGC 输出GC日志
 可达性分析（Reachability Analysis）
 ============================
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-06_11-14-44.jpg) 从一些被视为GC Root对象开始，从这些节点开始向下搜索，搜索经过的路径被称作引用链，如果一个对象到GC Roots没有任何引用链相连（不可达），就说明这个对象是个垃圾。 GC Roots包含以下几种对象：
+![](https://oss.kherrisan.cn/Snipaste_2018-05-06_11-14-44.jpg) 从一些被视为GC Root对象开始，从这些节点开始向下搜索，搜索经过的路径被称作引用链，如果一个对象到GC Roots没有任何引用链相连（不可达），就说明这个对象是个垃圾。 GC Roots包含以下几种对象：
 
 1.  虚拟机栈中：引用对象（本地变量表）
 2.  方法区中：类静态属性引用的对象
@@ -82,7 +82,7 @@ JVM可以输出GC日志供开发者分析GC过程。 -XX:+PrintGC 输出GC日志
 复制（Copying）
 -----------
 
-将内存分为两块，每次只使用其中的一块。当被使用的块发生了GC之后，将其中剩余的对象复制到另一个块中，同时紧密排列存活的对象。 这样做的优点是对内存的空间管理（已用部分和剩余部分）非常简单易操作。缺点是牺牲了一半的内存空间的可用性。 实际应用中，新生代都是使用这种方法进行垃圾收集的。而且有聪明的人发现，新生代中，98%的对象的生命周期非常的短暂。因此可以采取如下做法： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-06_13-27-10.jpg) 如上图所示，新生代被分成三个部分，一个较大的区域名为Eden，另两个较小的且大小相等的区域名为Survivor。每次使用Eden和其中一块Survivor，当发生GC后，将Eden和Survivor中的存活对象复制到另一个Survivor中，最后清理掉Eden和Survivor中用过的空间。
+将内存分为两块，每次只使用其中的一块。当被使用的块发生了GC之后，将其中剩余的对象复制到另一个块中，同时紧密排列存活的对象。 这样做的优点是对内存的空间管理（已用部分和剩余部分）非常简单易操作。缺点是牺牲了一半的内存空间的可用性。 实际应用中，新生代都是使用这种方法进行垃圾收集的。而且有聪明的人发现，新生代中，98%的对象的生命周期非常的短暂。因此可以采取如下做法： ![](https://oss.kherrisan.cn/Snipaste_2018-05-06_13-27-10.jpg) 如上图所示，新生代被分成三个部分，一个较大的区域名为Eden，另两个较小的且大小相等的区域名为Survivor。每次使用Eden和其中一块Survivor，当发生GC后，将Eden和Survivor中的存活对象复制到另一个Survivor中，最后清理掉Eden和Survivor中用过的空间。
 
 标记-整理（Mark-Compact）
 -------------------
@@ -128,7 +128,7 @@ HotSpot算法实现
 CMS（Concurrent Mard Sweep）收集器
 -----------------------------
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-06_20-25-53.jpg) 四个步骤：
+![](https://oss.kherrisan.cn/Snipaste_2018-05-06_20-25-53.jpg) 四个步骤：
 
 1.  初始标记（initial mark）：Stop The Word，并标记GC Root直接引用的对象，并做标记。这一步很快。
 2.  并发标记（concurrent mark）：恢复执行线程，同时继续追踪各个引用路径，完成可达性分析。
@@ -151,11 +151,11 @@ G1和CMS最大的区别在于，G1将内存区域分为很多个region，对每�
 
 ### 对于新生代对象
 
-很简单，把Eden和Survivor中的对象做标记复制，复制到另一个Survivor或者提升到老年代中。需要Stop the World。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-06_20-38-03.jpg)
+很简单，把Eden和Survivor中的对象做标记复制，复制到另一个Survivor或者提升到老年代中。需要Stop the World。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-06_20-38-03.jpg)
 
 ### 对于老年代对象
 
-首先，初始标记，标记所有GC Roots直接关联的对象。实际上这一步是在新生代GC的过程中顺带着做的。需要Stop the World。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-06_20-50-38.jpg)
+首先，初始标记，标记所有GC Roots直接关联的对象。实际上这一步是在新生代GC的过程中顺带着做的。需要Stop the World。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-06_20-50-38.jpg)
 
 ### G1的优势
 

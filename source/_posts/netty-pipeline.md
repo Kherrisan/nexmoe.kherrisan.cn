@@ -12,7 +12,7 @@ abbrlink: 403de3e7
 date: 2019-01-08 22:25:02
 ---
 
-)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 `Pipeline`的继承结构： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/e1fb7cb818b3cd0d10e25e3905f0efcb.png)
+)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 `Pipeline`的继承结构： ![](https://oss.kherrisan.cn/e1fb7cb818b3cd0d10e25e3905f0efcb.png)
 
 <!-- more -->
 
@@ -200,7 +200,7 @@ private final DefaultChannelPipeline pipeline;
 
 ```
 
-有数据结构基础的人都能够很快理解这段代码，对于没有学过数据结构的人来说双向链表的插入操作也不是很难。 停！现在来给pipeline拍一张快照： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/44464b519546afc2bfeed5d917c1cd5f.png) 现在pipeline中有三个节点，其中`HeadContext`和`TailContext`都是没有handler的，中间的`HandlerContext`包含一个`ChannelInitializer`。 在链表中插入了新的handlerContext之后，需要决定是否需要调用它的`handlerAdded`方法。如果暂时不调用回调方法的话：
+有数据结构基础的人都能够很快理解这段代码，对于没有学过数据结构的人来说双向链表的插入操作也不是很难。 停！现在来给pipeline拍一张快照： ![](https://oss.kherrisan.cn/44464b519546afc2bfeed5d917c1cd5f.png) 现在pipeline中有三个节点，其中`HeadContext`和`TailContext`都是没有handler的，中间的`HandlerContext`包含一个`ChannelInitializer`。 在链表中插入了新的handlerContext之后，需要决定是否需要调用它的`handlerAdded`方法。如果暂时不调用回调方法的话：
 
 ```java
     private void callHandlerCallbackLater(AbstractChannelHandlerContext ctx, boolean added) {
@@ -338,4 +338,4 @@ handlerContext会被包装成一个`PendingHandlerCallback`，插入到由pipeli
 1.  从`config()`中取出一个handler，添加到pipeline的末尾。从调试时的结果来看，这是一个`LoggingHandler`（估计就是专门负责打日志的）。
 2.  异步地在pipeline末尾插入一个`ServerBootstrapAcceptor`。
 
-再给pipeline拍一张快照： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/1d0c5dc9d01a99fbdf25dadaac0b36d9.png)
+再给pipeline拍一张快照： ![](https://oss.kherrisan.cn/1d0c5dc9d01a99fbdf25dadaac0b36d9.png)

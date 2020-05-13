@@ -24,7 +24,7 @@ date: 2017-12-22 00:12:11
 程序结构
 ----
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-21_22-58-47.png) 类的功能和名字差不多，应该挺容易理解的吧。
+![](https://oss.kherrisan.cn/Snipaste_2017-12-21_22-58-47.png) 类的功能和名字差不多，应该挺容易理解的吧。
 
 重点
 --
@@ -219,7 +219,7 @@ private static DefiniteAutomation build(NoDefiniteAutomation nfa, Set<State> all
 3.  运行过程中发现，在某些构造某些DFA状态的时候，花费时间很长。这个时间长可能有两方面原因，一是子集构造的时间较长，epilison边较多，二是判断子集构造完之后的状态是不是已知的状态，查找花费了较长的时间。后者，由于indexof是依次比较，对每个成员调用一次equals，因此把equals的逻辑简化应该可以节约一点时间。我的代码中，TableEntry的equals等价于HashSet的equals，又等价于其中每一个State的equals，State就是一个整数，并且是全局唯一的整数。试问：能不能找到一个HashSet的摘要变量？求和显然不行，直接相连得字符串的话，需要保证两个相同的集合中，把所有元素取出来，得到的元素的顺序是相同的，这样字符串比较才能够确保不漏判。如果顺序不一样，那就要排个序了。以下是HashSet的get和put的实现：
     
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-21_23-53-34.png) 我觉得问题的关键在于indexFor的冲突的特性。 不过我在网上找到的，有人说，程序就不应该依赖HashSet的顺序。emmmmm，也就是说要排个序？但这样的话，每次子集构造出来的HashSet就都要排序了，感觉工作量很大的样子。**想到这里，要不干脆全部把HashSet换成有序的LinkedList结构？反正没有很多按索引引用的代码!** set还有一种官方实现叫TreeSet，还自带排序功能，今天太晚了，有空我去了解一下。 (忽然有一种开窍的感觉，还真是第一次真正地把数据结构知识应用到项目实践中分析问题。)
+![](https://oss.kherrisan.cn/Snipaste_2017-12-21_23-53-34.png) 我觉得问题的关键在于indexFor的冲突的特性。 不过我在网上找到的，有人说，程序就不应该依赖HashSet的顺序。emmmmm，也就是说要排个序？但这样的话，每次子集构造出来的HashSet就都要排序了，感觉工作量很大的样子。**想到这里，要不干脆全部把HashSet换成有序的LinkedList结构？反正没有很多按索引引用的代码!** set还有一种官方实现叫TreeSet，还自带排序功能，今天太晚了，有空我去了解一下。 (忽然有一种开窍的感觉，还真是第一次真正地把数据结构知识应用到项目实践中分析问题。)
 
 难点
 --

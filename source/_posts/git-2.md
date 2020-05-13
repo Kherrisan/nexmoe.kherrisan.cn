@@ -77,7 +77,7 @@ $ git init
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E9%80%89%E5%8C%BA_003-300x68.png) 如果这不是一个空项目，那就需要把当前文件夹中的文件加入到git中。`git add`追踪文件，`git commit`提交文件。 `$ git add *.c $ git add LICENSE $ git commit -m 'initial project version'` 如果是想要从远程服务器上获取到话，`git clone`会从远程拷贝文件到本地到当前目录中。
+![](https://oss.kherrisan.cn/%E9%80%89%E5%8C%BA_003-300x68.png) 如果这不是一个空项目，那就需要把当前文件夹中的文件加入到git中。`git add`追踪文件，`git commit`提交文件。 `$ git add *.c $ git add LICENSE $ git commit -m 'initial project version'` 如果是想要从远程服务器上获取到话，`git clone`会从远程拷贝文件到本地到当前目录中。
 
 记录更新
 ====
@@ -89,7 +89,7 @@ git status #可以查看当前项目下文件的状态。
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E9%80%89%E5%8C%BA_011-300x159.png) README这个文件有一部分变更被暂存了，还有一部分变更没有暂存。如果要暂存新的这一次变更，就要再`git add`一次。
+![](https://oss.kherrisan.cn/%E9%80%89%E5%8C%BA_011-300x159.png) README这个文件有一部分变更被暂存了，还有一部分变更没有暂存。如果要暂存新的这一次变更，就要再`git add`一次。
 
 ```null
 $ git status -s #可以输出更加可读的信息。
@@ -101,14 +101,14 @@ M       lib/simplegit.rb #被修改，已暂存
 
 ```
 
-在`.gitignore`中可以添加要忽略的文件。被忽略的文件对于git来说是不存在的。 `git diff`可以将暂存提交与否精确到行的级别。此命令比较的是工作目录中当前文件和暂存区域快照之间的差异， 也就是修改之后还没有暂存起来的变化内容。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E9%80%89%E5%8C%BA_012-300x182.png)
+在`.gitignore`中可以添加要忽略的文件。被忽略的文件对于git来说是不存在的。 `git diff`可以将暂存提交与否精确到行的级别。此命令比较的是工作目录中当前文件和暂存区域快照之间的差异， 也就是修改之后还没有暂存起来的变化内容。 ![](https://oss.kherrisan.cn/%E9%80%89%E5%8C%BA_012-300x182.png)
 
 ```null
 git diff --cache #查看将要暂存到内容，即下次将要提交到内容。
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E9%80%89%E5%8C%BA_013-300x122.png)
+![](https://oss.kherrisan.cn/%E9%80%89%E5%8C%BA_013-300x122.png)
 
 ```null
 git commit -m "终于可以提交了好开心，这是一条提交信息。。。"
@@ -181,7 +181,7 @@ git remote show <remote-name> #查看远程仓库信息。
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E9%80%89%E5%8C%BA_014-300x169.png) 重命名和去除，操作还是很常规的。
+![](https://oss.kherrisan.cn/%E9%80%89%E5%8C%BA_014-300x169.png) 重命名和去除，操作还是很常规的。
 
 ```null
 git remote rename <oldname> <newname>

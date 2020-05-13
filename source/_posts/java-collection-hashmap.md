@@ -12,11 +12,11 @@ abbrlink: 3bd06c35
 date: 2018-02-14 16:08:09
 ---
 
-**本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。** ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-14_13-15-56-1.jpg) Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。
+**本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。** ![](https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg) Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。
 
 <!-- more -->
 
- ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-14_15-53-23.jpg) HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：
+ ![](https://oss.kherrisan.cn/Snipaste_2018-02-14_15-53-23.jpg) HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：
 
 ```
 public interface Map<K,V>{
@@ -99,7 +99,7 @@ Node的列表。
 方法
 --
 
-其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-14_19-03-24.jpg) 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。
+其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-14_19-03-24.jpg) 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。
 
 1.  首先通过table\[(table.length - 1) & hash\]找到hash对应的桶。进行按位与的目的就是为了把hash的空间映射到表空间中，相当于hash%table.length。
 2.  检查桶中的节点的hash、key是否和参数一致，确认是否是想要找的那个。
@@ -107,7 +107,7 @@ Node的列表。
 4.  如果桶中的节点是树节点，调用getTreeNode方法进行搜索。其实是一颗红黑树。
 5.  如果不是树节点，说明是一个链表，按照开链法的底层构造进行遍历搜索，直到找不到，返回null。这里判断是不是树节点使用了instanceof关键字。
 
-其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。**由于table的长度始终是2的整数次方**，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-14_19-12-49.jpg) 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：
+其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。**由于table的长度始终是2的整数次方**，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： ![](https://oss.kherrisan.cn/Snipaste_2018-02-14_19-12-49.jpg) 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：
 
 and
 
@@ -181,7 +181,7 @@ public int hashCode() {
 
 ### putVal
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-15_12-05-09.jpg) **如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。**
+![](https://oss.kherrisan.cn/Snipaste_2018-02-15_12-05-09.jpg) **如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。**
 
 1.  检查table是否时null或者capacity是否为0，如果是，resize，调整table，准备放东西进去了。
 2.  检查散列的桶table\[(n-1)&hash\]是否有元素，如果没有，就创建一个节点，把值放进去，就结束了。
@@ -279,7 +279,7 @@ final Node<K,V>[] resize() {
 
 ### treeifyBin
 
-如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-15_12-56-26.jpg)
+如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-15_12-56-26.jpg)
 
 1.  检查table的capacity是否达到要求，也就是说如果table长度过短，桶中的链表是没有资格treeify的，在这种情况下，往往resize就能够使链表长度缩短。
 2.  从散列到的节点的首节点开始，逐个将链表中的节点替换为树节点，设置好每个节点的prev和next。
@@ -287,7 +287,7 @@ final Node<K,V>[] resize() {
 
 ### removeNode
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-15_13-07-42.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-02-15_13-07-42.jpg)
 
 1.  根据hash和key，找到对应的节点node。
 2.  如果是树节点，调用removeTreeNode方法；如果是链表节点，从链表中删掉。
@@ -299,11 +299,11 @@ final Node<K,V>[] resize() {
 
 ### HashIterator
 
-是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-15_13-29-03.jpg) 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。
+是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-15_13-29-03.jpg) 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。
 
 #### nextNode
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/402986213d9199094e5db333036c6532.png) 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。
+![](https://oss.kherrisan.cn/402986213d9199094e5db333036c6532.png) 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。
 
 #### remove
 
@@ -314,7 +314,7 @@ final Node<K,V>[] resize() {
 
 ### TreeNode
 
-继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-15_13-23-42.jpg)
+继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-15_13-23-42.jpg)
 
 ### KeySet、Values、EntrySet
 

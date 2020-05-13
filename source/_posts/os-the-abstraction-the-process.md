@@ -33,7 +33,7 @@ date: 2018-04-25 19:41:59
 4.  初始化一些IO设备信息，如3个文件描述符（fd）：stdout，stdin，stderr。
 5.  最后，跳转到main子程序，正式开始运行。
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-04-25_19-28-45.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-04-25_19-28-45.jpg)
 
 进程的状态
 -----
@@ -42,9 +42,9 @@ date: 2018-04-25 19:41:59
 *   就绪（ready）：此时进程随时可以开始或继续运行，但是OS选择忽视了他，而是去垂青其他进程了。
 *   阻塞（blocked）：正在运行的进程发起了IO操作后，IO设备开始发送或接收数据，此时该进程处于等待IO操作完成的状态，也叫阻塞状态。此时CPU一般会分配给其他进程使用。
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-04-25_19-33-36.jpg) 正在运行的进程可能会被OS调出而进入就绪状态，就绪的进程可能会被OS调入，进入运行状态。当进程在运行过程中发起IO操作，会变为阻塞状态，好像被冻住了一样。处于阻塞状态的进程无法继续运行（数据没准备好），直到IO操作完成后，变为就绪状态。
+![](https://oss.kherrisan.cn/Snipaste_2018-04-25_19-33-36.jpg) 正在运行的进程可能会被OS调出而进入就绪状态，就绪的进程可能会被OS调入，进入运行状态。当进程在运行过程中发起IO操作，会变为阻塞状态，好像被冻住了一样。处于阻塞状态的进程无法继续运行（数据没准备好），直到IO操作完成后，变为就绪状态。
 
 数据结构
 ----
 
-可以想象，OS通过一个列表来记录每个进程的状态信息。记录一个进程相关状态信息的数据结构叫做PCB（Process Control Block）。因为常见的OS一般是用C语言编写的，因此这样的数据结构也常常用C语言来描述。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-04-25_19-41-28.jpg)
+可以想象，OS通过一个列表来记录每个进程的状态信息。记录一个进程相关状态信息的数据结构叫做PCB（Process Control Block）。因为常见的OS一般是用C语言编写的，因此这样的数据结构也常常用C语言来描述。 ![](https://oss.kherrisan.cn/Snipaste_2018-04-25_19-41-28.jpg)

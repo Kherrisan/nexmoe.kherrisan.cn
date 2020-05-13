@@ -87,17 +87,17 @@ Authentication Option，用来认证加密的，需要事先协商一些加密�
 实例分析1
 -----
 
-随便发了个HTTP请求，把数据包抓了一下，主要就是看一看三次握手的部分。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-18_12-08-11.png)
+随便发了个HTTP请求，把数据包抓了一下，主要就是看一看三次握手的部分。 ![](https://oss.kherrisan.cn/Snipaste_2017-10-18_12-08-11.png)
 
 TCP状态转换
 -------
 
-一个TCP连接的每一端的状态都会在下面这张图中转换。有的转换是由于收到或者发送了包含状态位的报文而产生的，有的转换则是定时器超时导致。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-18_13-59-58.png) 其实CLOSED并不是一个官方的状态，但是这里把CLOSED作为起点能够更加清晰明了地介绍TCP连接的状态转换关系。 图中有2点没有写出来的需要额外注明：
+一个TCP连接的每一端的状态都会在下面这张图中转换。有的转换是由于收到或者发送了包含状态位的报文而产生的，有的转换则是定时器超时导致。 ![](https://oss.kherrisan.cn/Snipaste_2017-10-18_13-59-58.png) 其实CLOSED并不是一个官方的状态，但是这里把CLOSED作为起点能够更加清晰明了地介绍TCP连接的状态转换关系。 图中有2点没有写出来的需要额外注明：
 
 1.  CLOSED->SYN_SENT在TCP协议中是合法的，但是Berkeley SOcket中没有实现，而且也很少见到。
 2.  从SYN\_RCVD->LISTEN的转换，要求必须要该SYN\_RCVD状态是由LISTEN转换而来才行，这时如果收到RST报文而不是ACK，那么又会回到LISTEN。这种转换在同时打开（simultaneous open）得情况下是不行的。
 
-把三次握手和四次挥手的图与状态相结合，如下。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-18_14-14-43.png)
+把三次握手和四次挥手的图与状态相结合，如下。 ![](https://oss.kherrisan.cn/Snipaste_2017-10-18_14-14-43.png)
 
 ### TIME_WAIT状态（2 MSL 等待）
 
@@ -128,12 +128,12 @@ Connection Refused.
 
 ### 时间等待错误
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-18_15-31-54.png) 主动关闭方在2MSL中收到了本应该在之前收到的报文，回复了ACK，但是此时恰好被动关闭方已经CLOSE，已经失去了所有关于此连接的信息，一无所知的被动关闭方收到了这个不明所以的ACK，只能回复一个RST，**而这个RST会导致主动关闭方提前CLOSE**。
+![](https://oss.kherrisan.cn/Snipaste_2017-10-18_15-31-54.png) 主动关闭方在2MSL中收到了本应该在之前收到的报文，回复了ACK，但是此时恰好被动关闭方已经CLOSE，已经失去了所有关于此连接的信息，一无所知的被动关闭方收到了这个不明所以的ACK，只能回复一个RST，**而这个RST会导致主动关闭方提前CLOSE**。
 
 TCP服务器选项
 --------
 
-在绝大多数运行的服务器上，服务器程序会监听某一个端口，当有新的连接到来时，建立一个新的进程或者线程来处理他，通常这个线程（进程）会启动一个socket。 以ssh为例，主进程监听22端口，当一个新的连接到来时，创建一个新的线程和socket，这个socket的状态为established。主进程继续监听。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-21_19-23-04.png) 途中的本地ip地址和远程ip地址都是通配符，没有限制。
+在绝大多数运行的服务器上，服务器程序会监听某一个端口，当有新的连接到来时，建立一个新的进程或者线程来处理他，通常这个线程（进程）会启动一个socket。 以ssh为例，主进程监听22端口，当一个新的连接到来时，创建一个新的线程和socket，这个socket的状态为established。主进程继续监听。 ![](https://oss.kherrisan.cn/Snipaste_2017-10-21_19-23-04.png) 途中的本地ip地址和远程ip地址都是通配符，没有限制。
 
 ### 将要到来的连接队列
 

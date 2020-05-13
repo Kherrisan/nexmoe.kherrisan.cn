@@ -19,11 +19,11 @@ date: 2018-02-09 13:00:50
 总览
 ==
 
-JDK提供的集合类包含两大块，一个是collection，一个是map，二者都提供了java对一些常用数据结构是实现，为开发者的日常使用提供了工具。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_12-43-43.jpg)
+JDK提供的集合类包含两大块，一个是collection，一个是map，二者都提供了java对一些常用数据结构是实现，为开发者的日常使用提供了工具。 ![](https://oss.kherrisan.cn/Snipaste_2018-02-09_12-43-43.jpg)
 
 * * *
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-14_13-15-56.jpg) 俗话说，**不要重复造轮子**。既然JDK提供了相关实现，经过了JDK版本的迭代更新以及几十年的开发人员的使用和修改，经历了充分的检验，可以说是可靠的和可用的。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56.jpg) 俗话说，**不要重复造轮子**。既然JDK提供了相关实现，经过了JDK版本的迭代更新以及几十年的开发人员的使用和修改，经历了充分的检验，可以说是可靠的和可用的。
 
 泛型
 --
@@ -33,7 +33,7 @@ JDK提供的集合类包含两大块，一个是collection，一个是map，二�
 接口
 --
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_12-59-08.jpg)
+![](https://oss.kherrisan.cn/Snipaste_2018-02-09_12-59-08.jpg)
 
 目录（暂定内容，后期会增加）
 ==============

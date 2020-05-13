@@ -11,7 +11,7 @@ abbrlink: 5088f3cd
 date: 2018-05-07 16:53:04
 ---
 
-java整个io包主要分为四块：字节流、字符流、File、RandomAccessFile。其中最复杂的是字节流和字符流两个簇，File和RandomAccessFile的功能较为单一。从名字可以看出，RandomAccessFile用于随机读写，字节流和字符流则用于顺序读写。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-07_16-01-04.jpg)
+java整个io包主要分为四块：字节流、字符流、File、RandomAccessFile。其中最复杂的是字节流和字符流两个簇，File和RandomAccessFile的功能较为单一。从名字可以看出，RandomAccessFile用于随机读写，字节流和字符流则用于顺序读写。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-07_16-01-04.jpg)
 
 <!-- more -->
 
@@ -23,22 +23,22 @@ java整个io包主要分为四块：字节流、字符流、File、RandomAccessF
 InputStream
 -----------
 
-字节输入流的总接口，接口中规定了输入字节流的各种实现所需要提供的方法。接口中声明的方法只有寥寥数个。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-07_16-43-36.jpg) 由于是字节流，所以输入的最小单位是字节（Byte），但是read方法返回的是int，范围是0-255，如果读到了文件末尾，返回-1。不带参数的read方法返回的是一个字节，带参数的read方法将读到的数据直接填充进参数的byte数组中，返回的是实际读取的字节数，类似于Unix中的read方法。  
+字节输入流的总接口，接口中规定了输入字节流的各种实现所需要提供的方法。接口中声明的方法只有寥寥数个。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-07_16-43-36.jpg) 由于是字节流，所以输入的最小单位是字节（Byte），但是read方法返回的是int，范围是0-255，如果读到了文件末尾，返回-1。不带参数的read方法返回的是一个字节，带参数的read方法将读到的数据直接填充进参数的byte数组中，返回的是实际读取的字节数，类似于Unix中的read方法。  
 
 FileInputStream
 ---------------
 
-文件输入字节流，用于从一个外存中的文件读取数据。在FileInputStream的源码中可以看到很多出native关键字，说明读取数据的方法主要由C++调用本地接口实现的。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-07_16-50-51.jpg)
+文件输入字节流，用于从一个外存中的文件读取数据。在FileInputStream的源码中可以看到很多出native关键字，说明读取数据的方法主要由C++调用本地接口实现的。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-07_16-50-51.jpg)
 
 ByteArrayInputStream
 --------------------
 
-从一个字节数组中读取数据，这个字节数组实际上就是内存里的一个byte\[\]对象。常见的用法是这个样子的： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-07_16-56-46.jpg)
+从一个字节数组中读取数据，这个字节数组实际上就是内存里的一个byte\[\]对象。常见的用法是这个样子的： ![](https://oss.kherrisan.cn/Snipaste_2018-05-07_16-56-46.jpg)
 
 ObjectInputStream
 -----------------
 
-是一个包装器流，能够将一个输入的字节流自动根据字节序解序列化，转换成开发人员所需要的对象或基本数据类型。当然转换成什么数据类型必须要在代码中自己指定，如果指定错了就会导致数据出现错误。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-07_17-14-47.jpg) 如上图所示，ObjectOutputStream读取基本数据类型或者变量需要提前知道输入流的结构。如果输入时不按照字节流的结构，很有可能会抛出异常。 直接读写对象时，要求对象实现Serializable接口。虽然这个接口只是一个标记接口，没有函数。而且序列化的方式完全由JVM决定，序列化之后的结果对于人来说是不可读的。 默认会把对象的所有字段都序列化，如果需要略过某些字段，可以添加transient修饰符。当然被序列化的对象中包含的其他对象的引用的话，也是会被序列化的。 反序列化不会调用对象的构造函数。
+是一个包装器流，能够将一个输入的字节流自动根据字节序解序列化，转换成开发人员所需要的对象或基本数据类型。当然转换成什么数据类型必须要在代码中自己指定，如果指定错了就会导致数据出现错误。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-07_17-14-47.jpg) 如上图所示，ObjectOutputStream读取基本数据类型或者变量需要提前知道输入流的结构。如果输入时不按照字节流的结构，很有可能会抛出异常。 直接读写对象时，要求对象实现Serializable接口。虽然这个接口只是一个标记接口，没有函数。而且序列化的方式完全由JVM决定，序列化之后的结果对于人来说是不可读的。 默认会把对象的所有字段都序列化，如果需要略过某些字段，可以添加transient修饰符。当然被序列化的对象中包含的其他对象的引用的话，也是会被序列化的。 反序列化不会调用对象的构造函数。
 
 BufferedInputStream
 -------------------

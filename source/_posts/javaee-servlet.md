@@ -34,12 +34,12 @@ Servlet是Java中一系列对象的统称，也可以说是一个标准，也可
 接口
 --
 
-既然是标准，那肯定要有interface。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/v2-85bf84640fbc6b6e195b9c5b513b918f_hd.jpg)
+既然是标准，那肯定要有interface。 ![](https://oss.kherrisan.cn/v2-85bf84640fbc6b6e195b9c5b513b918f_hd.jpg)
 
 生命周期
 ====
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-04-30_20-27-04.jpg) Servlet的生命周期比较简单，过程中经历的函数也不是很多。
+![](https://oss.kherrisan.cn/Snipaste_2018-04-30_20-27-04.jpg) Servlet的生命周期比较简单，过程中经历的函数也不是很多。
 
 1.  1.  1.  Servlet会被惰性初始化（或者在容器启动时初始化，取决于配置），即在容器在处理某个请求的时候检查其需要的Servlet是否存在，如果不存在，载入该Servlet类，实例化，运行init方法，读入一些初始化参数。
         2.  在某个请求到来的时候，会运行servlet的service方法，并传入相关参数。这些参数由容器打包。servlet处理结束之后，其第二个参数——response会被容器提取，并返回给客户端。每个请求都会运行service方法。
@@ -98,7 +98,7 @@ Servlet并不是单例，即允许实例化多个对象，尽管其在大多数�
             2.  监听用户会话：HttpSessionListener
             3.  监听请求：ServletRequestListener</ol start="1.">
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-01_15-28-55.jpg) 每种监听器都有数个类似的方法，如监听对象的创建、销毁事件，增加、修改、删除某个属性的事件。有的监听器会有一些独特的方法。这里不详细解释每个监听器的原型。
+![](https://oss.kherrisan.cn/Snipaste_2018-05-01_15-28-55.jpg) 每种监听器都有数个类似的方法，如监听对象的创建、销毁事件，增加、修改、删除某个属性的事件。有的监听器会有一些独特的方法。这里不详细解释每个监听器的原型。
 
 配置
 --
@@ -152,7 +152,7 @@ web.xml是Jave Web应用程序所使用的配置文件，虽然它并不是必�
 运作流程
 ----
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/invfilt.gif) 当一个web请求到来时，首先在在该请求上注册监听器（只有针对于请求的监听器才会再此时注册，针对其他对象的监听器在其他时刻注册，因为说不定其他对象还没有实例化呢），然后经过多个过滤器，最终到达servlet。  
+![](https://oss.kherrisan.cn/invfilt.gif) 当一个web请求到来时，首先在在该请求上注册监听器（只有针对于请求的监听器才会再此时注册，针对其他对象的监听器在其他时刻注册，因为说不定其他对象还没有实例化呢），然后经过多个过滤器，最终到达servlet。  
 
 实验
 --

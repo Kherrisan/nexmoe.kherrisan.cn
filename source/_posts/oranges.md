@@ -45,7 +45,7 @@ FAT12文件系统
 
 FAT12文件系统将存储空间分为四块：引导区，FAT表1和FAT表2，根目录区，用户数据区。
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-18_18-42-39.png)
+![](https://oss.kherrisan.cn/Snipaste_2018-08-18_18-42-39.png)
 
 在FAT文件表中，每个条目占12位（一个半字节），条目所在位置或者说条目在表中的索引为该扇区簇号，条目内容为该文件下一部分簇号。
 
@@ -63,7 +63,7 @@ Loader的功能如下：
 
 Loader将内存组织为下面这样子：
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-19_10-40-31.png)
+![](https://oss.kherrisan.cn/Snipaste_2018-08-19_10-40-31.png)
 
 ELF文件格式
 -------
@@ -74,7 +74,7 @@ ELF是一种文件格式约定。对象文件有三类：
 2.  可执行文件。
 3.  可被共享文件。也就是.so动态库文件。
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-19_11-45-09.png)
+![](https://oss.kherrisan.cn/Snipaste_2018-08-19_11-45-09.png)
 
 上图中左侧为链接视图，右侧为运行视图。链接过程中以section为单位，运行过程中以segment为单位。整个文件可以分为4部分：
 

@@ -16,12 +16,12 @@ date: 2018-12-24 20:41:23
 
 <!-- more -->
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/f1e818b190a1ab88c077a337c471f8f3.png) 上面的第一张图是多线程IO模型，第二张图是单线程NIO模型，第三张图是Reactor线程模型。第一和第二张图的区别主要在于线程是否复用，第二和第三张图的区别在于第二张图使用单线程（进程）处理读写事件而图三将对同一台远程主机的操作聚合到一个Handler里面，由Reactor负责派发事件给Handler执行。 当然，Handler中代码的执行也是需要线程的，这时就可以考虑线程的复用，即通过线程池管理线程。而Acceptor也可以进行多线程并发，也可以使用线程池。
+![](https://oss.kherrisan.cn/f1e818b190a1ab88c077a337c471f8f3.png) 上面的第一张图是多线程IO模型，第二张图是单线程NIO模型，第三张图是Reactor线程模型。第一和第二张图的区别主要在于线程是否复用，第二和第三张图的区别在于第二张图使用单线程（进程）处理读写事件而图三将对同一台远程主机的操作聚合到一个Handler里面，由Reactor负责派发事件给Handler执行。 当然，Handler中代码的执行也是需要线程的，这时就可以考虑线程的复用，即通过线程池管理线程。而Acceptor也可以进行多线程并发，也可以使用线程池。
 
 EventLoop类体系
 ============
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/31af451f0f108a2f460d9f1061b87ac0.png) 图中白框框处的是JDK中自带的类。显然Netty也是利用了JDK中的接口来表达类的语义。
+![](https://oss.kherrisan.cn/31af451f0f108a2f460d9f1061b87ac0.png) 图中白框框处的是JDK中自带的类。显然Netty也是利用了JDK中的接口来表达类的语义。
 
 1.  `Executor`表示任务的执行者，只有一个方法`execute()`，和`Runnable`的概念有点类似，但实际上是caller和callee的关系。
 2.  `ExecutorService`表示提供执行功能的服务方，所有的线程池都是`ExecutorService`的子类，这个接口定义了和executor相关的一些方法，如`execute`,`submit`等。
@@ -198,7 +198,7 @@ EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 
 ```
 
-这里的`group()`返回了一个`NioEventLoopGroup`。我有一个疑问： **这个`NioEvnetLoopGroup`是Boss还是Worker呢？** 这里我用了一个土办法，在调试模式下加断点，看对象的ID。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/d7902ca4f0352876f72b9ffc01c72830.png) 答案了然了，这是一个Boss。继续跟踪。
+这里的`group()`返回了一个`NioEventLoopGroup`。我有一个疑问： **这个`NioEvnetLoopGroup`是Boss还是Worker呢？** 这里我用了一个土办法，在调试模式下加断点，看对象的ID。 ![](https://oss.kherrisan.cn/d7902ca4f0352876f72b9ffc01c72830.png) 答案了然了，这是一个Boss。继续跟踪。
 
 ```java
     @Override
@@ -241,7 +241,7 @@ EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 eventLoop.inEventLoop
 =====================
 
-我认为这个方法是一个十分关键的方法，虽然实现逻辑很简单，**但他却很清晰地诠释了netty设计思路中对象和线程之间的关系，即executor和thread这两大概念之间的关系。** netty把这个方法的定义放在了`AbstractEventExecutor`类中。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/305bf4c6bc929c927ede4eecb54f2d68.png)
+我认为这个方法是一个十分关键的方法，虽然实现逻辑很简单，**但他却很清晰地诠释了netty设计思路中对象和线程之间的关系，即executor和thread这两大概念之间的关系。** netty把这个方法的定义放在了`AbstractEventExecutor`类中。 ![](https://oss.kherrisan.cn/305bf4c6bc929c927ede4eecb54f2d68.png)
 
 ```java
     @Override
@@ -266,7 +266,7 @@ eventLoop.inEventLoop
 重新梳理Bootstrap
 =============
 
-结合`NioEventLoop`的初始化过程，重新梳理netty程序的启动流程。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/44c84ddc625008b39ff4bb98e6d4fd05.png)
+结合`NioEventLoop`的初始化过程，重新梳理netty程序的启动流程。 ![](https://oss.kherrisan.cn/44c84ddc625008b39ff4bb98e6d4fd05.png)
 
 1.  创建`NioEventLoopGroup`，包含多个`NioEventLoop`，个数视情况而定。每个`NioEventLoop`的`run`方法还没有开始运行。
 2.  `Bootstrap`在`bind`的时候，通过反射创建`NioServerSocketChannel`对象。

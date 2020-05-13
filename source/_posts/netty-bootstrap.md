@@ -118,7 +118,7 @@ public interface ChannelFactory<T extends Channel> {
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/5c8854379f983db74506487c2d562e67.png) 实现了`ChannelFactory`接口的类不多，工厂对象的实际类型多半就是`ReflectiveChannelFactory`了。
+![](https://oss.kherrisan.cn/5c8854379f983db74506487c2d562e67.png) 实现了`ChannelFactory`接口的类不多，工厂对象的实际类型多半就是`ReflectiveChannelFactory`了。
 
 ```java
     public ReflectiveChannelFactory(Class<? extends T> clazz) {
@@ -212,7 +212,7 @@ public interface ChannelFactory<T extends Channel> {
 注册channel
 ---------
 
-`ChannelFuture regFuture = config().group().register(channel);` `group()`返回的是`EventLoopGroup`，即线程组，Netty中一个`EventLoop`即为一个线程，将多个线程组合起来管理就产生了“线程组”的概念（和OS中的线程组概念不同）。这里调用了`EventLoopGroup`接口里的`register`方法来注册`channel`，但暂时还无法判断是哪个实现了`EventLoopGroup`接口的小可爱。 在这一行代码加断点并以调试模式运行Echo Example。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/d94b109dc5c60ed0de2b23e7417abb6c.png) 发现`config().group()`返回的是一个`NioEventLoopGroup`对象，这个对象是`MultithreadEventLoopGroup`的子类，其`register`方法所做之事很简单。
+`ChannelFuture regFuture = config().group().register(channel);` `group()`返回的是`EventLoopGroup`，即线程组，Netty中一个`EventLoop`即为一个线程，将多个线程组合起来管理就产生了“线程组”的概念（和OS中的线程组概念不同）。这里调用了`EventLoopGroup`接口里的`register`方法来注册`channel`，但暂时还无法判断是哪个实现了`EventLoopGroup`接口的小可爱。 在这一行代码加断点并以调试模式运行Echo Example。 ![](https://oss.kherrisan.cn/d94b109dc5c60ed0de2b23e7417abb6c.png) 发现`config().group()`返回的是一个`NioEventLoopGroup`对象，这个对象是`MultithreadEventLoopGroup`的子类，其`register`方法所做之事很简单。
 
 ```java
     @Override
@@ -253,7 +253,7 @@ public interface ChannelFactory<T extends Channel> {
 
 ```
 
-这里实例化了一个`DefaultChannelPromise`，并把`channel`和`SingleThreadEventLoop`作为参数传入，估计`Promise`会把他们两人关联起来。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/d2d80e9027d11fab989d4dc9f3f2b4c1.png) 如果忘记了`channel`是什么东西的话，可以回溯到`ChannelFactory`的部分：`ChannelFactory`通过反射实例化`channel`对象，而其类型就是在`bootstrap`对象上进行方法链式调用时传入的`NioServerSocketChannel.class`。 实例化promise后并没有结束，因为还没有注册呢：
+这里实例化了一个`DefaultChannelPromise`，并把`channel`和`SingleThreadEventLoop`作为参数传入，估计`Promise`会把他们两人关联起来。 ![](https://oss.kherrisan.cn/d2d80e9027d11fab989d4dc9f3f2b4c1.png) 如果忘记了`channel`是什么东西的话，可以回溯到`ChannelFactory`的部分：`ChannelFactory`通过反射实例化`channel`对象，而其类型就是在`bootstrap`对象上进行方法链式调用时传入的`NioServerSocketChannel.class`。 实例化promise后并没有结束，因为还没有注册呢：
 
 ```java
     @Override

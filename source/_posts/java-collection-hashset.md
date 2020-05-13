@@ -12,7 +12,7 @@ abbrlink: 4e69e352
 date: 2018-02-14 14:57:23
 ---
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-16_15-13-28.jpg) HashSet的实现是基于HashMap的，与Map不同的地方在于HashSet中Key对应的Value只需要一个标记即可。 由于HashSet最核心的部分————Hash已经由HashMap完成，因此只要加一个包装即可。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-16_15-13-28.jpg) HashSet的实现是基于HashMap的，与Map不同的地方在于HashSet中Key对应的Value只需要一个标记即可。 由于HashSet最核心的部分————Hash已经由HashMap完成，因此只要加一个包装即可。
 
 <!-- more -->
 

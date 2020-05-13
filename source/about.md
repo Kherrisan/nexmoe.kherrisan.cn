@@ -6,7 +6,7 @@ comments: false
 date: 2017-06-25 15:20:30
 ---
 
-**就不直接放照片了，对我长什么样感兴趣的人可以通过联系方式勾搭我。我怕我放了我的照片被别人的爬虫爬走之后，成为海量数据中的一部分，然后会对计算出的模型产生不利的影响。** ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/cropped-logo-2.jpg)
+**就不直接放照片了，对我长什么样感兴趣的人可以通过联系方式勾搭我。我怕我放了我的照片被别人的爬虫爬走之后，成为海量数据中的一部分，然后会对计算出的模型产生不利的影响。** ![](https://oss.kherrisan.cn/cropped-logo-2.jpg)
 
 基本信息
 ----
@@ -32,4 +32,4 @@ date: 2017-06-25 15:20:30
 联系方式
 ----
 
-  ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/QQ图片20170609220618.png)
+  ![](https://oss.kherrisan.cn/QQ图片20170609220618.png)

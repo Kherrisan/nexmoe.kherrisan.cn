@@ -144,7 +144,7 @@ public class LearnArrayList {
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_15-26-44.jpg) 在测试的的过程中的确没有发现缩容的现象。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-09_15-26-44.jpg) 在测试的的过程中的确没有发现缩容的现象。
 
 #### batchRemove(Collection)
 
@@ -315,7 +315,7 @@ public class LearnArrayList {
 
 ```
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-02-09_20-05-15-1.jpg) 实验的结果是，使用传统for循环+ArrayList.remove，删除和遍历都没有问题；使用增强for循环和ArrayList.remove，删除成功，但是抛出了ConcurrentModificationException；使用迭代器循环+迭代器remove，遍历成功并且正确删除了5；使用迭代器循环+ArrayList.remove，抛出了ConcurrentModificationException。
+![](https://oss.kherrisan.cn/Snipaste_2018-02-09_20-05-15-1.jpg) 实验的结果是，使用传统for循环+ArrayList.remove，删除和遍历都没有问题；使用增强for循环和ArrayList.remove，删除成功，但是抛出了ConcurrentModificationException；使用迭代器循环+迭代器remove，遍历成功并且正确删除了5；使用迭代器循环+ArrayList.remove，抛出了ConcurrentModificationException。
 
 ### ListItr
 

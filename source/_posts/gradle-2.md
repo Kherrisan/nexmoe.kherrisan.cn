@@ -64,7 +64,7 @@ repositories {
 apply plugin
 ------------
 
-插件实际上就是一组task，只是将task做了一次包装，使得分发这些task的代码给他人使用时能够更加方便。 以插件Java为例 典型的Java项目的目录结构如下： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-01_16-32-41.jpg)
+插件实际上就是一组task，只是将task做了一次包装，使得分发这些task的代码给他人使用时能够更加方便。 以插件Java为例 典型的Java项目的目录结构如下： ![](https://oss.kherrisan.cn/Snipaste_2018-05-01_16-32-41.jpg)
 
 group
 -----
@@ -84,7 +84,7 @@ sourceCompatibility
 repositories
 ------------
 
-仓库，这是一个挺重要的关键字。如果开发者需要引入别人开发的库，就需要从仓库下载，得益于gradle高度自动化的依赖管理，开发者不需要自己在浏览器下载然后倒入jar包，而是只要在gradle脚本中声明一个依赖库即可。gradle自动从仓库搜索这个依赖库、下载并导入到该项目中。 常用的仓库有以下几个： ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-01_16-38-14.jpg) 要使用某个仓库的话：
+仓库，这是一个挺重要的关键字。如果开发者需要引入别人开发的库，就需要从仓库下载，得益于gradle高度自动化的依赖管理，开发者不需要自己在浏览器下载然后倒入jar包，而是只要在gradle脚本中声明一个依赖库即可。gradle自动从仓库搜索这个依赖库、下载并导入到该项目中。 常用的仓库有以下几个： ![](https://oss.kherrisan.cn/Snipaste_2018-05-01_16-38-14.jpg) 要使用某个仓库的话：
 
 repositories {
     mavenCentral()

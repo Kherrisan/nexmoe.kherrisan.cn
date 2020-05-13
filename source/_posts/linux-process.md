@@ -48,14 +48,14 @@ pid是进程的唯一标识符，Linux中使用task_struct来表示进程和线�
 内核栈
 ---
 
-一个进程在调用系统调用的时候，必然会陷入到内核态中，此时运行的代码所操作的栈不再是用户态的进程栈，而是一个内核栈。在内核栈的底部（从高地址生长的栈）存放了一个**thread_info_**_，这个结构指向当前进程的task_struct，从而使系统能够高效地获取到当前进程的信息。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-26_14-31-03.png)
+一个进程在调用系统调用的时候，必然会陷入到内核态中，此时运行的代码所操作的栈不再是用户态的进程栈，而是一个内核栈。在内核栈的底部（从高地址生长的栈）存放了一个**thread_info_**_，这个结构指向当前进程的task_struct，从而使系统能够高效地获取到当前进程的信息。 ![](https://oss.kherrisan.cn/Snipaste_2018-08-26_14-31-03.png)
 
 * * *
 
 进程状态
 ====
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-26_14-47-35.png) Linux进程一般有5种状态
+![](https://oss.kherrisan.cn/Snipaste_2018-08-26_14-47-35.png) Linux进程一般有5种状态
 
 1.  RUNNING：进程在运行或者在运行队列中等待运行
 2.  INTERRUPTIBLE：可中断
@@ -92,7 +92,7 @@ vfork
 创建线程
 ----
 
-可以通过clone的参数来指定创建线程时需要共享的资源：打开的文件、文件系统资源、信号响应程序等。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-08-26_15-11-54.png)
+可以通过clone的参数来指定创建线程时需要共享的资源：打开的文件、文件系统资源、信号响应程序等。 ![](https://oss.kherrisan.cn/Snipaste_2018-08-26_15-11-54.png)
 
 内核线程
 ----

@@ -17,7 +17,7 @@ date: 2017-09-29 21:28:23
 
 <!-- more -->
 
- ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-09-29_22-12-19.png) 从wireshark中也可以看出tracert探测的模式：每个TTL发送三个ICMP报文，收到三个回复后再把TTL+1，再继续发送。 基于上述原理，可以开始尝试自己发送ICMP报文并实现tracert功能了。 注：由于国庆回家，网络环境发生了一些变化，我现在只能在家进行实验，因此每一条的结果肯定会和在宿舍进行追踪产生的结果不同。 下面先贴出我写的py程序：
+ ![](https://oss.kherrisan.cn/Snipaste_2017-09-29_22-12-19.png) 从wireshark中也可以看出tracert探测的模式：每个TTL发送三个ICMP报文，收到三个回复后再把TTL+1，再继续发送。 基于上述原理，可以开始尝试自己发送ICMP报文并实现tracert功能了。 注：由于国庆回家，网络环境发生了一些变化，我现在只能在家进行实验，因此每一条的结果肯定会和在宿舍进行追踪产生的结果不同。 下面先贴出我写的py程序：
 
 ```null
 from scapy.all import *
@@ -51,4 +51,4 @@ if __name__ == '__main__':
 
 ```
 
-这是windows自带的tracert的输出结果。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-10-01_20-47-17.png) 从图中可以看出，scapy的动作也是很有规律的，基本上符合发送两个ICMP报文，收到一个reply的模式，而且对同一个地址的两个ICMP之间相隔不到20ms。
+这是windows自带的tracert的输出结果。 ![](https://oss.kherrisan.cn/Snipaste_2017-10-01_20-47-17.png) 从图中可以看出，scapy的动作也是很有规律的，基本上符合发送两个ICMP报文，收到一个reply的模式，而且对同一个地址的两个ICMP之间相隔不到20ms。

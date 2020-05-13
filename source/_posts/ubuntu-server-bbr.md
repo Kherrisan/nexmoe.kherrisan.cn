@@ -16,19 +16,19 @@ date: 2017-12-19 23:04:32
 
 # BBR简介
 
-BBR是TCP层的一种拥塞控制算法，是Google设计并开源的。传统的拥塞控制算法通过丢包的情况判断网络情况，从而及时调整拥塞窗口的大小，这样使得整个网络处于稳定状态的同时，单个终端又能够享受尽可能大的传输速度。 目前大规模使用的应该是Qubic算法，我没有深入了解过这种算法，好像也是指数增长——丢包回落的形式，具体细节不清楚，有时间可以去了解一下。 知乎上各种吐槽TCP现在的拥塞算法太保守，不能够充分提升传输速度。BBR则是另外一套算法，能够通过更加合理科学的判断和调节，更加充分的提升传输速度。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/bbr.jpg) 在Linux 4.9之后的内核中自带BBR，因此如果是老版本内核想要享受BBR，就需要升级内核了。
+BBR是TCP层的一种拥塞控制算法，是Google设计并开源的。传统的拥塞控制算法通过丢包的情况判断网络情况，从而及时调整拥塞窗口的大小，这样使得整个网络处于稳定状态的同时，单个终端又能够享受尽可能大的传输速度。 目前大规模使用的应该是Qubic算法，我没有深入了解过这种算法，好像也是指数增长——丢包回落的形式，具体细节不清楚，有时间可以去了解一下。 知乎上各种吐槽TCP现在的拥塞算法太保守，不能够充分提升传输速度。BBR则是另外一套算法，能够通过更加合理科学的判断和调节，更加充分的提升传输速度。 ![](https://oss.kherrisan.cn/bbr.jpg) 在Linux 4.9之后的内核中自带BBR，因此如果是老版本内核想要享受BBR，就需要升级内核了。
 
 # 配置过程
 
 首先查看内核版本`uname -r`。 
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-19_22-21-21.png) 
+![](https://oss.kherrisan.cn/Snipaste_2017-12-19_22-21-21.png) 
 
 是4.4，64位的。接下来到 http://kernel.ubuntu.com/~kernel-ppa/mainline/ 这个网站找对应架构和版本的内核。我选了一个4.12的。
 
- ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-19_22-26-48.png) 注意看清楚架构，我一开始把arm64看成了amd64，架构选错了是肯定没办法安装的。把他下载下来，用`wget`（刚刚那个网站是国外的，网速有点慢，自己想办法吧）。 一般几十MB，下载完成后，`sudo dpkg -i xxxxxx.deb` 安装完成，执行`sudo update-grub`，更新引导程序，并重启。 
+ ![](https://oss.kherrisan.cn/Snipaste_2017-12-19_22-26-48.png) 注意看清楚架构，我一开始把arm64看成了amd64，架构选错了是肯定没办法安装的。把他下载下来，用`wget`（刚刚那个网站是国外的，网速有点慢，自己想办法吧）。 一般几十MB，下载完成后，`sudo dpkg -i xxxxxx.deb` 安装完成，执行`sudo update-grub`，更新引导程序，并重启。 
  
- ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-19_22-56-02.png) 
+ ![](https://oss.kherrisan.cn/Snipaste_2017-12-19_22-56-02.png) 
  
  重启完成，剩下的就只是修改几个配置项了。 
  
@@ -48,6 +48,6 @@ BBR是TCP层的一种拥塞控制算法，是Google设计并开源的。传统�
  
  如果返回如下，说明成功啦。 
  
- ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2017-12-19_22-59-56.png) 
+ ![](https://oss.kherrisan.cn/Snipaste_2017-12-19_22-59-56.png) 
  
  的确，开启了BBR之后，下载大图的速度得到了显著的提升~

@@ -36,15 +36,15 @@ date: 2018-02-16 16:00:32
 
 ### 对象的创建
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E7%BB%98%E5%9B%BE1.jpg)
+![](https://oss.kherrisan.cn/%E7%BB%98%E5%9B%BE1.jpg)
 
 ### 对象内存布局
 
-![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/%E7%BB%98%E5%9B%BE4.jpg)
+![](https://oss.kherrisan.cn/%E7%BB%98%E5%9B%BE4.jpg)
 
 ### 对象锁状态
 
-对象处于不同的状态时，对象头的布局也会产生变化，对象头的格式并不是像TCP报文头这样子一直不变的。 ![](https://kherrisanbucketone.oss-cn-shanghai.aliyuncs.com/Snipaste_2018-05-05_17-53-42.jpg) 锁有重有轻，有乐观有悲观，从这么多角度来将锁的概念分类并区分设计，目的就是为了应对不同的并发场景，最大程度提升系统性能。
+对象处于不同的状态时，对象头的布局也会产生变化，对象头的格式并不是像TCP报文头这样子一直不变的。 ![](https://oss.kherrisan.cn/Snipaste_2018-05-05_17-53-42.jpg) 锁有重有轻，有乐观有悲观，从这么多角度来将锁的概念分类并区分设计，目的就是为了应对不同的并发场景，最大程度提升系统性能。
 
 ### 对象的访问定位
 
