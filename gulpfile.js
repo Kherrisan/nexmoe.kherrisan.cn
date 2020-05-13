@@ -84,9 +84,9 @@ function replaceOssUrl() {
 gulp.task('minify-html', function () {
     return gulp.src('./docs/**/*.html')
         //内联 js 文件
-        .pipe(inline(/<script.+?src="(.+?\.js.*?)".*?><\/script>/g, '<script type="text/javascript">', '</script>'))
+        // .pipe(inline(/<script.+?src="(.+?\.js.*?)".*?><\/script>/g, '<script type="text/javascript">', '</script>'))
         //内联 css 文件
-        .pipe(inline(/<link rel="stylesheet" href="(.+?\.css.*?)">/g, '<style type="text/css">', '</style>'))
+        // .pipe(inline(/<link rel="stylesheet" href="(.+?\.css.*?)">/g, '<style type="text/css">', '</style>'))
         //替换所有 oss url 为本域名下的路径
         .pipe(replaceOssUrl())
         .pipe(htmlclean())
