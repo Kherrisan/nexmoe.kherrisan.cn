@@ -74,14 +74,23 @@ function addhttp(url) {
     return url;
 }
 
+function replaceOssUrl() {
+    return replace(' https://oss.kherrisan.cn', '/images');
+}
+
 // 压缩html
 gulp.task('minify-html', function () {
     return gulp.src('./docs/**/*.html')
+        //内联 js 文件
         .pipe(inline(/<script.+?src="(.+?\.js.*?)".*?><\/script>/g, '<script type="text/javascript">', '</script>'))
+        //内联 css 文件
         .pipe(inline(/<link rel="stylesheet" href="(.+?\.css.*?)">/g, '<style type="text/css">', '</style>'))
+        //替换所有 oss url 为本域名下的路径
+        .pipe(replaceOssUrl())
         .pipe(htmlclean())
         .pipe(gulp.dest('./docs'))
 });
+
 // 压缩css
 gulp.task('minify-css', function () {
     return gulp.src('./docs/**/*.css')
@@ -90,6 +99,7 @@ gulp.task('minify-css', function () {
         }))
         .pipe(gulp.dest('./docs'));
 });
+
 // 压缩js
 gulp.task('minify-js', function () {
     return gulp.src('./docs/js/**/*.js')
@@ -99,6 +109,7 @@ gulp.task('minify-js', function () {
         .pipe(uglify())
         .pipe(gulp.dest('./docs/js'));
 });
+
 // 默认任务
 gulp.task('default', gulp.series(
     gulp.parallel('minify-js', 'minify-css'), 'minify-html'
