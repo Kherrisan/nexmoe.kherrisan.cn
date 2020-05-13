@@ -11,7 +11,7 @@
 # 全局
 # Site
 #---------------------------
-favicon: https://oss.kherrisan.cn/logo.jpg/webp # 网站标签页的 icon
+favicon: https://oss.kherrisan.cn/logo.jpg # 网站标签页的 icon
 
 apple_touch_icon: /images/apple-touch-icon.png # 用于苹果设备的 icon
 
@@ -91,7 +91,7 @@ aplayer:  # 音乐播放器，注意不能与 hexo-tag-aplayer 插件共用
   order: 'random'  # 播放顺序，可选值: 'list', 'random'
   theme: '#b7daff'  # 主题色
   songs:  # 歌曲列表，必须传入下列各参数，其中 url 与 cover 在本地需存于 source 目录，更多参数见文档：https://aplayer.js.org/#/zh-Hans/?id=%E5%8F%82%E6%95%B0
-    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: ' https://oss.kherrisan.cn/20200509135933.jpg/webp' }
+    - { name: '竈門炭治郎のうた', artist: '椎名豪', url: 'https://oss.kherrisan.cn/tanjiro.mp3', cover: ' https://oss.kherrisan.cn/20200509135933.jpg' }
 
 version:  # 主题版本相关
   check: true  # 每次生成页面后，检测主题是否为最新版本
@@ -341,7 +341,7 @@ about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.co
   banner_img_height: 60  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 害怕，你竟然到了这里。乂(ﾟДﾟ三ﾟДﾟ)乂  # 打字机内容
-  avatar: https://oss.kherrisan.cn/logo.jpg/webp # 头像
+  avatar: https://oss.kherrisan.cn/logo.jpg # 头像
   name: kherrisan
   introduce: 金银妖瞳 / 疾风之狼  # 支持 HTML
   icons: # 更多图标可从 https://github.com/fluid-dev/static/blob/master/hexo-theme-fluid/iconfont.png 查找，class 代表图标的 css class
