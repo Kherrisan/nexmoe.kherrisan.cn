@@ -75,7 +75,9 @@ function addhttp(url) {
 }
 
 function replaceOssUrl() {
-    return replace(' https://oss.kherrisan.cn', '/images');
+    return replace(/https:\/\/oss\.kherrisan\.cn(\/(\w|\/)+?\.(png|jpg|jpeg|webp|gif))/g, (match, img) => {
+        return '/images' + img;
+    });
 }
 
 // 压缩html
