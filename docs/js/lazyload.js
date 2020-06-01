@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // eslint-disable-next-line no-unused-expressions
 !(function(window, document) {
   var runningOnBrowser = typeof window !== 'undefined';
@@ -68,3 +69,6 @@
   }
 
 })(window, document);
+=======
+"use strict";!function(i,c){var e=void 0!==i&&"IntersectionObserver"in i,s=Array.prototype.slice.call(c.querySelectorAll("img[srcset]"));if(s&&0!==s.length)if(e){var n=new IntersectionObserver(function(e){e.forEach(function(e){var t=e.target;e.isIntersecting&&(t.setAttribute("srcset",t.src),t.onload=t.onerror=function(){return n.unobserve(t)})})},{threshold:[0],rootMargin:(i.innerHeight||c.documentElement.clientHeight)+"px"});s.map(function(e){return n.observe(e)})}else{var l=new Debouncer(function(){for(var o=0;o<s.length;o++)e=s[o],0,t=e.getBoundingClientRect(),n=i.innerHeight||c.documentElement.clientHeight,(0<=(r=t.top)&&r<=3*n||r<=0&&r<=-2*n-t.height)&&function(){var e,t,n,r,i=s[o];e=i,t=function(){s=s.filter(function(e){return i!==e})},n=new Image,r=e.getAttribute("src"),n.onload=function(){e.srcset=r,t&&t()},n.srcset=r}();var e,t,n,r;0===s.length&&i.removeEventListener("scroll",l,!1)});i.addEventListener("scroll",l,!1),l.handleEvent()}}(window,document);
+>>>>>>> 9c564748324edcfc9c7247781d993d1f71dabb84

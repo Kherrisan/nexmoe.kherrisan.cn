@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 
 /**
@@ -39,3 +40,6 @@ Debouncer.prototype = {
     this.requestTick();
   }
 };
+=======
+"use strict";function Debouncer(i){this.callback=i,this.ticking=!1}window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame,Debouncer.prototype={constructor:Debouncer,update:function(){this.callback&&this.callback(),this.ticking=!1},requestTick:function(){this.ticking||(requestAnimationFrame(this.rafCallback||(this.rafCallback=this.update.bind(this))),this.ticking=!0)},handleEvent:function(){this.requestTick()}};
+>>>>>>> 9c564748324edcfc9c7247781d993d1f71dabb84
