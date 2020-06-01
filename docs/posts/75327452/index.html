@@ -1,5 +1,216 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>Netty——NioEventLoop(2) - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2019-01-05 10:36">2019年1月5日 上午</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 1.9k 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 24 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><h1 id="Loop过程"><a href="#Loop过程" class="headerlink" title="Loop过程"></a>Loop过程</h1><p><code>NioEventLoop</code>最核心的就是处理事件循环的<code>run</code>方法。这个方法看起来不长，但实际上它承担了最重要的逻辑，并且对很多细节问题做了处理。</p><a id="more"></a><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>Netty——NioEventLoop(2) - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2019-01-05 10:36">
+                    2019年1月5日 上午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    1.9k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    24
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h1 id="Loop过程"><a href="#Loop过程" class="headerlink" title="Loop过程"></a>Loop过程</h1><p><code>NioEventLoop</code>最核心的就是处理事件循环的<code>run</code>方法。这个方法看起来不长，但实际上它承担了最重要的逻辑，并且对很多细节问题做了处理。</p>
+<a id="more"></a>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">for</span> (;;) {
         <span class="hljs-keyword">try</span> {
@@ -54,7 +265,9 @@
             handleLoopException(t);
         }
     }
-}</code></pre></div><p>既然叫eventLoop，那代码的主体部分自然就是一个循环，在每一次循环迭代都根据某些状态做一些针对性工作。 首先是<code>selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())</code>，<code>selectStrategy</code>只有一个实现类：<code>DefaultSelectStrategy</code>。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>既然叫eventLoop，那代码的主体部分自然就是一个循环，在每一次循环迭代都根据某些状态做一些针对性工作。 首先是<code>selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())</code>，<code>selectStrategy</code>只有一个实现类：<code>DefaultSelectStrategy</code>。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculateStrategy</span><span class="hljs-params">(IntSupplier selectSupplier, <span class="hljs-keyword">boolean</span> hasTasks)</span> <span class="hljs-keyword">throws</span> Exception </span>{
     <span class="hljs-keyword">return</span> hasTasks ? selectSupplier.get() : SelectStrategy.SELECT;
 }
@@ -64,7 +277,14 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
         <span class="hljs-keyword">return</span> selectNow();
     }
-};</code></pre></div><ol><li>判断队列中有无任务，如果有，则返回<code>selectNow</code>的结果。</li><li>如果没有，就返回SELECT。</li></ol><p><code>selectNow</code>方法返回的是JDK的select的<code>selectNow</code>方法执行的结果，这个方法执行非阻塞的select，返回<code>SelectionKey</code>的个数，当然如果无事发生的话也会返回0。 <strong><code>selectStrategy</code>中定义了三个常量：SELECT、CONTINUE、BUSY_WAIT，然而后两种并没有在哪里被使用到。</strong>可能是netty是打算先设计好结构，然后再慢慢填坑把。</p><h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>当strategy为SELECT的时候，涉及到<code>NioEventLoop</code>的<code>select</code>方法：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> oldWakenUp)</span> <span class="hljs-keyword">throws</span> IOException </span>{
+};</code></pre></div>
+<ol>
+<li>判断队列中有无任务，如果有，则返回<code>selectNow</code>的结果。</li>
+<li>如果没有，就返回SELECT。</li>
+</ol>
+<p><code>selectNow</code>方法返回的是JDK的select的<code>selectNow</code>方法执行的结果，这个方法执行非阻塞的select，返回<code>SelectionKey</code>的个数，当然如果无事发生的话也会返回0。 <strong><code>selectStrategy</code>中定义了三个常量：SELECT、CONTINUE、BUSY_WAIT，然而后两种并没有在哪里被使用到。</strong>可能是netty是打算先设计好结构，然后再慢慢填坑把。</p>
+<h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>当strategy为SELECT的时候，涉及到<code>NioEventLoop</code>的<code>select</code>方法：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> oldWakenUp)</span> <span class="hljs-keyword">throws</span> IOException </span>{
     Selector selector = <span class="hljs-keyword">this</span>.selector;
         <span class="hljs-keyword">int</span> selectCnt = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">long</span> currentTimeNanos = System.nanoTime();
@@ -120,7 +340,25 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
     }
 
     <span class="hljs-keyword">return</span> scheduledTask.delayNanos(currentTimeNanos);
-}</=></code></pre></div><p><code>select</code>方法在循环中尝试根据时间限制来进行阻塞或者非阻塞的select操作。这里的时间限制就是<code>selectDeadLineNanos</code>，他根据下一个任务的时间限制给出这次阻塞select最迟必须结束的时间。如果没有下一个任务，就给出长达SCHEDULE_PURGE_INTERVAL的时间，当然在这段时间内如果有任务到来还是会按照任务的deadline时间做判断。</p><ol><li>如果还有不到500ms就要到ddl了，就结束循环，不过如果还没有执行过阻塞select，为了不破坏<code>select</code>方法的语义，可以先selectNow一次。</li><li>如果任务队列里有任务了，尝试将这个<code>NioEventLoop</code>设置为唤醒，如果唤醒成功，selectNow一次并结束。</li><li>通过selector执行阻塞的select操作，可以阻塞到ddl的前500ms，即在ddl之前预留500ms，说不定要做别的事情。记录阻塞select次数。</li><li>如果阻塞select操作真的返回了几个事件，结束循环。</li><li>如果用户（就是除了对象本身之外的其他人）唤醒了它，结束循环。</li><li>如果任务队列有任务了，或者有调度任务了，结束循环。</li><li>如果线程被中断了，结束循环。</li><li>如果阻塞select次数超过了一个阈值，说明selector出bug了，重建selector，selectNow一次，结束循环。</li></ol><p>在循环体开头的switch可以这么解释：</p><ol><li>如果任务队列里有任务，就让<code>selector</code>selectNow一次，非阻塞地看看有没有什么事件发生，不管事件是0个还是几个，继续执行switch下面的代码。</li><li>如果没有任务，就考虑执行一段时间阻塞的select操作。</li></ol><p>结束了switch，该处理事件和执行任务了。这里netty又来骚操作了——<code>ioRatio</code>，这个变量代表两个过程——IO和运行任务分别所占时间比例。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (ioRatio == <span class="hljs-number">100</span>) {
+}</=></code></pre></div>
+<p><code>select</code>方法在循环中尝试根据时间限制来进行阻塞或者非阻塞的select操作。这里的时间限制就是<code>selectDeadLineNanos</code>，他根据下一个任务的时间限制给出这次阻塞select最迟必须结束的时间。如果没有下一个任务，就给出长达SCHEDULE_PURGE_INTERVAL的时间，当然在这段时间内如果有任务到来还是会按照任务的deadline时间做判断。</p>
+<ol>
+<li>如果还有不到500ms就要到ddl了，就结束循环，不过如果还没有执行过阻塞select，为了不破坏<code>select</code>方法的语义，可以先selectNow一次。</li>
+<li>如果任务队列里有任务了，尝试将这个<code>NioEventLoop</code>设置为唤醒，如果唤醒成功，selectNow一次并结束。</li>
+<li>通过selector执行阻塞的select操作，可以阻塞到ddl的前500ms，即在ddl之前预留500ms，说不定要做别的事情。记录阻塞select次数。</li>
+<li>如果阻塞select操作真的返回了几个事件，结束循环。</li>
+<li>如果用户（就是除了对象本身之外的其他人）唤醒了它，结束循环。</li>
+<li>如果任务队列有任务了，或者有调度任务了，结束循环。</li>
+<li>如果线程被中断了，结束循环。</li>
+<li>如果阻塞select次数超过了一个阈值，说明selector出bug了，重建selector，selectNow一次，结束循环。</li>
+</ol>
+<p>在循环体开头的switch可以这么解释：</p>
+<ol>
+<li>如果任务队列里有任务，就让<code>selector</code>selectNow一次，非阻塞地看看有没有什么事件发生，不管事件是0个还是几个，继续执行switch下面的代码。</li>
+<li>如果没有任务，就考虑执行一段时间阻塞的select操作。</li>
+</ol>
+<p>结束了switch，该处理事件和执行任务了。这里netty又来骚操作了——<code>ioRatio</code>，这个变量代表两个过程——IO和运行任务分别所占时间比例。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (ioRatio == <span class="hljs-number">100</span>) {
     processSelectedKeys();
     runAllTasks();
 } <span class="hljs-keyword">else</span> {
@@ -128,11 +366,16 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
     processSelectedKeys();
     <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> ioTime = System.nanoTime() - ioStartTime;
     runAllTasks(ioTime * (<span class="hljs-number">100</span> - ioRatio) / ioRatio);
-}</code></pre></div><p>判断方法很简单，如果<code>ioRatio</code>是100，就运行所有的任务；如果不是100，比如说是20，那么记录下IO所话的时间<code>ioTime</code>，然后限定运行任务的时间为<code>ioTime*(100-20)/20</code>，也就是4倍<code>ioTime</code>。</p><h2 id="processSelectedKeys"><a href="#processSelectedKeys" class="headerlink" title="processSelectedKeys"></a>processSelectedKeys</h2><p>既然select操作检测到了IO事件，那么就要处理对应的key，这个key和JavaNIO中是SelectionKey是一回事。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (selectedKeys != <span class="hljs-keyword">null</span>) {
+}</code></pre></div>
+<p>判断方法很简单，如果<code>ioRatio</code>是100，就运行所有的任务；如果不是100，比如说是20，那么记录下IO所话的时间<code>ioTime</code>，然后限定运行任务的时间为<code>ioTime*(100-20)/20</code>，也就是4倍<code>ioTime</code>。</p>
+<h2 id="processSelectedKeys"><a href="#processSelectedKeys" class="headerlink" title="processSelectedKeys"></a>processSelectedKeys</h2><p>既然select操作检测到了IO事件，那么就要处理对应的key，这个key和JavaNIO中是SelectionKey是一回事。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (selectedKeys != <span class="hljs-keyword">null</span>) {
     processSelectedKeysOptimized();
 } <span class="hljs-keyword">else</span> {
     processSelectedKeysPlain(selector.selectedKeys());
-}</code></pre></div><p>netty提供了两种处理selectionKey的方法——plain和optimized。<code>NioEventLoop</code>对象维护了一个<code>SelectedSelectionKeySet</code>对象，这个对象管理了一个selectionKey的集合。至于为什么不用Java原生的Set容器，应该还是出于效率上的考虑（TreeSet和HashSet在某些场景下都不如数组来的快）。 <code>SelectedSelectionKeySet</code>使用一个数组来作为set的底层实现，初始长度为1024，add操作向数组索引为size的位置插入元素，如果长度不够就扩容一倍，没有缩容的情况，没有remove操作，提供迭代器访问形式。 先看<code>processSelectedKeysOptimized</code>到底是怎么optimize的。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processSelectedKeysOptimized</span><span class="hljs-params">()</span> </span>{
+}</code></pre></div>
+<p>netty提供了两种处理selectionKey的方法——plain和optimized。<code>NioEventLoop</code>对象维护了一个<code>SelectedSelectionKeySet</code>对象，这个对象管理了一个selectionKey的集合。至于为什么不用Java原生的Set容器，应该还是出于效率上的考虑（TreeSet和HashSet在某些场景下都不如数组来的快）。 <code>SelectedSelectionKeySet</code>使用一个数组来作为set的底层实现，初始长度为1024，add操作向数组索引为size的位置插入元素，如果长度不够就扩容一倍，没有缩容的情况，没有remove操作，提供迭代器访问形式。 先看<code>processSelectedKeysOptimized</code>到底是怎么optimize的。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processSelectedKeysOptimized</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i < selectedKeys.size; ++i) {
         <span class="hljs-keyword">final</span> SelectionKey k = selectedKeys.keys[i];
         selectedKeys.keys[i] = <span class="hljs-keyword">null</span>;
@@ -146,7 +389,11 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
             ......
         }
     }
-}</selectablechannel></code></pre></div><p>遍历set中的每一个selectionKey，取出attach在它上面的对象，有可能是<code>AbstractNioChannel</code>，也有可能是<code>NioTask</code>。 <strong>这里可以思考一下：SelectionKey上的attachment是什么时候加上去的？</strong> 在<code>AbstractNioChannel</code>中的<code>doRegister</code>中：</p><div class="hljs"><pre><code class="hljs java">selectionKey = javaChannel().register(eventLoop().unwrappedSelector(), <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>);</code></pre></div><p><code>AbstractNioChannel</code>被attach到了<code>SelectionKey</code>上面。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processSelectedKey</span><span class="hljs-params">(SelectionKey k, AbstractNioChannel ch)</span> </span>{
+}</selectablechannel></code></pre></div>
+<p>遍历set中的每一个selectionKey，取出attach在它上面的对象，有可能是<code>AbstractNioChannel</code>，也有可能是<code>NioTask</code>。 <strong>这里可以思考一下：SelectionKey上的attachment是什么时候加上去的？</strong> 在<code>AbstractNioChannel</code>中的<code>doRegister</code>中：</p>
+<div class="hljs"><pre><code class="hljs java">selectionKey = javaChannel().register(eventLoop().unwrappedSelector(), <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>);</code></pre></div>
+<p><code>AbstractNioChannel</code>被attach到了<code>SelectionKey</code>上面。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processSelectedKey</span><span class="hljs-params">(SelectionKey k, AbstractNioChannel ch)</span> </span>{
         <span class="hljs-keyword">final</span> AbstractNioChannel.NioUnsafe unsafe = ch.unsafe();
         ......
         <span class="hljs-keyword">int</span> readyOps = k.readyOps();
@@ -160,24 +407,40 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
         <span class="hljs-keyword">if</span> ((readyOps & (SelectionKey.OP_READ | SelectionKey.OP_ACCEPT)) != <span class="hljs-number">0</span> || readyOps == <span class="hljs-number">0</span>) {
             unsafe.read();
         }
-}</code></pre></div><p>思路很清晰，就是根据<code>readyOps</code>的不同的值，采取不同的行为。 <code>processSelectedKeysPlain</code>实际上类似，区别主要在于它使用Java自带的Set存放SelectionKey。</p><h2 id="runAllTasks"><a href="#runAllTasks" class="headerlink" title="runAllTasks"></a>runAllTasks</h2><p><code>runAllTasks</code>有两种，带时间限的和不带时间限的。不带时间限则执行所有任务：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">do</span> {
+}</code></pre></div>
+<p>思路很清晰，就是根据<code>readyOps</code>的不同的值，采取不同的行为。 <code>processSelectedKeysPlain</code>实际上类似，区别主要在于它使用Java自带的Set存放SelectionKey。</p>
+<h2 id="runAllTasks"><a href="#runAllTasks" class="headerlink" title="runAllTasks"></a>runAllTasks</h2><p><code>runAllTasks</code>有两种，带时间限的和不带时间限的。不带时间限则执行所有任务：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">do</span> {
     fetchedAll = fetchFromScheduledTaskQueue();
     <span class="hljs-keyword">if</span> (runAllTasksFrom(taskQueue)) {
         ranAtLeastOne = <span class="hljs-keyword">true</span>;
     }
-} <span class="hljs-keyword">while</span> (!fetchedAll); <span class="hljs-comment">// keep on processing until we fetched all scheduled tasks.</span></code></pre></div><p>首先从<code>ScheduledTaskQueue</code>中取出任务，存放到<code>taskQueue</code>中，直到所有<code>ScheduledTaskQueue</code>被取空，或者<code>taskQueue</code>已满。 然后逐个执行<code>taskQueue</code>中的所有任务，直到<code>taskQueue</code>为空。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (;;) {
+} <span class="hljs-keyword">while</span> (!fetchedAll); <span class="hljs-comment">// keep on processing until we fetched all scheduled tasks.</span></code></pre></div>
+<p>首先从<code>ScheduledTaskQueue</code>中取出任务，存放到<code>taskQueue</code>中，直到所有<code>ScheduledTaskQueue</code>被取空，或者<code>taskQueue</code>已满。 然后逐个执行<code>taskQueue</code>中的所有任务，直到<code>taskQueue</code>为空。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (;;) {
     safeExecute(task);
     task = pollTaskFrom(taskQueue);
     <span class="hljs-keyword">if</span> (task == <span class="hljs-keyword">null</span>) {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
     }
-}</code></pre></div><p>引用闪电侠博客中的一张图来概括loop的过程。 <img src="https://upload-images.jianshu.io/upload_images/1357217-67ed6d1e8070426f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" srcset="/img/loading.gif" alt></p><h1 id="wakenUp"><a href="#wakenUp" class="headerlink" title="wakenUp"></a>wakenUp</h1><p>参考：<a href="https://wenku.baidu.com/view/c75d218c804d2b160a4ec04c.html" target="_blank" rel="noopener">Netty原子wakeup作用分析</a>，虽然这篇文章已经严重过期了。 在<code>NioEventLoop</code>对象中，有一个<code>AtomicBoolean</code>——<code>wakenUp</code>，在<code>run</code>方法及其调用的其他方法中多次见到了对该变量的判断及CAS（Compare and Set）操作，之前一直忽略了这个变量的作用。</p><blockquote><p>Boolean that controls determines if a blocked Selector.select should break out of its selection process. In our case we use a timeout for the select method and the select method will block for that time unless waken up.</p></blockquote><p>字面意思为：决定<code>Selector.select</code>阻塞调用是否要中断select过程的一个Boolean，即是否应该通过<code>select.wakeUp()</code>唤醒正在阻塞的select操作。 <strong>主要目的是防止<code>selector.wakeUp()</code>被重复调用，因为<code>selector.wakeUp()</code>操作的开销还是不小的。</strong></p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>引用闪电侠博客中的一张图来概括loop的过程。 <img src="https://upload-images.jianshu.io/upload_images/1357217-67ed6d1e8070426f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" srcset="/img/loading.gif" alt></p>
+<h1 id="wakenUp"><a href="#wakenUp" class="headerlink" title="wakenUp"></a>wakenUp</h1><p>参考：<a href="https://wenku.baidu.com/view/c75d218c804d2b160a4ec04c.html" target="_blank" rel="noopener">Netty原子wakeup作用分析</a>，虽然这篇文章已经严重过期了。 在<code>NioEventLoop</code>对象中，有一个<code>AtomicBoolean</code>——<code>wakenUp</code>，在<code>run</code>方法及其调用的其他方法中多次见到了对该变量的判断及CAS（Compare and Set）操作，之前一直忽略了这个变量的作用。</p>
+<blockquote>
+<p>Boolean that controls determines if a blocked Selector.select should break out of its selection process. In our case we use a timeout for the select method and the select method will block for that time unless waken up.</p>
+</blockquote>
+<p>字面意思为：决定<code>Selector.select</code>阻塞调用是否要中断select过程的一个Boolean，即是否应该通过<code>select.wakeUp()</code>唤醒正在阻塞的select操作。 <strong>主要目的是防止<code>selector.wakeUp()</code>被重复调用，因为<code>selector.wakeUp()</code>操作的开销还是不小的。</strong></p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">wakeup</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> inEventLoop)</span> </span>{
     <span class="hljs-keyword">if</span> (!inEventLoop && wakenUp.compareAndSet(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>)) {
         selector.wakeup();
     }
-}</code></pre></div><p>这里有个问题：<code>NioEventLoop</code>是单线程的代码逻辑，怎么会出现在selector阻塞的同时唤醒他呢？我认为问题出在selector可能不是单线程独享的，即不是每一个<code>NioEventLoop</code>都有一个独立的<code>selector</code>。此外，通过<code>NioEventLoop.execute</code>执行<code>Runnable</code>是串行的，但调用<code>NioEventLoop</code>的其他方法时还是会出现多线程并发的情况。 在switch语句块的SELECT分支中，会首先设置<code>wakenUp</code>为false，相当于每次循环时都给<code>wakenUp</code>变量设个初始值。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">case</span> SelectStrategy.SELECT:
-    select(wakenUp.getAndSet(<span class="hljs-keyword">false</span>));</code></pre></div><p>在<code>select()</code>方法中，有两处对<code>wakenUp</code>的值做了判断：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">for</span>{
+}</code></pre></div>
+<p>这里有个问题：<code>NioEventLoop</code>是单线程的代码逻辑，怎么会出现在selector阻塞的同时唤醒他呢？我认为问题出在selector可能不是单线程独享的，即不是每一个<code>NioEventLoop</code>都有一个独立的<code>selector</code>。此外，通过<code>NioEventLoop.execute</code>执行<code>Runnable</code>是串行的，但调用<code>NioEventLoop</code>的其他方法时还是会出现多线程并发的情况。 在switch语句块的SELECT分支中，会首先设置<code>wakenUp</code>为false，相当于每次循环时都给<code>wakenUp</code>变量设个初始值。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">case</span> SelectStrategy.SELECT:
+    select(wakenUp.getAndSet(<span class="hljs-keyword">false</span>));</code></pre></div>
+<p>在<code>select()</code>方法中，有两处对<code>wakenUp</code>的值做了判断：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">for</span>{
     ......
     <span class="hljs-keyword">if</span> (hasTasks() && wakenUp.compareAndSet(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>)) {
         selector.selectNow();
@@ -186,9 +449,71 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
     }
     ......
     selector.select(timeoutMillis);
-}</code></pre></div><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (wakenUp.get()) {
+}</code></pre></div>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (wakenUp.get()) {
     selector.wakeup();
-}</code></pre></div></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/Netty/">Netty</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/Netty/">Netty</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/72407af/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">JLink——借助JLink打包Java程序为可执行程序</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/5e1f2791/"><span class="hidden-mobile">Netty——NioEventLoop(1)</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+}</code></pre></div>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty/">Netty</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Netty/">Netty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/72407af/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JLink——借助JLink打包Java程序为可执行程序</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/5e1f2791/">
+                        <span class="hidden-mobile">Netty——NioEventLoop(1)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -208,7 +533,69 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -221,10 +608,75 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -246,7 +698,28 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -254,7 +727,12 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -269,7 +747,21 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -284,7 +776,12 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -296,14 +793,26 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -312,7 +821,17 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -358,4 +877,19 @@ selectSupplier = <span class="hljs-keyword">new</span> IntSupplier() {
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

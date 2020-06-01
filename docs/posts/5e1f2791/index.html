@@ -1,15 +1,243 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>Netty——NioEventLoop(1) - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2018-12-24 20:41">2018年12月24日 晚上</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 2.7k 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 31 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><p>作为Netty中最核心的概念之一，<code>NioEventLoop</code>作为线程实体承载Netty中几乎所有代码的运行、所有事件的检测和触发。<code>EventLoop</code>这个单词并不陌生。在很多的图形用户界面（GUI）程序中，都会使用较少的数个线程来运行代码，以应对用户操作事件。 由于Netty的线程模型基于Java的<strong>NIO</strong>，而NIO又是通过<strong>IO多路复用</strong>实现的。IO多路复用是底层技术，在其之上则是负责管理多路IO的线程模型。Reactor模式就是一种经典的多线程IO设计模型。</p><a id="more"></a><p><img src="/images/f1e818b190a1ab88c077a337c471f8f3.png" srcset="/img/loading.gif" alt> 上面的第一张图是多线程IO模型，第二张图是单线程NIO模型，第三张图是Reactor线程模型。第一和第二张图的区别主要在于线程是否复用，第二和第三张图的区别在于第二张图使用单线程（进程）处理读写事件而图三将对同一台远程主机的操作聚合到一个Handler里面，由Reactor负责派发事件给Handler执行。 当然，Handler中代码的执行也是需要线程的，这时就可以考虑线程的复用，即通过线程池管理线程。而Acceptor也可以进行多线程并发，也可以使用线程池。</p><h1 id="EventLoop类体系"><a href="#EventLoop类体系" class="headerlink" title="EventLoop类体系"></a>EventLoop类体系</h1><p><img src="/images/31af451f0f108a2f460d9f1061b87ac0.png" srcset="/img/loading.gif" alt> 图中白框框处的是JDK中自带的类。显然Netty也是利用了JDK中的接口来表达类的语义。</p><ol><li><code>Executor</code>表示任务的执行者，只有一个方法<code>execute()</code>，和<code>Runnable</code>的概念有点类似，但实际上是caller和callee的关系。</li><li><code>ExecutorService</code>表示提供执行功能的服务方，所有的线程池都是<code>ExecutorService</code>的子类，这个接口定义了和executor相关的一些方法，如<code>execute</code>,<code>submit</code>等。</li><li><code>EventExecutorGroup</code>表示基于事件的执行者集合，它继承了<code>Iterable</code>，说明他可以迭代，且每个元素都是<code>EventExecutor</code>。同时它继承了<code>ScheduledExecutorService</code>接口，表明他具有调度定时任务的功能。</li><li><code>EventExecutor</code>表示任务的执行者。</li><li><code>EventLoopGroup</code>表示<code>EventLoop</code>的集合，即线程的集合，这个接口的主要功能一个是遍历<code>EventLoop</code>，另一个是允许将<code>channel</code>注册到某个<code>EventLoop</code>上。</li><li><code>EventLoop</code>负责处理各个<code>channel</code>的任务，一般一个<code>EventLoop</code>会对应多个<code>channel</code>。此接口本身并没有提供什么有趣的方法。</li></ol><h1 id="第一个NioEventLoop"><a href="#第一个NioEventLoop" class="headerlink" title="第一个NioEventLoop"></a>第一个NioEventLoop</h1><p>不妨探索一下Netty启动时第一个<code>NioEventLoop</code>是何时何地启动的，以典型的启动代码为例：</p><div class="hljs"><pre><code class="hljs java">EventLoopGroup bossGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">1</span>);</code></pre></div><p>忽略重载的构造函数。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">NioEventLoopGroup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads, Executor executor, <span class="hljs-keyword">final</span> SelectorProvider selectorProvider,</span></span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>Netty——NioEventLoop(1) - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2018-12-24 20:41">
+                    2018年12月24日 晚上
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    2.7k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    31
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>作为Netty中最核心的概念之一，<code>NioEventLoop</code>作为线程实体承载Netty中几乎所有代码的运行、所有事件的检测和触发。<code>EventLoop</code>这个单词并不陌生。在很多的图形用户界面（GUI）程序中，都会使用较少的数个线程来运行代码，以应对用户操作事件。 由于Netty的线程模型基于Java的<strong>NIO</strong>，而NIO又是通过<strong>IO多路复用</strong>实现的。IO多路复用是底层技术，在其之上则是负责管理多路IO的线程模型。Reactor模式就是一种经典的多线程IO设计模型。 </p>
+<a id="more"></a>
+<p><img src="https://oss.kherrisan.cn/f1e818b190a1ab88c077a337c471f8f3.png" srcset="/img/loading.gif" alt> 上面的第一张图是多线程IO模型，第二张图是单线程NIO模型，第三张图是Reactor线程模型。第一和第二张图的区别主要在于线程是否复用，第二和第三张图的区别在于第二张图使用单线程（进程）处理读写事件而图三将对同一台远程主机的操作聚合到一个Handler里面，由Reactor负责派发事件给Handler执行。 当然，Handler中代码的执行也是需要线程的，这时就可以考虑线程的复用，即通过线程池管理线程。而Acceptor也可以进行多线程并发，也可以使用线程池。</p>
+<h1 id="EventLoop类体系"><a href="#EventLoop类体系" class="headerlink" title="EventLoop类体系"></a>EventLoop类体系</h1><p><img src="https://oss.kherrisan.cn/31af451f0f108a2f460d9f1061b87ac0.png" srcset="/img/loading.gif" alt> 图中白框框处的是JDK中自带的类。显然Netty也是利用了JDK中的接口来表达类的语义。</p>
+<ol>
+<li><code>Executor</code>表示任务的执行者，只有一个方法<code>execute()</code>，和<code>Runnable</code>的概念有点类似，但实际上是caller和callee的关系。</li>
+<li><code>ExecutorService</code>表示提供执行功能的服务方，所有的线程池都是<code>ExecutorService</code>的子类，这个接口定义了和executor相关的一些方法，如<code>execute</code>,<code>submit</code>等。</li>
+<li><code>EventExecutorGroup</code>表示基于事件的执行者集合，它继承了<code>Iterable</code>，说明他可以迭代，且每个元素都是<code>EventExecutor</code>。同时它继承了<code>ScheduledExecutorService</code>接口，表明他具有调度定时任务的功能。</li>
+<li><code>EventExecutor</code>表示任务的执行者。</li>
+<li><code>EventLoopGroup</code>表示<code>EventLoop</code>的集合，即线程的集合，这个接口的主要功能一个是遍历<code>EventLoop</code>，另一个是允许将<code>channel</code>注册到某个<code>EventLoop</code>上。</li>
+<li><code>EventLoop</code>负责处理各个<code>channel</code>的任务，一般一个<code>EventLoop</code>会对应多个<code>channel</code>。此接口本身并没有提供什么有趣的方法。</li>
+</ol>
+<h1 id="第一个NioEventLoop"><a href="#第一个NioEventLoop" class="headerlink" title="第一个NioEventLoop"></a>第一个NioEventLoop</h1><p>不妨探索一下Netty启动时第一个<code>NioEventLoop</code>是何时何地启动的，以典型的启动代码为例：</p>
+<div class="hljs"><pre><code class="hljs java">EventLoopGroup bossGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">1</span>);</code></pre></div>
+<p>忽略重载的构造函数。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">NioEventLoopGroup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads, Executor executor, <span class="hljs-keyword">final</span> SelectorProvider selectorProvider,</span></span>
 <span class="hljs-function"><span class="hljs-params">                         <span class="hljs-keyword">final</span> SelectStrategyFactory selectStrategyFactory)</span> </span>{
     <span class="hljs-keyword">super</span>(nThreads, executor, selectorProvider, selectStrategyFactory, RejectedExecutionHandlers.reject());
-}</code></pre></div><p>这里调用了父类的构造函数。</p><div class="hljs"><pre><code class="hljs java">    <span class="hljs-keyword">static</span> {
+}</code></pre></div>
+<p>这里调用了父类的构造函数。</p>
+<div class="hljs"><pre><code class="hljs java">    <span class="hljs-keyword">static</span> {
             DEFAULT_EVENT_LOOP_THREADS = Math.max(<span class="hljs-number">1</span>, SystemPropertyUtil.getInt(
             <span class="hljs-string">"io.netty.eventLoopThreads"</span>, NettyRuntime.availableProcessors() * <span class="hljs-number">2</span>));
     }
 
     <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">MultithreadEventLoopGroup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads, Executor executor, Object... args)</span> </span>{
         <span class="hljs-keyword">super</span>(nThreads == <span class="hljs-number">0</span> ? DEFAULT_EVENT_LOOP_THREADS : nThreads, executor, args);
-}</code></pre></div><p><code>NioEventLoopGroup</code>是一个<code>MultiThreadEventLoopGroup</code>，即多线程事件循环组，最关键的是多线程的，这里既可以指多个线程，也可以看做是多个<code>EventLoop</code>组成的group。<strong>线程个数取决于最开始传入的整数，如果这个数是0，则会取一个默认值——处理器个数x2。</strong> 继续跟踪这个类的重载的及其父类的构造函数，直到构造函数中有明显的代码。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">MultithreadEventExecutorGroup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads, Executor executor,</span></span>
+}</code></pre></div>
+<p><code>NioEventLoopGroup</code>是一个<code>MultiThreadEventLoopGroup</code>，即多线程事件循环组，最关键的是多线程的，这里既可以指多个线程，也可以看做是多个<code>EventLoop</code>组成的group。<strong>线程个数取决于最开始传入的整数，如果这个数是0，则会取一个默认值——处理器个数x2。</strong> 继续跟踪这个类的重载的及其父类的构造函数，直到构造函数中有明显的代码。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">MultithreadEventExecutorGroup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads, Executor executor,</span></span>
 <span class="hljs-function"><span class="hljs-params">                                        EventExecutorChooserFactory chooserFactory, Object... args)</span> </span>{
     <span class="hljs-keyword">if</span> (executor == <span class="hljs-keyword">null</span>) {
         executor = <span class="hljs-keyword">new</span> ThreadPerTaskExecutor(newDefaultThreadFactory());
@@ -36,11 +264,15 @@
     }
 
     readonlyChildren = Collections.unmodifiableSet(childrenSet);
-}</object></code></pre></div><p>在<code>NioEventLoopGroup</code>初始化时，参数<code>executor</code>为null，于是会首先创建一个<code>ThreadPerTaskExecutor</code>（顾名思义，为每个任务取得一个线程来执行它的Executor，至于如何取得，是直接创建新线程还是复用线程，要看具体情况）。 <code>ThreadPerTaskExecutor</code>的<code>execute</code>方法如下：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadFactory threadFactory;
+}</object></code></pre></div>
+<p>在<code>NioEventLoopGroup</code>初始化时，参数<code>executor</code>为null，于是会首先创建一个<code>ThreadPerTaskExecutor</code>（顾名思义，为每个任务取得一个线程来执行它的Executor，至于如何取得，是直接创建新线程还是复用线程，要看具体情况）。 <code>ThreadPerTaskExecutor</code>的<code>execute</code>方法如下：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadFactory threadFactory;
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Runnable command)</span> </span>{
     threadFactory.newThread(command).start();
-}</code></pre></div><p>在这里，<code>threadFactory</code>是一个<code>DefaultThreadFactory</code>对象，它提供线程的方式由<code>newThread</code>方法决定：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>在这里，<code>threadFactory</code>是一个<code>DefaultThreadFactory</code>对象，它提供线程的方式由<code>newThread</code>方法决定：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> Thread <span class="hljs-title">newThread</span><span class="hljs-params">(Runnable r)</span> </span>{
     Thread t = newThread(FastThreadLocalRunnable.wrap(r), prefix + nextId.incrementAndGet());
         <span class="hljs-keyword">if</span> (t.isDaemon() != daemon) {
@@ -51,11 +283,15 @@
             t.setPriority(priority);
         }
     <span class="hljs-keyword">return</span> t;
-}</code></pre></div><p>显然，这里的<code>ThreadPerTaskExecutor</code>会将收到的每个task放到一个新创建的线程里运行。 回到构造函数，接下来程序开辟了一个数组用于存放所有的executor。<code>EchoServer</code>中nThread取1，自然就开辟长度为1的数组。 <code>newChild</code>在<code>MultithreadEventExecutorGroup</code>是一个抽象方法，具体如何创建子executor取决于其子类的实现。<code>NioEventLoopGroup</code>是这么实现它的：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>显然，这里的<code>ThreadPerTaskExecutor</code>会将收到的每个task放到一个新创建的线程里运行。 回到构造函数，接下来程序开辟了一个数组用于存放所有的executor。<code>EchoServer</code>中nThread取1，自然就开辟长度为1的数组。 <code>newChild</code>在<code>MultithreadEventExecutorGroup</code>是一个抽象方法，具体如何创建子executor取决于其子类的实现。<code>NioEventLoopGroup</code>是这么实现它的：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> EventLoop <span class="hljs-title">newChild</span><span class="hljs-params">(Executor executor, Object... args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> NioEventLoop(<span class="hljs-keyword">this</span>, executor, (SelectorProvider) args[<span class="hljs-number">0</span>],
         ((SelectStrategyFactory) args[<span class="hljs-number">1</span>]).newSelectStrategy(), (RejectedExecutionHandler) args[<span class="hljs-number">2</span>]);
-}</code></pre></div><p>直接new了一个<code>NioEventLoop</code>，并且把<code>executor</code>作为构造函数的参数传进了<code>NioEventLoop</code>。不过<code>executor</code>并不是由<code>NioEventLoop</code>使用，而是由其父类的父类——<code>SingleThreadEventExecutor</code>作为属性之一进行维护。<code>SingleThreadEventExecutor</code>作为<code>executor</code>的维护者，在它的代码中也只有一处地方用到了<code>executor</code>，就在<code>doStartThread</code>函数中。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doStartThread</span><span class="hljs-params">()</span> </span>{
+}</code></pre></div>
+<p>直接new了一个<code>NioEventLoop</code>，并且把<code>executor</code>作为构造函数的参数传进了<code>NioEventLoop</code>。不过<code>executor</code>并不是由<code>NioEventLoop</code>使用，而是由其父类的父类——<code>SingleThreadEventExecutor</code>作为属性之一进行维护。<code>SingleThreadEventExecutor</code>作为<code>executor</code>的维护者，在它的代码中也只有一处地方用到了<code>executor</code>，就在<code>doStartThread</code>函数中。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doStartThread</span><span class="hljs-params">()</span> </span>{
     executor.execute(<span class="hljs-keyword">new</span> Runnable() {
         <span class="hljs-meta">@Override</span>
         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
@@ -70,7 +306,9 @@
             }
         }
     });
-}</code></pre></div><p>而这个<code>doStartThread</code>方法也不是<code>SingleThreadEventExecutor</code>一诞生就起作用的，在<code>SingleThreadEventExecutor</code>的<code>execute</code>方法中调用了该方法。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>而这个<code>doStartThread</code>方法也不是<code>SingleThreadEventExecutor</code>一诞生就起作用的，在<code>SingleThreadEventExecutor</code>的<code>execute</code>方法中调用了该方法。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Runnable task)</span> </span>{
     ......
     addTask(task);
@@ -80,14 +318,20 @@
             ......
         }
     }
-}</code></pre></div><p>重新审视<code>SingleThreadEventExecutor</code>，他提供了一个<code>execute</code>方法，当有人调用了该对象的<code>execute</code>方法时，会把要运行的任务加入到一个任务队列中（通过<code>addTask</code>方法，这个方法不看我们都能猜到是什么意思的）。如果是第一次execute，就在修改队列之后通过<code>SingleThreadEventExecutor</code>自带的<code>executor</code>启动一个线程，这个线程执行一个抽象的<code>run</code>方法，在<code>NioEventLoop</code>中对该方法给出了实现。 这里遇到了三种executor——<code>ThreadPerTaskExecutor</code>和<code>SingleThreadEventExecutor</code>，前者给每个任务（也就是<code>Runnable</code>）分配一个线程来执行，后者则只使用一个线程（只做一次<code>startThread</code>，那肯定只有一个线程了），<code>NioEventLoop</code>则也在其整个生命周期中只使用一个线程，此外它通过轮训来从队列中取任务。 <strong>那么问题来了，<code>SingleThreadEventExecutor</code>为什么要用<code>ThreadPerTaskExecutor</code>启动线程呢，二者看似是平级的概念，为什么却采用了包含关系？</strong> 会到负责启动多个<code>SingleThreadEventExecutor</code>的<code>MultithreadEventExecutorGroup</code>，接下来通过<code>chooserFactory</code>得到了一个<code>chooser</code>，这个对象的作用是根据特定的策略选择多个<code>executor</code>中的一个，即一个选择器。 <strong>这里不禁想起了在负载均衡中应该也有一个这样的<code>chooser</code>，只是不知道这样的<code>chooser</code>应该处于怎样的层级，来收集做出选择所需要的信息。</strong> 回到最初的问题——第一个<code>NioEventLoop</code>是何时启动的？到目前为止，第一个<code>NioEventLoop</code>已经诞生了，但他的<code>execute</code>方法还没有被任何人调用，因此他还没有启动自己的轮训线程。也就是说，应该是在另外的某一个犄角旮旯里，某行代码调用了<code>execute</code>，启动了第一个<code>NioEventLoop</code>的线程。 启动<code>EchoServer</code>的代码就那么多，不是初始化<code>EventLoopGroup</code>就是配置<code>Bootstrap</code>，最后就是<code>bind</code>。我认为在<code>bind</code>中可能性最大。 在前一篇文章中曾经分析过服务端启动的流程。这里稍微略过一些细节。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ChannelFuture <span class="hljs-title">doBind</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketAddress localAddress)</span> </span>{
+}</code></pre></div>
+<p>重新审视<code>SingleThreadEventExecutor</code>，他提供了一个<code>execute</code>方法，当有人调用了该对象的<code>execute</code>方法时，会把要运行的任务加入到一个任务队列中（通过<code>addTask</code>方法，这个方法不看我们都能猜到是什么意思的）。如果是第一次execute，就在修改队列之后通过<code>SingleThreadEventExecutor</code>自带的<code>executor</code>启动一个线程，这个线程执行一个抽象的<code>run</code>方法，在<code>NioEventLoop</code>中对该方法给出了实现。 这里遇到了三种executor——<code>ThreadPerTaskExecutor</code>和<code>SingleThreadEventExecutor</code>，前者给每个任务（也就是<code>Runnable</code>）分配一个线程来执行，后者则只使用一个线程（只做一次<code>startThread</code>，那肯定只有一个线程了），<code>NioEventLoop</code>则也在其整个生命周期中只使用一个线程，此外它通过轮训来从队列中取任务。 <strong>那么问题来了，<code>SingleThreadEventExecutor</code>为什么要用<code>ThreadPerTaskExecutor</code>启动线程呢，二者看似是平级的概念，为什么却采用了包含关系？</strong> 会到负责启动多个<code>SingleThreadEventExecutor</code>的<code>MultithreadEventExecutorGroup</code>，接下来通过<code>chooserFactory</code>得到了一个<code>chooser</code>，这个对象的作用是根据特定的策略选择多个<code>executor</code>中的一个，即一个选择器。 <strong>这里不禁想起了在负载均衡中应该也有一个这样的<code>chooser</code>，只是不知道这样的<code>chooser</code>应该处于怎样的层级，来收集做出选择所需要的信息。</strong> 回到最初的问题——第一个<code>NioEventLoop</code>是何时启动的？到目前为止，第一个<code>NioEventLoop</code>已经诞生了，但他的<code>execute</code>方法还没有被任何人调用，因此他还没有启动自己的轮训线程。也就是说，应该是在另外的某一个犄角旮旯里，某行代码调用了<code>execute</code>，启动了第一个<code>NioEventLoop</code>的线程。 启动<code>EchoServer</code>的代码就那么多，不是初始化<code>EventLoopGroup</code>就是配置<code>Bootstrap</code>，最后就是<code>bind</code>。我认为在<code>bind</code>中可能性最大。 在前一篇文章中曾经分析过服务端启动的流程。这里稍微略过一些细节。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ChannelFuture <span class="hljs-title">doBind</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketAddress localAddress)</span> </span>{
     <span class="hljs-keyword">final</span> ChannelFuture regFuture = initAndRegister();
     ......
-}</code></pre></div><p>在<code>AbstractBootstrap</code>的<code>doBind</code>方法中，发现了<code>ChannelFuture</code>的踪迹。Future是一种返回异步结果的常见形式，出现了<code>ChannelFuture</code>说明其中肯定有某个函数是通过另一个线程执行操作，然后异步返回运行结果的。继续紧跟这个Future。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> ChannelFuture <span class="hljs-title">initAndRegister</span><span class="hljs-params">()</span> </span>{
+}</code></pre></div>
+<p>在<code>AbstractBootstrap</code>的<code>doBind</code>方法中，发现了<code>ChannelFuture</code>的踪迹。Future是一种返回异步结果的常见形式，出现了<code>ChannelFuture</code>说明其中肯定有某个函数是通过另一个线程执行操作，然后异步返回运行结果的。继续紧跟这个Future。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> ChannelFuture <span class="hljs-title">initAndRegister</span><span class="hljs-params">()</span> </span>{
     ......
     ChannelFuture regFuture = config().group().register(channel);
     ......
-}</code></pre></div><p>这里的<code>group()</code>返回了一个<code>NioEventLoopGroup</code>。我有一个疑问： <strong>这个<code>NioEvnetLoopGroup</code>是Boss还是Worker呢？</strong> 这里我用了一个土办法，在调试模式下加断点，看对象的ID。 <img src="/images/d7902ca4f0352876f72b9ffc01c72830.png" srcset="/img/loading.gif" alt> 答案了然了，这是一个Boss。继续跟踪。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>这里的<code>group()</code>返回了一个<code>NioEventLoopGroup</code>。我有一个疑问： <strong>这个<code>NioEvnetLoopGroup</code>是Boss还是Worker呢？</strong> 这里我用了一个土办法，在调试模式下加断点，看对象的ID。 <img src="https://oss.kherrisan.cn/d7902ca4f0352876f72b9ffc01c72830.png" srcset="/img/loading.gif" alt> 答案了然了，这是一个Boss。继续跟踪。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">register</span><span class="hljs-params">(Channel channel)</span> </span>{
     <span class="hljs-keyword">return</span> register(<span class="hljs-keyword">new</span> DefaultChannelPromise(channel, <span class="hljs-keyword">this</span>));
 }
@@ -97,7 +341,9 @@
     ObjectUtil.checkNotNull(promise, <span class="hljs-string">"promise"</span>);
     promise.channel().unsafe().register(<span class="hljs-keyword">this</span>, promise);
     <span class="hljs-keyword">return</span> promise;
-}</code></pre></div><p>在<code>SingleThreadEventLoop</code>中，Future逐渐浮出水面——他是作为一个Promise被创建出来的。但这里只是创建，并没有修改Future的状态，也没有在Future中填充异步运行的结果。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>在<code>SingleThreadEventLoop</code>中，Future逐渐浮出水面——他是作为一个Promise被创建出来的。但这里只是创建，并没有修改Future的状态，也没有在Future中填充异步运行的结果。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(EventLoop eventLoop, <span class="hljs-keyword">final</span> ChannelPromise promise)</span> </span>{
     ......
     AbstractChannel.<span class="hljs-keyword">this</span>.eventLoop = eventLoop;
@@ -111,13 +357,91 @@
                 }
             });
     }
-}</code></pre></div><p>在<code>AbstractChannel</code>中出现了一个<code>eventLoop</code>，这个<code>eventLoop</code>是不是就是通过<code>newChild</code>得到的<code>NioEventLoop</code>呢？再次祭出比对ID大法。 这里我就不截图了，结果是这里的<code>eventLoop</code>是作为boss的<code>NioEventLoopGroup</code>制造出来的。 这里代码会进入else分支，即<code>eventLoop.execute</code>，那么第一个<code>NioEventLoop</code>就会将这个<code>Runnable</code>加到自己的任务队列中，接着通过<code>ThreadPerTaskExecutor.execute</code>运行自己的<code>run</code>方法，在<code>run</code>方法中轮训任务队列，运行<code>Runnable</code>。</p><h1 id="eventLoop-inEventLoop"><a href="#eventLoop-inEventLoop" class="headerlink" title="eventLoop.inEventLoop"></a>eventLoop.inEventLoop</h1><p>我认为这个方法是一个十分关键的方法，虽然实现逻辑很简单，<strong>但他却很清晰地诠释了netty设计思路中对象和线程之间的关系，即executor和thread这两大概念之间的关系。</strong> netty把这个方法的定义放在了<code>AbstractEventExecutor</code>类中。 <img src="/images/305bf4c6bc929c927ede4eecb54f2d68.png" srcset="/img/loading.gif" alt></p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>在<code>AbstractChannel</code>中出现了一个<code>eventLoop</code>，这个<code>eventLoop</code>是不是就是通过<code>newChild</code>得到的<code>NioEventLoop</code>呢？再次祭出比对ID大法。 这里我就不截图了，结果是这里的<code>eventLoop</code>是作为boss的<code>NioEventLoopGroup</code>制造出来的。 这里代码会进入else分支，即<code>eventLoop.execute</code>，那么第一个<code>NioEventLoop</code>就会将这个<code>Runnable</code>加到自己的任务队列中，接着通过<code>ThreadPerTaskExecutor.execute</code>运行自己的<code>run</code>方法，在<code>run</code>方法中轮训任务队列，运行<code>Runnable</code>。</p>
+<h1 id="eventLoop-inEventLoop"><a href="#eventLoop-inEventLoop" class="headerlink" title="eventLoop.inEventLoop"></a>eventLoop.inEventLoop</h1><p>我认为这个方法是一个十分关键的方法，虽然实现逻辑很简单，<strong>但他却很清晰地诠释了netty设计思路中对象和线程之间的关系，即executor和thread这两大概念之间的关系。</strong> netty把这个方法的定义放在了<code>AbstractEventExecutor</code>类中。 <img src="https://oss.kherrisan.cn/305bf4c6bc929c927ede4eecb54f2d68.png" srcset="/img/loading.gif" alt></p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">inEventLoop</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> inEventLoop(Thread.currentThread());
-}</code></pre></div><p>在<code>AbstractEventExecutor</code>中，<code>inEventLoop</code>表示在当前这个线程的<code>EventLoop</code>，由于<code>EventLoop</code>是单线程的（它是<code>SingleThreadEventExecutor</code>的子类），一个<code>EventLoop</code>对象<code>run</code>方法的代码只会运行在一个线程中。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>在<code>AbstractEventExecutor</code>中，<code>inEventLoop</code>表示在当前这个线程的<code>EventLoop</code>，由于<code>EventLoop</code>是单线程的（它是<code>SingleThreadEventExecutor</code>的子类），一个<code>EventLoop</code>对象<code>run</code>方法的代码只会运行在一个线程中。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">inEventLoop</span><span class="hljs-params">(Thread thread)</span> </span>{
     <span class="hljs-keyword">return</span> thread == <span class="hljs-keyword">this</span>.thread;
-}</code></pre></div><p>在<code>SingleThreadEventExecutor</code>中，<code>inEventLoop</code>表示传入参数的thread对象和与对象自身绑定的thread对象是同一个对象。 也就是说，一个<code>SingleThreadEventLoop</code>对象会和一个线程绑定，当想要通过这个对象执行某些方法的时候，可以先通过<code>inEventLoop()</code>方法判断，当前线程是不是和这个eventLoop绑定的线程，继而针对不同情况进行区分处理。如：如果当前线程不是eventLoop绑定的那个线程，就通过<code>execute</code>方法把任务加入到任务队列中；如果就是当前线程，那就直接运行代码。这样可以避免产生多线程操作同一个对象所带来的同步问题。</p><h1 id="重新梳理Bootstrap"><a href="#重新梳理Bootstrap" class="headerlink" title="重新梳理Bootstrap"></a>重新梳理Bootstrap</h1><p>结合<code>NioEventLoop</code>的初始化过程，重新梳理netty程序的启动流程。 <img src="/images/44c84ddc625008b39ff4bb98e6d4fd05.png" srcset="/img/loading.gif" alt></p><ol><li>创建<code>NioEventLoopGroup</code>，包含多个<code>NioEventLoop</code>，个数视情况而定。每个<code>NioEventLoop</code>的<code>run</code>方法还没有开始运行。</li><li><code>Bootstrap</code>在<code>bind</code>的时候，通过反射创建<code>NioServerSocketChannel</code>对象。</li><li>初始化<code>NioServerSocketChannel</code>上面的attribute和option。</li><li><code>NioEventLoopGroup</code>选出下一个<code>NioEventLoop</code>，让channel注册到它上面。</li><li>在选中的<code>NioEventLoop</code>的线程上，注册interestOps和attachment到selector上。</li><li>在channel的eventloop线程上，通过<code>headContext</code>绑定到指定端口上。</li></ol><p><strong>NioEventLoop</strong>的核心——loop的梳理，见下一篇。</p></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/Netty/">Netty</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/Netty/">Netty</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/75327452/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">Netty——NioEventLoop(2)</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/96393751/"><span class="hidden-mobile">K2-PandoraBox-IPV6（教育网）配置过程</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+}</code></pre></div>
+<p>在<code>SingleThreadEventExecutor</code>中，<code>inEventLoop</code>表示传入参数的thread对象和与对象自身绑定的thread对象是同一个对象。 也就是说，一个<code>SingleThreadEventLoop</code>对象会和一个线程绑定，当想要通过这个对象执行某些方法的时候，可以先通过<code>inEventLoop()</code>方法判断，当前线程是不是和这个eventLoop绑定的线程，继而针对不同情况进行区分处理。如：如果当前线程不是eventLoop绑定的那个线程，就通过<code>execute</code>方法把任务加入到任务队列中；如果就是当前线程，那就直接运行代码。这样可以避免产生多线程操作同一个对象所带来的同步问题。</p>
+<h1 id="重新梳理Bootstrap"><a href="#重新梳理Bootstrap" class="headerlink" title="重新梳理Bootstrap"></a>重新梳理Bootstrap</h1><p>结合<code>NioEventLoop</code>的初始化过程，重新梳理netty程序的启动流程。 <img src="https://oss.kherrisan.cn/44c84ddc625008b39ff4bb98e6d4fd05.png" srcset="/img/loading.gif" alt></p>
+<ol>
+<li>创建<code>NioEventLoopGroup</code>，包含多个<code>NioEventLoop</code>，个数视情况而定。每个<code>NioEventLoop</code>的<code>run</code>方法还没有开始运行。</li>
+<li><code>Bootstrap</code>在<code>bind</code>的时候，通过反射创建<code>NioServerSocketChannel</code>对象。</li>
+<li>初始化<code>NioServerSocketChannel</code>上面的attribute和option。</li>
+<li><code>NioEventLoopGroup</code>选出下一个<code>NioEventLoop</code>，让channel注册到它上面。</li>
+<li>在选中的<code>NioEventLoop</code>的线程上，注册interestOps和attachment到selector上。</li>
+<li>在channel的eventloop线程上，通过<code>headContext</code>绑定到指定端口上。</li>
+</ol>
+<p><strong>NioEventLoop</strong>的核心——loop的梳理，见下一篇。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty/">Netty</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Netty/">Netty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/75327452/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty——NioEventLoop(2)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/96393751/">
+                        <span class="hidden-mobile">K2-PandoraBox-IPV6（教育网）配置过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -137,7 +461,69 @@
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -150,10 +536,75 @@
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -175,7 +626,28 @@
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -183,7 +655,12 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -198,7 +675,21 @@
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -213,7 +704,12 @@
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -225,14 +721,26 @@
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -241,7 +749,17 @@
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -287,4 +805,19 @@
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

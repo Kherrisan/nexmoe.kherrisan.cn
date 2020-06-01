@@ -1,17 +1,251 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>Java Collection——ArrayList - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2018-02-09 18:18">2018年2月9日 晚上</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 2.9k 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 35 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><div class="hljs"><pre><code class="hljs null">public class ArrayList<e> extends AbstractList<e> 
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>Java Collection——ArrayList - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2018-02-09 18:18">
+                    2018年2月9日 晚上
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    2.9k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    35
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <div class="hljs"><pre><code class="hljs null">public class ArrayList<e> extends AbstractList<e> 
         implements List<e>, RandomAccess, Cloneable, java.io.Serializable
-{}</e></e></e></code></pre></div><a id="more"></a><p>ArrayList继承了AbstractList，实现了List、RandomAccess、Cloneable、Serializable接口。 RandomAccess接口定义里没有函数，他只是一个标记。如果一个实现了List接口的类支持快速的随机访问（一般是常数时间的），那就要用实现这个接口。或者说如果</p><div class="hljs"><pre><code class="hljs null">for (int i=0, n=list.size(); i < n; i++)
-    list.get(i);</code></pre></div><p>比</p><div class="hljs"><pre><code class="hljs null">for (Iterator i=list.iterator(); i.hasNext(); )
-    i.next();</code></pre></div><p>快，那么就要实现该接口。对于使用该类的开发人员来说，在需要遍历一个List的时候，可以通过instanceOf判断是不是RandomAccess，如果是的话，用<code>get(i)</code>遍历更快，如果不是，用迭代器<code>next()</code>遍历更快。 ArrayList类似于C++中的vector，表示在内存中顺序存放的一组元素组成的数组。</p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>比较重要的属性有：</p><ol><li>Object[] elementDat：实际存放数组元素的数组。</li><li>DEFAULT_CAPACITY：默认的数组大小。</li><li>size：数组中实际存放的元素个数（不一定等于数组大小）。</li></ol><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>有三个构造函数，如果在构造函数中注明存放的元素个数，就会new一个这么大的数组；如果不注明元素个数，那么就不new数组，而是直接用一个静态空数组来表示存放内容；如果在构造函数中传入另一个collection对象，则会把所有的那个collection对象中的所有元素拷贝一份，作为本对象的存放内容。 常用的几个方法有：</p><h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>随机修改数组元素，只需要常数时间。</p><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>随机访问数组元素，只需要常数时间。</p><h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><p>添加一个元素，可以以null为参数。</p><h4 id="add-1"><a href="#add-1" class="headerlink" title="add"></a>add</h4><p>如果在数组末尾添加元素，只需要常数时间，如果是在数组中部插入新元素，需要让插入位置以后的所有元素都向后挪动，所以就需要线性时间了。 在数组的末尾或者指定位置添加一个元素，在添加之前会先检查容量是否满足需求，即capacity是不是比size大1，如果放不下，就要考虑扩容到指定长度的问题了。</p><h4 id="ensureCapacityInternal"><a href="#ensureCapacityInternal" class="headerlink" title="ensureCapacityInternal"></a>ensureCapacityInternal</h4><p>具体而言，判断的逻辑是这样的：先手动指定一个数组最小长度（比如，在add之前，指定这个数组最小长度为size+1），看这个数组是不是默认大小的空数组，如果是的话，取指定数组长度和10（默认空间大小）的较大值；如果不是默认大小的空数组，就直接取指定的数组长度。这个值作为新的capacity，如果新的capacity比当前的capacity大的话，就要扩大数组了。但并不是直接扩大到新的capacity，而是看当前的capacity的1.5倍和新的capacity谁大，取较大的那个值作为最终扩容的数组长度。 同时扩容的时候会检查扩容后的数组长度是不是比最大长度大（MAX_ARRAY_SIZE），如果是，检查指定的数组长度是不是溢出了，如果是，就抛出异常，如果没有溢出并且指定的数组长度比MAX_ARRAY_SIZE，就取Integer.MAX_VALUE作为新的数组长度，否则就取MAX_ARRAY_SIZE作为新的数组长度。也就是说在数组长度较大的时候，长度要么是Integer.MAX_VALUE，要么是MAX_ARRAY_SIZE。</p><div class="hljs"><pre><code class="hljs null">private void grow(int minCapacity) {
+{}</e></e></e></code></pre></div>
+<a id="more"></a>
+<p>ArrayList继承了AbstractList，实现了List、RandomAccess、Cloneable、Serializable接口。 RandomAccess接口定义里没有函数，他只是一个标记。如果一个实现了List接口的类支持快速的随机访问（一般是常数时间的），那就要用实现这个接口。或者说如果</p>
+<div class="hljs"><pre><code class="hljs null">for (int i=0, n=list.size(); i < n; i++)
+    list.get(i);</code></pre></div>
+<p>比</p>
+<div class="hljs"><pre><code class="hljs null">for (Iterator i=list.iterator(); i.hasNext(); )
+    i.next();</code></pre></div>
+<p>快，那么就要实现该接口。对于使用该类的开发人员来说，在需要遍历一个List的时候，可以通过instanceOf判断是不是RandomAccess，如果是的话，用<code>get(i)</code>遍历更快，如果不是，用迭代器<code>next()</code>遍历更快。 ArrayList类似于C++中的vector，表示在内存中顺序存放的一组元素组成的数组。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>比较重要的属性有：</p>
+<ol>
+<li>Object[] elementDat：实际存放数组元素的数组。</li>
+<li>DEFAULT_CAPACITY：默认的数组大小。</li>
+<li>size：数组中实际存放的元素个数（不一定等于数组大小）。</li>
+</ol>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>有三个构造函数，如果在构造函数中注明存放的元素个数，就会new一个这么大的数组；如果不注明元素个数，那么就不new数组，而是直接用一个静态空数组来表示存放内容；如果在构造函数中传入另一个collection对象，则会把所有的那个collection对象中的所有元素拷贝一份，作为本对象的存放内容。 常用的几个方法有：</p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>随机修改数组元素，只需要常数时间。</p>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>随机访问数组元素，只需要常数时间。</p>
+<h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><p>添加一个元素，可以以null为参数。</p>
+<h4 id="add-1"><a href="#add-1" class="headerlink" title="add"></a>add</h4><p>如果在数组末尾添加元素，只需要常数时间，如果是在数组中部插入新元素，需要让插入位置以后的所有元素都向后挪动，所以就需要线性时间了。 在数组的末尾或者指定位置添加一个元素，在添加之前会先检查容量是否满足需求，即capacity是不是比size大1，如果放不下，就要考虑扩容到指定长度的问题了。</p>
+<h4 id="ensureCapacityInternal"><a href="#ensureCapacityInternal" class="headerlink" title="ensureCapacityInternal"></a>ensureCapacityInternal</h4><p>具体而言，判断的逻辑是这样的：先手动指定一个数组最小长度（比如，在add之前，指定这个数组最小长度为size+1），看这个数组是不是默认大小的空数组，如果是的话，取指定数组长度和10（默认空间大小）的较大值；如果不是默认大小的空数组，就直接取指定的数组长度。这个值作为新的capacity，如果新的capacity比当前的capacity大的话，就要扩大数组了。但并不是直接扩大到新的capacity，而是看当前的capacity的1.5倍和新的capacity谁大，取较大的那个值作为最终扩容的数组长度。 同时扩容的时候会检查扩容后的数组长度是不是比最大长度大（MAX_ARRAY_SIZE），如果是，检查指定的数组长度是不是溢出了，如果是，就抛出异常，如果没有溢出并且指定的数组长度比MAX_ARRAY_SIZE，就取Integer.MAX_VALUE作为新的数组长度，否则就取MAX_ARRAY_SIZE作为新的数组长度。也就是说在数组长度较大的时候，长度要么是Integer.MAX_VALUE，要么是MAX_ARRAY_SIZE。</p>
+<div class="hljs"><pre><code class="hljs null">private void grow(int minCapacity) {
     // overflow-conscious code
     int oldCapacity = elementData.length;
     int newCapacity = oldCapacity + (oldCapacity >> 1);
-    if (newCapacity - minCapacity <0) newCapacity=minCapacity; if (newCapacity - MAX_ARRAY_SIZE> 0)
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
         newCapacity = hugeCapacity(minCapacity);
     // minCapacity is usually close to size, so this is a win:
     elementData = Arrays.copyOf(elementData, newCapacity);
-}</code></pre></div><p>比如：如果我调用默认构造函数，那得到的数组的capacity=0，size=0，如果我再add一次，那么我需要的size应该是1，但是由于当前数组是默认空数组，情况比较特殊，新的capacity是10，10>capacity，要扩容，capacity=0，1.5倍还是0，显然是10比较大，所以最终的数组长度就为1，并且把新的元素加add到最后一个。 如果现在有个ArrayList，size=20，capacity=32，add一个新的元素，需要的最小数组长度应该是20+1=21，21比32小，那就不用扩容了。 如果有个ArrayList，size=20，capacity=20，add一个新的元素，需要的最小数组长度应该是21，21>capacity，要扩容，扩容到30。</p><h4 id="addAll"><a href="#addAll" class="headerlink" title="addAll"></a>addAll</h4><p>同样要检查数组长度，有必要的话需要扩容，既可以在数组末尾添加元素，也可以在某个位置添加，显然需要线性时间，因为需要深拷贝。 <strong>添加元素的顺序即为参数Collection的迭代器的顺序。</strong></p><h3 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h3><p>删除某个位置的元素，或者删除数组中的某个对象。二者都需要线性时间。可以以null为参数。 remove(Object)会通过equals从数组中找到第一个和参数相等的元素，然后移除他。 值得注意的是，remove中并没有数组缩容的逻辑，也就是说ArrayList只会变大不会变小。这点值得再继续研究一下。 写了一小段代码来测试一下ArrayList扩容的原理，因为elementData是protected的，所以要用反射才能获取到capacity。</p><div class="hljs"><pre><code class="hljs null">package collection;
+}</code></pre></div>
+<p>比如：如果我调用默认构造函数，那得到的数组的capacity=0，size=0，如果我再add一次，那么我需要的size应该是1，但是由于当前数组是默认空数组，情况比较特殊，新的capacity是10，10>capacity，要扩容，capacity=0，1.5倍还是0，显然是10比较大，所以最终的数组长度就为1，并且把新的元素加add到最后一个。 如果现在有个ArrayList，size=20，capacity=32，add一个新的元素，需要的最小数组长度应该是20+1=21，21比32小，那就不用扩容了。 如果有个ArrayList，size=20，capacity=20，add一个新的元素，需要的最小数组长度应该是21，21>capacity，要扩容，扩容到30。</p>
+<h4 id="addAll"><a href="#addAll" class="headerlink" title="addAll"></a>addAll</h4><p>同样要检查数组长度，有必要的话需要扩容，既可以在数组末尾添加元素，也可以在某个位置添加，显然需要线性时间，因为需要深拷贝。 <strong>添加元素的顺序即为参数Collection的迭代器的顺序。</strong></p>
+<h3 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h3><p>删除某个位置的元素，或者删除数组中的某个对象。二者都需要线性时间。可以以null为参数。 remove(Object)会通过equals从数组中找到第一个和参数相等的元素，然后移除他。 值得注意的是，remove中并没有数组缩容的逻辑，也就是说ArrayList只会变大不会变小。这点值得再继续研究一下。 写了一小段代码来测试一下ArrayList扩容的原理，因为elementData是protected的，所以要用反射才能获取到capacity。</p>
+<div class="hljs"><pre><code class="hljs null">package collection;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -52,7 +286,15 @@ public class LearnArrayList {
     private static void printListCapacity(List<listelement> listElements) throws Exception {
         System.out.println("Capacity is " + ((Object[]) elementDataField.get(listElements)).length);
     }
-}</listelement></listelement></code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-09_15-26-44.jpg" srcset="/img/loading.gif" alt> 在测试的的过程中的确没有发现缩容的现象。</p><h4 id="batchRemove-Collection"><a href="#batchRemove-Collection" class="headerlink" title="batchRemove(Collection)"></a>batchRemove(Collection)</h4><p>能够批量删除本数组中所有出现在参数中的元素。</p><h3 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h3><p>查询一次需要线性的时间复杂度，可以以null为参数。</p><h3 id="forEach、removeIf、replaceAll"><a href="#forEach、removeIf、replaceAll" class="headerlink" title="forEach、removeIf、replaceAll"></a>forEach、removeIf、replaceAll</h3><p>为函数式编程提供了支持。</p><h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><p>调用Arrays.sort方法进行排序。排序算法今天暂时先不研究了。。。</p><h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>ArrayList有两个迭代器的内部类，一个是Itr，一个是ListItr，后者比前者的方法多一些。 Itr实现了next()、hasNext()、remove()、forEachRemaining()这些方法。 ListItr在Itr的基础上，多了add()、set()、previous()、xxxIndex()等方法。 <strong>ArrayList的方法中没有出现对并发访问的控制，基本上没有见过哪里抛出了<code>ConcurrentModificationException</code>，但是在迭代器的方法中却经常见到抛出这个异常的代码。 会导致这个异常的最经典的场景就是在一个<code>for</code>循环中一边用迭代器遍历数组（或者用增强for循环）一边给数组添加或删除元素。</strong></p><h3 id="ConcurrentModificationException"><a href="#ConcurrentModificationException" class="headerlink" title="ConcurrentModificationException"></a>ConcurrentModificationException</h3><p>ArrayList在add和remove的时候会自增一个modCount，这个modCount属性记录的是本对象的结构被修改的次数。迭代器也有一个相同功能的expectedModCount，在构造迭代器的时候，expectedModCount和modCount的值是相等的，一旦在循环体中调用了ArrayList的remove(index)或remove(Object)方法，使数组结构发生了变化，两个modCount就不一样了。 next函数的第一行就是检查两个modCount是否一致，不一致就抛出异常了。</p><div class="hljs"><pre><code class="hljs null">@SuppressWarnings("unchecked")
+}</listelement></listelement></code></pre></div>
+<p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-09_15-26-44.jpg" srcset="/img/loading.gif" alt> 在测试的的过程中的确没有发现缩容的现象。</p>
+<h4 id="batchRemove-Collection"><a href="#batchRemove-Collection" class="headerlink" title="batchRemove(Collection)"></a>batchRemove(Collection)</h4><p>能够批量删除本数组中所有出现在参数中的元素。</p>
+<h3 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h3><p>查询一次需要线性的时间复杂度，可以以null为参数。</p>
+<h3 id="forEach、removeIf、replaceAll"><a href="#forEach、removeIf、replaceAll" class="headerlink" title="forEach、removeIf、replaceAll"></a>forEach、removeIf、replaceAll</h3><p>为函数式编程提供了支持。</p>
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><p>调用Arrays.sort方法进行排序。排序算法今天暂时先不研究了。。。</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>ArrayList有两个迭代器的内部类，一个是Itr，一个是ListItr，后者比前者的方法多一些。 Itr实现了next()、hasNext()、remove()、forEachRemaining()这些方法。 ListItr在Itr的基础上，多了add()、set()、previous()、xxxIndex()等方法。 <strong>ArrayList的方法中没有出现对并发访问的控制，基本上没有见过哪里抛出了<code>ConcurrentModificationException</code>，但是在迭代器的方法中却经常见到抛出这个异常的代码。 会导致这个异常的最经典的场景就是在一个<code>for</code>循环中一边用迭代器遍历数组（或者用增强for循环）一边给数组添加或删除元素。</strong></p>
+<h3 id="ConcurrentModificationException"><a href="#ConcurrentModificationException" class="headerlink" title="ConcurrentModificationException"></a>ConcurrentModificationException</h3><p>ArrayList在add和remove的时候会自增一个modCount，这个modCount属性记录的是本对象的结构被修改的次数。迭代器也有一个相同功能的expectedModCount，在构造迭代器的时候，expectedModCount和modCount的值是相等的，一旦在循环体中调用了ArrayList的remove(index)或remove(Object)方法，使数组结构发生了变化，两个modCount就不一样了。 next函数的第一行就是检查两个modCount是否一致，不一致就抛出异常了。</p>
+<div class="hljs"><pre><code class="hljs null">@SuppressWarnings("unchecked")
 public E next() {
     checkForComodification();
     int i = cursor;
@@ -87,7 +329,9 @@ public void remove() {
 final void checkForComodification() {
     if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
-}</code></pre></div><p>以上是java中ArrayList的迭代器Itr的几个函数的定义，其中hasNext就可能因为一边遍历一边修改数组导致返回值出现错误。 但也并不是就不能一边遍历一边添加删除元素了，Itr提供了remove方法，用于删除迭代器当前指向的元素，这个remove方法实际上是调用了ArrayList的remove方法，并修改expectedModCount到与modCount一致的状态。 当然，Itr的remove方法是要有条件的，就是在remove之前至少要有一次next方法，否则lastRet无法得到正确的值，使得迭代器删掉了这个元素之后不知道该指向哪个元素了。 当然，一边遍历一边添加删除数组还有另一种写法，就是依靠ArrayList的remove函数和传统的for循环，不使用增强的for循环或迭代器。 又写了一段代码测试remove的特性。 10个元素，分别是0-9，四次不同的循环，分别删除3，4，5，6。</p><div class="hljs"><pre><code class="hljs null">package collection;
+}</code></pre></div>
+<p>以上是java中ArrayList的迭代器Itr的几个函数的定义，其中hasNext就可能因为一边遍历一边修改数组导致返回值出现错误。 但也并不是就不能一边遍历一边添加删除元素了，Itr提供了remove方法，用于删除迭代器当前指向的元素，这个remove方法实际上是调用了ArrayList的remove方法，并修改expectedModCount到与modCount一致的状态。 当然，Itr的remove方法是要有条件的，就是在remove之前至少要有一次next方法，否则lastRet无法得到正确的值，使得迭代器删掉了这个元素之后不知道该指向哪个元素了。 当然，一边遍历一边添加删除数组还有另一种写法，就是依靠ArrayList的remove函数和传统的for循环，不使用增强的for循环或迭代器。 又写了一段代码测试remove的特性。 10个元素，分别是0-9，四次不同的循环，分别删除3，4，5，6。</p>
+<div class="hljs"><pre><code class="hljs null">package collection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -184,7 +428,77 @@ public class LearnArrayList {
         }
 
     }
-}</listelement></listelement></listelement></listelement></listelement></listelement></listelement></code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-09_20-05-15-1.jpg" srcset="/img/loading.gif" alt> 实验的结果是，使用传统for循环+ArrayList.remove，删除和遍历都没有问题；使用增强for循环和ArrayList.remove，删除成功，但是抛出了ConcurrentModificationException；使用迭代器循环+迭代器remove，遍历成功并且正确删除了5；使用迭代器循环+ArrayList.remove，抛出了ConcurrentModificationException。</p><h3 id="ListItr"><a href="#ListItr" class="headerlink" title="ListItr"></a>ListItr</h3><p>继承了Itr，并提过了几个额外的方法:previous,set,add。这个add是可以配合迭代器对象在遍历过程中添加元素的。但是同样有前提条件：lastRet必须有效，即在add之前必须调用一次next。</p><h3 id="lastRet"><a href="#lastRet" class="headerlink" title="lastRet"></a>lastRet</h3><p>这个变量很有意思，cursor代表写一个元素的index，那么上一个不就是cursor-1吗，为什么还要专门找一个变量来表示上一个变量的index呢？？？ 注意：Itr还是ListItr，都可以通过ArrayList的方法获得。</p><h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="SubList"><a href="#SubList" class="headerlink" title="SubList"></a>SubList</h3><p>代表ArrayList的一部分，奇怪的是，没有继承ArrayList，而是直接继承AbstractList并实现了RandomAccess。概念类似于数据库中的视图，即把ArrayList中的内容截取一段，ArrayList和SubList中的数组元素实际上是相同的。任何一处修改，另一处也会更随着变化。 提供的数个方法和ArrayList相差无几（set、get、size、add、remove、addAll），区别在于要比ArrayList的对应方法多一步：检查comidification。 SubList也提供了自己的迭代器，是一个继承了ListIterator的匿名内部类。</p><h3 id="ArrayListSplitter"><a href="#ArrayListSplitter" class="headerlink" title="ArrayListSplitter"></a>ArrayListSplitter</h3><blockquote><p>Spliterator是一个可分割迭代器(splitable iterator)，可以和iterator顺序遍历迭代器一起看。jdk1.8发布后，对于并行处理的能力大大增强，Spliterator就是为了并行遍历元素而设计的一个迭代器，jdk1.8中的集合框架中的数据结构都默认实现了spliterator。</p></blockquote><p>jdk8的新特性，暂不研究。。。</p></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/Java-Collection/">Java Collection</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/7b8114a5/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">Java Collection——LinkedList</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/a80f8f54/"><span class="hidden-mobile">Java Collection——总览</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+}</listelement></listelement></listelement></listelement></listelement></listelement></listelement></code></pre></div>
+<p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-09_20-05-15-1.jpg" srcset="/img/loading.gif" alt> 实验的结果是，使用传统for循环+ArrayList.remove，删除和遍历都没有问题；使用增强for循环和ArrayList.remove，删除成功，但是抛出了ConcurrentModificationException；使用迭代器循环+迭代器remove，遍历成功并且正确删除了5；使用迭代器循环+ArrayList.remove，抛出了ConcurrentModificationException。</p>
+<h3 id="ListItr"><a href="#ListItr" class="headerlink" title="ListItr"></a>ListItr</h3><p>继承了Itr，并提过了几个额外的方法:previous,set,add。这个add是可以配合迭代器对象在遍历过程中添加元素的。但是同样有前提条件：lastRet必须有效，即在add之前必须调用一次next。</p>
+<h3 id="lastRet"><a href="#lastRet" class="headerlink" title="lastRet"></a>lastRet</h3><p>这个变量很有意思，cursor代表写一个元素的index，那么上一个不就是cursor-1吗，为什么还要专门找一个变量来表示上一个变量的index呢？？？ 注意：Itr还是ListItr，都可以通过ArrayList的方法获得。</p>
+<h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="SubList"><a href="#SubList" class="headerlink" title="SubList"></a>SubList</h3><p>代表ArrayList的一部分，奇怪的是，没有继承ArrayList，而是直接继承AbstractList并实现了RandomAccess。概念类似于数据库中的视图，即把ArrayList中的内容截取一段，ArrayList和SubList中的数组元素实际上是相同的。任何一处修改，另一处也会更随着变化。 提供的数个方法和ArrayList相差无几（set、get、size、add、remove、addAll），区别在于要比ArrayList的对应方法多一步：检查comidification。 SubList也提供了自己的迭代器，是一个继承了ListIterator的匿名内部类。</p>
+<h3 id="ArrayListSplitter"><a href="#ArrayListSplitter" class="headerlink" title="ArrayListSplitter"></a>ArrayListSplitter</h3><blockquote>
+<p>Spliterator是一个可分割迭代器(splitable iterator)，可以和iterator顺序遍历迭代器一起看。jdk1.8发布后，对于并行处理的能力大大增强，Spliterator就是为了并行遍历元素而设计的一个迭代器，jdk1.8中的集合框架中的数据结构都默认实现了spliterator。</p>
+</blockquote>
+<p>jdk8的新特性，暂不研究。。。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java-Collection/">Java Collection</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/7b8114a5/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java Collection——LinkedList</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/a80f8f54/">
+                        <span class="hidden-mobile">Java Collection——总览</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -204,7 +518,69 @@ public class LearnArrayList {
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -217,10 +593,75 @@ public class LearnArrayList {
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -242,7 +683,28 @@ public class LearnArrayList {
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -250,7 +712,12 @@ public class LearnArrayList {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -265,7 +732,21 @@ public class LearnArrayList {
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -280,7 +761,12 @@ public class LearnArrayList {
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -292,14 +778,26 @@ public class LearnArrayList {
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -308,7 +806,17 @@ public class LearnArrayList {
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -354,4 +862,19 @@ public class LearnArrayList {
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

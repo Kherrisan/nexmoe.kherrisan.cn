@@ -1,6 +1,341 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>JavaEE——Servlet总结 - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2018-05-01 15:54">2018年5月1日 下午</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 1.7k 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 18 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><p>谈到JavaEE，虽然如今绝大部分场合使用的都是SSH、SSM等框架，但这些都是基于Servlet技术所做的进一步发展，也就是说底层实现还是servlet，只是做了针对业务需求做了进一步的封装，使得开发人员能够更加有针对性的、更加高效的编写代码。这里稍微总结一下servlet技术的几个重要概念。 从没有在实际项目过程中使用过servlet，因此这里就从一个开发者的角度来考虑几个问题。</p><a id="more"></a><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Servlet是Java中一系列对象的统称，也可以说是一个标准，也可以说是java中的一个借口（interface）。</p><h2 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h2><p>和JDBC一样，Servlet规定了Java Web Server程序所需要的输入数据、输出数据的规范，遵守该规范的程序能够在常用的Servlet容器如Tomcat中运行。类比于JDBC规范，Servlet就是JDBC，在JDBC中，编写Java程序进行数据库的增删改查操作的函数接口都由JDBC规范约定好了，同一个Java程序可以应用于不同的数据库DBMC，只需要切换驱动即可；在Servlet中，Servlet容器也可以随意更换，编写的Servlet类是可以处处运行的。而Tomcat等容器对应于各种DBMS如MySQL、Oracle及其驱动。</p><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>开发人员编写Servlet程序是以自定义类并覆盖抽象类，或实现接口，这两种形式进行的。在运行时，类在容器中被实例化为对象，容器负责管理对象的生死存亡，负责向servlet对象中传入参数或接收返回值。 以HttpServlet为例，servlet对象被实例化后存活于容器中，每当有HTTP请求进入容器，容器会将该请求报文封装为一个HTTP请求对象（该请求对象也要符合Servlet标准），传入对应的Servlet中，Servlet根据请求内容采取操作，最后返回一个HTTP响应对象，该响应对象经容器序列化为响应报文，返回给客户端。</p><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>既然是标准，那肯定要有interface。 <img src="https://oss.kherrisan.cn/v2-85bf84640fbc6b6e195b9c5b513b918f_hd.jpg" srcset="/img/loading.gif" alt></p><h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p><img src="https://oss.kherrisan.cn/Snipaste_2018-04-30_20-27-04.jpg" srcset="/img/loading.gif" alt> Servlet的生命周期比较简单，过程中经历的函数也不是很多。</p><ol><li><ol><li><ol><li>Servlet会被惰性初始化（或者在容器启动时初始化，取决于配置），即在容器在处理某个请求的时候检查其需要的Servlet是否存在，如果不存在，载入该Servlet类，实例化，运行init方法，读入一些初始化参数。</li><li>在某个请求到来的时候，会运行servlet的service方法，并传入相关参数。这些参数由容器打包。servlet处理结束之后，其第二个参数——response会被容器提取，并返回给客户端。每个请求都会运行service方法。</li><li>由容器决定何时销毁servlet（就像JVM垃圾回收一样），销毁时执行destroy方法，释放资源。一般是容器关闭的时候销毁。</li></ol></li></ol></li></ol><h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><p>Servlet并不是单例，即允许实例化多个对象，尽管其在大多数情况下只有一个对象。一个servlet声明对应一个对象，声明多次就有多个。</p><blockquote><p>For a servlet not hosted in a distributed environment (the default), the servlet container must use only one instance per servlet declaration. 如果 servlet 不是在分布式环境下（默认），servlet 容器必须使一个 servlet 实例对应一个 servlet 声明。 However, for a servlet implementing the SingleThreadModel(Deprecated) interface, the servlet container may instantiate multiple instances to handle a heavy request load and serialize requests to a particular instance. 然而，实现了 SingleThreadModel 接口的 Servlet，可以有多个实例。以处理繁重的请求，并且序列化 request 到特定的 servlet 实例。</p></blockquote><p>在面对并发的情况时，servlet对象会运行在多线程环境中。即一个servlet对象会被多个线程共享，每个线程可能对应于一个HTTP连接（线程的复用机制取决于容器）。在service方法内部的局部变量不会受线程切换而影响，但是如果servlet类中定义了实例变量，那么就有可能造成线程的冲突。 因此要避免在servlet中定义实例变量，或者手动同步，不过手动同步可能会影响处理性能。</p><h1 id="过滤器（Filter）"><a href="#过滤器（Filter）" class="headerlink" title="过滤器（Filter）"></a>过滤器（Filter）</h1><p>和servlet对象一样，过滤器概念也是来自于servlet标准，即如果我按照标准编写并配置了一个过滤器，那么容器就必须将该过滤器实例化并装载在合适的位置，对于HTTP请求进行过滤。</p><h2 id="生命周期-1"><a href="#生命周期-1" class="headerlink" title="生命周期"></a>生命周期</h2><p>和servlet类似，有init和destroy阶段，只初始化一次。初始化时机在servlet初始化之前，销毁于servlet之后。对应于servlet的service方法，filter有一个doFilter方法，表示在过滤HTTP请求时采取该行为。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>直接上代码吧，理解起来没什么难度。这是一个处理字符编码的过滤器。</p><filter><filter-name>setCharacterEncoding</filter-name><filter-class>com.company.strutstudy.web.servletstudy.filter.EncodingFilter</filter-class><init-param><param-name>encoding</param-name><param-value>utf-8</param-value></init-param></filter><filter-mapping><filter-name>setCharacterEncoding</filter-name><url-pattern>/*</url-pattern></filter-mapping> 如果声明了多个servlet对象，HTTP请求入站过程经过过滤器的顺序为从上到下。 模式 -- 一个HTTP可能会经过多个filter，filter的组装顺序和过滤控制是可以调整的。容器会自动把声明的过滤器组装在一个filterChain对象里面，在某个过滤器的doFilter方法中，如果想要让该请求进入下一个过滤器，就需要调用`chain.doFilter`方法。最后一个过滤器调用该方法把请求直接传给servlet对象。 监听器（Listener） ============= 监听器，顾名思义，就是监听某个事件发生并采取相应行动的组件。 监听器能够监视三类对象，ServletContext、HttpSession、ServletRequest，监听这三类对象的监听器的抽象类类名和接口名也不同： 1. 1. 1. 1. 监听应用上下文：ServletContextListener 2. 监听用户会话：HttpSessionListener 3. 监听请求：ServletRequestListener ![](https://oss.kherrisan.cn/Snipaste_2018-05-01_15-28-55.jpg) 每种监听器都有数个类似的方法，如监听对象的创建、销毁事件，增加、修改、删除某个属性的事件。有的监听器会有一些独特的方法。这里不详细解释每个监听器的原型。 配置 --<listener><listener-class>cn.itcast.web.listener.MyServletContextListener</listener-class></listener> 如果在web.xml中声明了多个监听器，那么这些监听器会按照声明的顺序注册到相应对象中。 上下文（Context） ============ 容器启动后，会为每个web应用创建一个context，只要不关闭容器或者卸载该web应用，context就不会被销毁。servlet之间通过context来通信，servlet也可以通过context来获取全局的资源文件等。 配置 --<?xml version="1.0" encoding="UTF-8"?><web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://xmlns.jcp.org/xml/ns/javaee
-                      http://xmlns.jcp.org/xml/ns/javaee/web-app\_4\_0.xsd" version="4.0" metadata-complete="true"><servlet><servlet-name>FristServlet</servlet-name><servlet-class>com.hello.com.FristServlet</servlet-class></servlet><servlet-mapping><servlet-name>FristServlet</servlet-name><url-pattern>/test</url-pattern></servlet-mapping></web-app> servlet和filter都是通过mapping-url来标识是否要选择此servlet或filter的，而监听器则是对于每个对象都会无条件绑定。 Web.xml ======= web.xml是Jave Web应用程序所使用的配置文件，虽然它并不是必须的。web.xml中可以定义上文所提及的servlet、listener、filter对象，每种对象可以定义一个或多个，并通过xml语法指定他们的属性。 定义和加载顺序 ------- 在web.xml中，servlet、listener、filter的定义顺序是随意的，但是Tomcat只会按照规定的顺序加载他们： Listener->Filter->Servlet 可以这么理解：Listener中有一个ContextListener用于监听ContextInitialize时间，由于该项目一启动就会有一个ApplicationContext，因此为了监听到这个事件就必须要在最前面初始化。Servlet是惰性初始化的，所以排在最后。 运作流程 ---- ![](/images/invfilt.gif) 当一个web请求到来时，首先在在该请求上注册监听器（只有针对于请求的监听器才会再此时注册，针对其他对象的监听器在其他时刻注册，因为说不定其他对象还没有实例化呢），然后经过多个过滤器，最终到达servlet。 实验 --<?xml version="1.0" encoding="UTF-8"?><web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd" version="2.5"><filter><filter-name>MyFilter</filter-name><filter-class>com.testwebxml.MyFilter</filter-class><init-param><param-name>name</param-name><param-value>FirstFilter</param-value></init-param></filter><div class="hljs"><pre><code>&lt;filter-mapping&gt;
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>JavaEE——Servlet总结 - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2018-05-01 15:54">
+                    2018年5月1日 下午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    1.7k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    18
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>谈到JavaEE，虽然如今绝大部分场合使用的都是SSH、SSM等框架，但这些都是基于Servlet技术所做的进一步发展，也就是说底层实现还是servlet，只是做了针对业务需求做了进一步的封装，使得开发人员能够更加有针对性的、更加高效的编写代码。这里稍微总结一下servlet技术的几个重要概念。 从没有在实际项目过程中使用过servlet，因此这里就从一个开发者的角度来考虑几个问题。</p>
+<a id="more"></a>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Servlet是Java中一系列对象的统称，也可以说是一个标准，也可以说是java中的一个借口（interface）。</p>
+<h2 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h2><p>和JDBC一样，Servlet规定了Java Web Server程序所需要的输入数据、输出数据的规范，遵守该规范的程序能够在常用的Servlet容器如Tomcat中运行。类比于JDBC规范，Servlet就是JDBC，在JDBC中，编写Java程序进行数据库的增删改查操作的函数接口都由JDBC规范约定好了，同一个Java程序可以应用于不同的数据库DBMC，只需要切换驱动即可；在Servlet中，Servlet容器也可以随意更换，编写的Servlet类是可以处处运行的。而Tomcat等容器对应于各种DBMS如MySQL、Oracle及其驱动。</p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>开发人员编写Servlet程序是以自定义类并覆盖抽象类，或实现接口，这两种形式进行的。在运行时，类在容器中被实例化为对象，容器负责管理对象的生死存亡，负责向servlet对象中传入参数或接收返回值。 以HttpServlet为例，servlet对象被实例化后存活于容器中，每当有HTTP请求进入容器，容器会将该请求报文封装为一个HTTP请求对象（该请求对象也要符合Servlet标准），传入对应的Servlet中，Servlet根据请求内容采取操作，最后返回一个HTTP响应对象，该响应对象经容器序列化为响应报文，返回给客户端。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>既然是标准，那肯定要有interface。 <img src="https://oss.kherrisan.cn/v2-85bf84640fbc6b6e195b9c5b513b918f_hd.jpg" srcset="/img/loading.gif" alt></p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p><img src="https://oss.kherrisan.cn/Snipaste_2018-04-30_20-27-04.jpg" srcset="/img/loading.gif" alt> Servlet的生命周期比较简单，过程中经历的函数也不是很多。</p>
+<ol>
+<li><ol>
+<li><ol>
+<li>Servlet会被惰性初始化（或者在容器启动时初始化，取决于配置），即在容器在处理某个请求的时候检查其需要的Servlet是否存在，如果不存在，载入该Servlet类，实例化，运行init方法，读入一些初始化参数。</li>
+<li>在某个请求到来的时候，会运行servlet的service方法，并传入相关参数。这些参数由容器打包。servlet处理结束之后，其第二个参数——response会被容器提取，并返回给客户端。每个请求都会运行service方法。</li>
+<li>由容器决定何时销毁servlet（就像JVM垃圾回收一样），销毁时执行destroy方法，释放资源。一般是容器关闭的时候销毁。</li></ol></li>
+</ol>
+</li>
+</ol>
+
+
+<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><p>Servlet并不是单例，即允许实例化多个对象，尽管其在大多数情况下只有一个对象。一个servlet声明对应一个对象，声明多次就有多个。</p>
+<blockquote>
+<p>For a servlet not hosted in a distributed environment (the default), the servlet container must use only one instance per servlet declaration. 如果 servlet 不是在分布式环境下（默认），servlet 容器必须使一个 servlet 实例对应一个 servlet 声明。 However, for a servlet implementing the SingleThreadModel(Deprecated) interface, the servlet container may instantiate multiple instances to handle a heavy request load and serialize requests to a particular instance. 然而，实现了 SingleThreadModel 接口的 Servlet，可以有多个实例。以处理繁重的请求，并且序列化 request 到特定的 servlet 实例。</p>
+</blockquote>
+<p>在面对并发的情况时，servlet对象会运行在多线程环境中。即一个servlet对象会被多个线程共享，每个线程可能对应于一个HTTP连接（线程的复用机制取决于容器）。在service方法内部的局部变量不会受线程切换而影响，但是如果servlet类中定义了实例变量，那么就有可能造成线程的冲突。 因此要避免在servlet中定义实例变量，或者手动同步，不过手动同步可能会影响处理性能。</p>
+<h1 id="过滤器（Filter）"><a href="#过滤器（Filter）" class="headerlink" title="过滤器（Filter）"></a>过滤器（Filter）</h1><p>和servlet对象一样，过滤器概念也是来自于servlet标准，即如果我按照标准编写并配置了一个过滤器，那么容器就必须将该过滤器实例化并装载在合适的位置，对于HTTP请求进行过滤。</p>
+<h2 id="生命周期-1"><a href="#生命周期-1" class="headerlink" title="生命周期"></a>生命周期</h2><p>和servlet类似，有init和destroy阶段，只初始化一次。初始化时机在servlet初始化之前，销毁于servlet之后。对应于servlet的service方法，filter有一个doFilter方法，表示在过滤HTTP请求时采取该行为。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>直接上代码吧，理解起来没什么难度。这是一个处理字符编码的过滤器。</p>
+<filter>  
+    <filter-name>setCharacterEncoding</filter-name>  
+    <filter-class>com.company.strutstudy.web.servletstudy.filter.EncodingFilter</filter-class>  
+    <init-param>  
+        <param-name>encoding</param-name>  
+        <param-value>utf-8</param-value>  
+    </init-param>  
+</filter>  
+<filter-mapping>  
+    <filter-name>setCharacterEncoding</filter-name>  
+    <url-pattern>/*</url-pattern>  
+</filter-mapping>
+
+  如果声明了多个servlet对象，HTTP请求入站过程经过过滤器的顺序为从上到下。
+
+模式
+--
+
+一个HTTP可能会经过多个filter，filter的组装顺序和过滤控制是可以调整的。容器会自动把声明的过滤器组装在一个filterChain对象里面，在某个过滤器的doFilter方法中，如果想要让该请求进入下一个过滤器，就需要调用`chain.doFilter`方法。最后一个过滤器调用该方法把请求直接传给servlet对象。
+
+监听器（Listener）
+=============
+
+监听器，顾名思义，就是监听某个事件发生并采取相应行动的组件。 监听器能够监视三类对象，ServletContext、HttpSession、ServletRequest，监听这三类对象的监听器的抽象类类名和接口名也不同：
+
+1.  1.  1.  1.  监听应用上下文：ServletContextListener
+            2.  监听用户会话：HttpSessionListener
+            3.  监听请求：ServletRequestListener
+
+![](https://oss.kherrisan.cn/Snipaste_2018-05-01_15-28-55.jpg) 每种监听器都有数个类似的方法，如监听对象的创建、销毁事件，增加、修改、删除某个属性的事件。有的监听器会有一些独特的方法。这里不详细解释每个监听器的原型。
+
+配置
+--
+
+<listener>
+    <listener-class>cn.itcast.web.listener.MyServletContextListener</listener-class>
+</listener>
+
+  如果在web.xml中声明了多个监听器，那么这些监听器会按照声明的顺序注册到相应对象中。
+
+上下文（Context）
+============
+
+容器启动后，会为每个web应用创建一个context，只要不关闭容器或者卸载该web应用，context就不会被销毁。servlet之间通过context来通信，servlet也可以通过context来获取全局的资源文件等。
+
+配置
+--
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app\_4\_0.xsd" version="4.0" metadata-complete="true">
+<!--配置和映射Servlet-->
+<!--配置Servlet-->
+<servlet>
+       <servlet-name>FristServlet</servlet-name>
+       <servlet-class>com.hello.com.FristServlet</servlet-class>
+</servlet>
+<!--映射Servlet -- >
+<servlet-mapping>  
+       <servlet-name>FristServlet</servlet-name>  
+       <url-pattern>/test</url-pattern>  
+   </servlet-mapping>  
+</web-app>
+
+  servlet和filter都是通过mapping-url来标识是否要选择此servlet或filter的，而监听器则是对于每个对象都会无条件绑定。
+
+Web.xml
+=======
+
+web.xml是Jave Web应用程序所使用的配置文件，虽然它并不是必须的。web.xml中可以定义上文所提及的servlet、listener、filter对象，每种对象可以定义一个或多个，并通过xml语法指定他们的属性。
+
+定义和加载顺序
+-------
+
+在web.xml中，servlet、listener、filter的定义顺序是随意的，但是Tomcat只会按照规定的顺序加载他们： Listener->Filter->Servlet 可以这么理解：Listener中有一个ContextListener用于监听ContextInitialize时间，由于该项目一启动就会有一个ApplicationContext，因此为了监听到这个事件就必须要在最前面初始化。Servlet是惰性初始化的，所以排在最后。
+
+运作流程
+----
+
+![](https://oss.kherrisan.cn/invfilt.gif) 当一个web请求到来时，首先在在该请求上注册监听器（只有针对于请求的监听器才会再此时注册，针对其他对象的监听器在其他时刻注册，因为说不定其他对象还没有实例化呢），然后经过多个过滤器，最终到达servlet。  
+
+实验
+--
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd"
+         version="2.5">
+
+    <filter>
+        <filter-name>MyFilter</filter-name>
+        <filter-class>com.testwebxml.MyFilter</filter-class>
+        <init-param>
+            <param-name>name</param-name>
+            <param-value>FirstFilter</param-value>
+        </init-param>
+    </filter>
+
+<div class="hljs"><pre><code>&lt;filter-mapping&gt;
     &lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
     &lt;url-pattern&gt;/&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
@@ -51,7 +386,81 @@
     &lt;servlet-name&gt;MyHttpServlet&lt;/servlet-name&gt;
     &lt;url-pattern&gt;/http/*&lt;/url-pattern&gt;
 &lt;/servlet-mapping&gt;
-</code></pre></div><p>&lt;/web-app&gt;</p><p>项目启动时</p><p>[2018-08-06 10:32:26,102] Artifact test: Artifact is being deployed, please wait…<br>Connected to server<br>[com.testwebxml.MyServletContextAttritubeListener][<init>]<br>[com.testwebxml.MyServletContextListener][<init>]<br>[com.testwebxml.MyServletRequestListener][<init>]<br>[com.testwebxml.MyHttpSessionActivationListener][<init>]<br>[com.testwebxml.MyHttpSessionListener][<init>]<br>[com.testwebxml.MyServletContextListener][contextInitialized]ApplicationContextFacade<br>[com.testwebxml.MyFilter][init]FirstFilter<br>[com.testwebxml.MyFilter][init]SecondFilter<br>[2018-08-06 10:32:26,493] Artifact test: Artifact is deployed successfully<br>[2018-08-06 10:32:26,493] Artifact test: Deploy took 391 milliseconds</p><p>接收第一个/请求时</p><p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyServlet][init]<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyServlet][service]<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p><p>接收第二个/请求时</p><p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyServlet][service]<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p><p>接收第一个/http请求时</p><p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyHttpServlet][init]init()<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyHttpServlet][doGet]<br>[com.testwebxml.MyHttpSessionListener][sessionCreated]<br>[com.testwebxml.MyHttpServlet][doGet]HttpServletRequest.getSession()<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p><p>接收第二个/http请求时</p><p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyHttpServlet][doGet]<br>[com.testwebxml.MyHttpServlet][doGet]HttpServletRequest.getSession()<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p><p>项目停止时</p><p>信息: Stopping service Catalina<br>[com.testwebxml.MyServlet][destroy]<br>[com.testwebxml.MyFilter][destroy]FirstFilter<br>[com.testwebxml.MyFilter][destroy]SecondFilter<br>[com.testwebxml.MyServletContextListener][contextDestroyed]ApplicationContextFacade<br>八月 06, 2018 10:35:42 上午 org.apache.coyote.http11.Http11AprProtocol destroy<br>信息: Stopping Coyote HTTP/1.1 on http-21211<br>八月 06, 2018 10:35:42 上午 org.apache.coyote.ajp.AjpAprProtocol destroy<br>信息: Stopping Coyote AJP/1.3 on ajp-8009<br>Disconnected from server</p> --></web-app></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/JavaEE/">JavaEE</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/servlet/">servlet</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/2118eccf/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">JVM——垃圾收集（GC）和内存分配</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/77a52e0d/"><span class="hidden-mobile">MySQL——总体架构</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+</code></pre></div><p>&lt;/web-app&gt;</p>
+<p>项目启动时</p>
+<p>[2018-08-06 10:32:26,102] Artifact test: Artifact is being deployed, please wait…<br>Connected to server<br>[com.testwebxml.MyServletContextAttritubeListener][<init>]<br>[com.testwebxml.MyServletContextListener][<init>]<br>[com.testwebxml.MyServletRequestListener][<init>]<br>[com.testwebxml.MyHttpSessionActivationListener][<init>]<br>[com.testwebxml.MyHttpSessionListener][<init>]<br>[com.testwebxml.MyServletContextListener][contextInitialized]ApplicationContextFacade<br>[com.testwebxml.MyFilter][init]FirstFilter<br>[com.testwebxml.MyFilter][init]SecondFilter<br>[2018-08-06 10:32:26,493] Artifact test: Artifact is deployed successfully<br>[2018-08-06 10:32:26,493] Artifact test: Deploy took 391 milliseconds</p>
+<p>接收第一个/请求时</p>
+<p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyServlet][init]<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyServlet][service]<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p>
+<p>接收第二个/请求时</p>
+<p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyServlet][service]<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p>
+<p>接收第一个/http请求时</p>
+<p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyHttpServlet][init]init()<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyHttpServlet][doGet]<br>[com.testwebxml.MyHttpSessionListener][sessionCreated]<br>[com.testwebxml.MyHttpServlet][doGet]HttpServletRequest.getSession()<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p>
+<p>接收第二个/http请求时</p>
+<p>[com.testwebxml.MyServletRequestListener][requestInitialized]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestInitialized]RequestFacade<br>[com.testwebxml.MyFilter][doFilter]FirstFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyFilter][doFilter]SecondFilter ServletRequest:127.0.0.1<br>[com.testwebxml.MyHttpServlet][doGet]<br>[com.testwebxml.MyHttpServlet][doGet]HttpServletRequest.getSession()<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]ApplicationContextFacade<br>[com.testwebxml.MyServletRequestListener][requestDestroyed]RequestFacade</p>
+<p>项目停止时</p>
+<p>信息: Stopping service Catalina<br>[com.testwebxml.MyServlet][destroy]<br>[com.testwebxml.MyFilter][destroy]FirstFilter<br>[com.testwebxml.MyFilter][destroy]SecondFilter<br>[com.testwebxml.MyServletContextListener][contextDestroyed]ApplicationContextFacade<br>八月 06, 2018 10:35:42 上午 org.apache.coyote.http11.Http11AprProtocol destroy<br>信息: Stopping Coyote HTTP/1.1 on http-21211<br>八月 06, 2018 10:35:42 上午 org.apache.coyote.ajp.AjpAprProtocol destroy<br>信息: Stopping Coyote AJP/1.3 on ajp-8009<br>Disconnected from server</p>
+--></web-app>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JavaEE/">JavaEE</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/servlet/">servlet</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/2118eccf/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JVM——垃圾收集（GC）和内存分配</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/77a52e0d/">
+                        <span class="hidden-mobile">MySQL——总体架构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -71,7 +480,69 @@
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -84,10 +555,75 @@
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -109,7 +645,28 @@
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -117,7 +674,12 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -132,7 +694,21 @@
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -147,7 +723,12 @@
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -159,14 +740,26 @@
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -175,7 +768,17 @@
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -221,4 +824,19 @@
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

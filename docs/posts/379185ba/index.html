@@ -1,5 +1,290 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>TCP/IP协议 Introduction - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2017-07-18 17:38">2017年7月18日 下午</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 822 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 8 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><p>一边看书，一边做一些笔记。刚刚开始看第一章，书是全英文版的，一上来就感觉很难，一改这类书第一章都是导论所以很简单的印象。</p><h2 id="架构原则"><a href="#架构原则" class="headerlink" title="架构原则"></a>架构原则</h2><p>因特网架构的首要原则主要考虑这几个关键词：高效，复用，连接已有的网络。 二级原则包含下面几个方面：</p><a id="more"></a><ol><li>发生了loss也要继续。</li><li>支持多种服务。</li><li>适配多种网络。</li><li>支持分布式资源的管理。</li><li>高效。（高效性）</li><li>新主机的接入要足够方便。（拓展性）</li><li>资源必须可数。（高效性）</li></ol><p>几个基本概念： packet（包） datagram（数据报） connection（连接） 还有两个原则，这两个原则我没怎么看懂，所以想先放一放。</p><h4 id="end-to-end-argument"><a href="#end-to-end-argument" class="headerlink" title="end to end argument"></a>end to end argument</h4><h4 id="fate-sharing"><a href="#fate-sharing" class="headerlink" title="fate sharing"></a>fate sharing</h4><h2 id="设计与实现"><a href="#设计与实现" class="headerlink" title="设计与实现"></a>设计与实现</h2><p><a href="https://gyazo.com/98b166aba720915bc11aa51544bca788" target="_blank" rel="noopener"><img src="https://i.gyazo.com/98b166aba720915bc11aa51544bca788.png" srcset="/img/loading.gif" alt="https://gyazo.com/98b166aba720915bc11aa51544bca788"></a> 这是OSI7层模型，下三层是所有设备都有的，上四层是只有主机才有的。各层的分工各不相同。在OSI层结构的基础上，每一层能够<strong>复用</strong>数据，能够<strong>封装</strong>上层的数据，封装的方式是在上层的数据最前加上一个header，有的层会在最尾端加上trailer，封装了之后就不必关心上层协议下来的数据的内容。每层协议可以封装多个上层协议的PDU（协议数据单元）。 这里的<strong>复用</strong>是指，每一层所要封装的上层PDU可以是来自不同的协议的，比如IP层可以封装TCP和UDP的就好像每一层都有一个槽，槽里面放的是什么东西是可以变的。为了能够正确的解复用，需要在封装的时候在header部分加上一些标识符来表面PDU是什么类型的，否则接收放在拆包的时候就无法正确地处理了。 <a href="https://gyazo.com/bdfc6e943b517149e9e7b9c1264254f5" target="_blank" rel="noopener"><img src="https://i.gyazo.com/bdfc6e943b517149e9e7b9c1264254f5.png" srcset="/img/loading.gif" alt="https://gyazo.com/bdfc6e943b517149e9e7b9c1264254f5"></a> <a href="https://gyazo.com/38587d2012ea9ee270029e19792bf1a4" target="_blank" rel="noopener"><img src="https://i.gyazo.com/38587d2012ea9ee270029e19792bf1a4.png" srcset="/img/loading.gif" alt="https://gyazo.com/38587d2012ea9ee270029e19792bf1a4"></a> 上面这张图描述了一个理想的网络结构，两台主机，中间一台交换机一台路由器，交换机只包含两层，路由器包含了三层，所以路由器可以用来联通不同类型的网络。当今时代也有很多路由器和交换机能充当主机的身份的，比如路由器能够供管理员登陆，那就说明肯定有应用层了。 网络层以上的层使用end to end协议，只有主机才使用这些协议（因为中继设备没有网络层以上的层），网络层使用hop to hop协议，所有主机和中继设备都会用到。 注：交换机或者说网桥不被普遍地认为是中继设备因为他们不被编址，换句话说，从网络层设备的角度看，交换机是透明的。</p><h2 id="TCP-IP协议栈的结构和协议"><a href="#TCP-IP协议栈的结构和协议" class="headerlink" title="TCP/IP协议栈的结构和协议"></a>TCP/IP协议栈的结构和协议</h2><p><a href="https://gyazo.com/3c84782b0a61cc631ad94a515439d7d8" target="_blank" rel="noopener"><img src="https://i.gyazo.com/3c84782b0a61cc631ad94a515439d7d8.png" srcset="/img/loading.gif" alt="https://gyazo.com/3c84782b0a61cc631ad94a515439d7d8"></a> 有的层还包含一些附属的协议，协议很多而且后面的章节还会详细的介绍所以这里就不一一罗列了。 有关复用，解复用，封装的问题再一次得到了体现。如以太网帧包含16位的以太网类型字段（ipv4，ipv6，arp），IP数据报包含8位的协议字段（ICMP，IPV4，TCP，UDP），在传输层则使用端口号来进行解复用。 <a href="https://gyazo.com/4078dc6dfc4f440015d229351c2f9fb7" target="_blank" rel="noopener"><img src="https://i.gyazo.com/4078dc6dfc4f440015d229351c2f9fb7.png" srcset="/img/loading.gif" alt="https://gyazo.com/4078dc6dfc4f440015d229351c2f9fb7"></a></p></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/TCP-IP/">TCP/IP</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a> <a class="hover-with-bg" href="/tags/TCP-IP/">TCP/IP</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/7ce108b4/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">MIT_6.828 Homework: boot xv6</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/d949f9e1/"><span class="hidden-mobile">MIT_6.828 简介，环境搭建</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>TCP/IP协议 Introduction - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2017-07-18 17:38">
+                    2017年7月18日 下午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    822 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    8
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>一边看书，一边做一些笔记。刚刚开始看第一章，书是全英文版的，一上来就感觉很难，一改这类书第一章都是导论所以很简单的印象。</p>
+<h2 id="架构原则"><a href="#架构原则" class="headerlink" title="架构原则"></a>架构原则</h2><p>因特网架构的首要原则主要考虑这几个关键词：高效，复用，连接已有的网络。 二级原则包含下面几个方面：</p>
+<a id="more"></a>
+<ol>
+<li>发生了loss也要继续。</li>
+<li>支持多种服务。</li>
+<li>适配多种网络。</li>
+<li>支持分布式资源的管理。</li>
+<li>高效。（高效性）</li>
+<li>新主机的接入要足够方便。（拓展性）</li>
+<li>资源必须可数。（高效性）</li>
+</ol>
+<p>几个基本概念： packet（包） datagram（数据报） connection（连接） 还有两个原则，这两个原则我没怎么看懂，所以想先放一放。</p>
+<h4 id="end-to-end-argument"><a href="#end-to-end-argument" class="headerlink" title="end to end argument"></a>end to end argument</h4><h4 id="fate-sharing"><a href="#fate-sharing" class="headerlink" title="fate sharing"></a>fate sharing</h4><h2 id="设计与实现"><a href="#设计与实现" class="headerlink" title="设计与实现"></a>设计与实现</h2><p><a href="https://gyazo.com/98b166aba720915bc11aa51544bca788" target="_blank" rel="noopener"><img src="https://i.gyazo.com/98b166aba720915bc11aa51544bca788.png" srcset="/img/loading.gif" alt="https://gyazo.com/98b166aba720915bc11aa51544bca788"></a> 这是OSI7层模型，下三层是所有设备都有的，上四层是只有主机才有的。各层的分工各不相同。在OSI层结构的基础上，每一层能够<strong>复用</strong>数据，能够<strong>封装</strong>上层的数据，封装的方式是在上层的数据最前加上一个header，有的层会在最尾端加上trailer，封装了之后就不必关心上层协议下来的数据的内容。每层协议可以封装多个上层协议的PDU（协议数据单元）。 这里的<strong>复用</strong>是指，每一层所要封装的上层PDU可以是来自不同的协议的，比如IP层可以封装TCP和UDP的就好像每一层都有一个槽，槽里面放的是什么东西是可以变的。为了能够正确的解复用，需要在封装的时候在header部分加上一些标识符来表面PDU是什么类型的，否则接收放在拆包的时候就无法正确地处理了。 <a href="https://gyazo.com/bdfc6e943b517149e9e7b9c1264254f5" target="_blank" rel="noopener"><img src="https://i.gyazo.com/bdfc6e943b517149e9e7b9c1264254f5.png" srcset="/img/loading.gif" alt="https://gyazo.com/bdfc6e943b517149e9e7b9c1264254f5"></a> <a href="https://gyazo.com/38587d2012ea9ee270029e19792bf1a4" target="_blank" rel="noopener"><img src="https://i.gyazo.com/38587d2012ea9ee270029e19792bf1a4.png" srcset="/img/loading.gif" alt="https://gyazo.com/38587d2012ea9ee270029e19792bf1a4"></a> 上面这张图描述了一个理想的网络结构，两台主机，中间一台交换机一台路由器，交换机只包含两层，路由器包含了三层，所以路由器可以用来联通不同类型的网络。当今时代也有很多路由器和交换机能充当主机的身份的，比如路由器能够供管理员登陆，那就说明肯定有应用层了。 网络层以上的层使用end to end协议，只有主机才使用这些协议（因为中继设备没有网络层以上的层），网络层使用hop to hop协议，所有主机和中继设备都会用到。 注：交换机或者说网桥不被普遍地认为是中继设备因为他们不被编址，换句话说，从网络层设备的角度看，交换机是透明的。</p>
+<h2 id="TCP-IP协议栈的结构和协议"><a href="#TCP-IP协议栈的结构和协议" class="headerlink" title="TCP/IP协议栈的结构和协议"></a>TCP/IP协议栈的结构和协议</h2><p><a href="https://gyazo.com/3c84782b0a61cc631ad94a515439d7d8" target="_blank" rel="noopener"><img src="https://i.gyazo.com/3c84782b0a61cc631ad94a515439d7d8.png" srcset="/img/loading.gif" alt="https://gyazo.com/3c84782b0a61cc631ad94a515439d7d8"></a> 有的层还包含一些附属的协议，协议很多而且后面的章节还会详细的介绍所以这里就不一一罗列了。 有关复用，解复用，封装的问题再一次得到了体现。如以太网帧包含16位的以太网类型字段（ipv4，ipv6，arp），IP数据报包含8位的协议字段（ICMP，IPV4，TCP，UDP），在传输层则使用端口号来进行解复用。 <a href="https://gyazo.com/4078dc6dfc4f440015d229351c2f9fb7" target="_blank" rel="noopener"><img src="https://i.gyazo.com/4078dc6dfc4f440015d229351c2f9fb7.png" srcset="/img/loading.gif" alt="https://gyazo.com/4078dc6dfc4f440015d229351c2f9fb7"></a></p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/TCP-IP/">TCP/IP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+                    
+                      <a class="hover-with-bg" href="/tags/TCP-IP/">TCP/IP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/7ce108b4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MIT_6.828 Homework: boot xv6</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/d949f9e1/">
+                        <span class="hidden-mobile">MIT_6.828 简介，环境搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -19,7 +304,69 @@
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -32,10 +379,75 @@
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -57,7 +469,28 @@
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -65,7 +498,12 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -80,7 +518,21 @@
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -95,7 +547,12 @@
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -107,14 +564,26 @@
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -123,7 +592,17 @@
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -169,4 +648,19 @@
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

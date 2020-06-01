@@ -1,5 +1,217 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>Java Collection——HashMap - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2018-02-14 16:08">2018年2月14日 下午</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 695 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 8 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><p><strong>本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。</strong> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg" srcset="/img/loading.gif" alt> Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。</p><a id="more"></a><p> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_15-53-23.jpg" srcset="/img/loading.gif" alt> HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：</p><div class="hljs"><pre><code class="hljs plain">public interface Map<k,v>{
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>Java Collection——HashMap - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2018-02-14 16:08">
+                    2018年2月14日 下午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    695 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    8
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p><strong>本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。</strong> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg" srcset="/img/loading.gif" alt> Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。</p>
+<a id="more"></a>
+<p> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_15-53-23.jpg" srcset="/img/loading.gif" alt> HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：</p>
+<div class="hljs"><pre><code class="hljs plain">public interface Map<k,v>{
     int size();
     boolean isEmpty();
     boolean containsKey(key);
@@ -22,14 +234,78 @@
     computeIfAbsent(key,mappingFunction);
     compute(key,remappingFUnction);
     merge(key,value,remappingFunction);
-}</k,v></code></pre></div><p>大部分函数的参数和返回值都是Key的类型或Value的类型，少数几个Java 8中的方法为函数式编程提供了支持，能够传lambda表达式为参数。 回到HashMap。</p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="静态类属性"><a href="#静态类属性" class="headerlink" title="静态类属性"></a>静态类属性</h3><p>静态属性中，除了两个用来约束capacity的属性之外：</p><h4 id="DEFAULT-LOAD-FACTOR"><a href="#DEFAULT-LOAD-FACTOR" class="headerlink" title="DEFAULT_LOAD_FACTOR"></a>DEFAULT_LOAD_FACTOR</h4><p>默认装载因子，0.75。装载因子是一个很影响Hash容器效率的属性，反映的是Hash容器中数据的疏密程度。装载因子过大，Hash容器中绝大多数桶都放有元素，但每个桶中的链表很有可能会很长，这样在散列冲突的时候进行搜索就会花费一定的时间；装载因子过小，会导致空间利用率过低。 从直观上来说，装载因子决定了capacity的动态调节。</p><h4 id="TREEIFY-THRESHOLD"><a href="#TREEIFY-THRESHOLD" class="headerlink" title="TREEIFY_THRESHOLD"></a>TREEIFY_THRESHOLD</h4><p>HashMap使用的结构是可以动态变化的，可以是List或者Tree，做出选择的标准就是bucket（桶）的数量，如果数量大于这个阈值，就由List变为Tree。 取值为8。</p><h4 id="UNTREEIFY-THRESHOLD"><a href="#UNTREEIFY-THRESHOLD" class="headerlink" title="UNTREEIFY_THRESHOLD"></a>UNTREEIFY_THRESHOLD</h4><p>如果HashMap中桶的数量在remove的过程中逐渐变小，并越过了这个阈值，就untreeify这个map。换言之，使用Tree变为List。 取值为6。</p><h4 id="MIN-TREEIFY-CAPACITY"><a href="#MIN-TREEIFY-CAPACITY" class="headerlink" title="MIN_TREEIFY_CAPACITY"></a>MIN_TREEIFY_CAPACITY</h4><p>如果table的capacity过小，是不允许treeify的，只有capacity超过这个值，并且某个桶的链表长度超过了threshold，才会将那个桶treeify。</p><h3 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h3><h4 id="table"><a href="#table" class="headerlink" title="table"></a>table</h4><p>Node的列表。</p><h4 id="entrySet"><a href="#entrySet" class="headerlink" title="entrySet"></a>entrySet</h4><p>将一对key-value看做一个entry，在以entry为单位遍历的时候，就需要一个容器来承载所有的entry，entrySet属性用于保存这个容器。它是一个Set<entry<k,v>></entry<k,v></p><h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>下一个需要resize的值。</p><h4 id="loadFactor"><a href="#loadFactor" class="headerlink" title="loadFactor"></a>loadFactor</h4><p>装载因子。size/capacity。</p><h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>桶节点，多个Node组成了一个链表。每个Node保存自身的hash、key、value和next。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-03-24.jpg" srcset="/img/loading.gif" alt> 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。</p><ol><li>首先通过table[(table.length - 1) & hash]找到hash对应的桶。进行按位与的目的就是为了把hash的空间映射到表空间中，相当于hash%table.length。</li><li>检查桶中的节点的hash、key是否和参数一致，确认是否是想要找的那个。</li><li>如果通过散列找到的桶中的节点不是所要的节点的话，说明有冲突了，就需要进一步搜索。</li><li>如果桶中的节点是树节点，调用getTreeNode方法进行搜索。其实是一颗红黑树。</li><li>如果不是树节点，说明是一个链表，按照开链法的底层构造进行遍历搜索，直到找不到，返回null。这里判断是不是树节点使用了instanceof关键字。</li></ol><p>其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。<strong>由于table的长度始终是2的整数次方</strong>，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-12-49.jpg" srcset="/img/loading.gif" alt> 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：</p><p>and</p><p>or</p><p>xor</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>1</p><p>0</p><p>1</p><p>1</p><p>1</p><p>0</p><p>0</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>0</p><p>从表中可以看出，and和or得到的0和1的结果个数都不相同，只有xor得到的0和1的个数才是相同的。 使用hashCode的时候，通常要使得分布较为均匀，使用and和or运算都会造成0或者1的偏多或偏少，因此计算hashCode的代码常常用到异或操作。</p><h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h3><p>hashCode方法是Object类定义的方法之一，用来返回某个对象的散列值。在Object类的定义中，hashCode的默认实现返回的是该对象所在内存的地址。通常在涉及到HashSet、HashMap、HashTable之类的容器时，需要开发者重新考虑自定义的类的hashCode计算方式。 hashCode的计算需要遵循一些规则，这有助于容器类操作效率的提升以及正确性的保证。</p><blockquote><ul><li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.（一个Java程序运行的过程中，同一个对象返回的hashCode必须一致。）</li><li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.（两个相等（equals）的对象的hashCode必须一致。）</li><li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.（不想等的对象的hashCode不必不同，但不同更好。）</li></ul></blockquote><p>针对最后一点，可以假设如下情境： 一系列数个对象返回的hashCode都是相等的，那么HashMap或其他Hash容器散列的时间复杂度接近于线性，因为需要逐个遍历一边。 在网上找到一个计算hashCode的较为合适的模式：通过加入两个质数成分，将一个对象的属性映射到不同的域上面，最后相加得到散列值。虽然这个计算方法中没有用到异或操作，但应该也是值得借鉴的一种写法。</p><div class="hljs"><pre><code class="hljs plain">@Override
+}</k,v></code></pre></div>
+<p>大部分函数的参数和返回值都是Key的类型或Value的类型，少数几个Java 8中的方法为函数式编程提供了支持，能够传lambda表达式为参数。 回到HashMap。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="静态类属性"><a href="#静态类属性" class="headerlink" title="静态类属性"></a>静态类属性</h3><p>静态属性中，除了两个用来约束capacity的属性之外：</p>
+<h4 id="DEFAULT-LOAD-FACTOR"><a href="#DEFAULT-LOAD-FACTOR" class="headerlink" title="DEFAULT_LOAD_FACTOR"></a>DEFAULT_LOAD_FACTOR</h4><p>默认装载因子，0.75。装载因子是一个很影响Hash容器效率的属性，反映的是Hash容器中数据的疏密程度。装载因子过大，Hash容器中绝大多数桶都放有元素，但每个桶中的链表很有可能会很长，这样在散列冲突的时候进行搜索就会花费一定的时间；装载因子过小，会导致空间利用率过低。 从直观上来说，装载因子决定了capacity的动态调节。</p>
+<h4 id="TREEIFY-THRESHOLD"><a href="#TREEIFY-THRESHOLD" class="headerlink" title="TREEIFY_THRESHOLD"></a>TREEIFY_THRESHOLD</h4><p>HashMap使用的结构是可以动态变化的，可以是List或者Tree，做出选择的标准就是bucket（桶）的数量，如果数量大于这个阈值，就由List变为Tree。 取值为8。</p>
+<h4 id="UNTREEIFY-THRESHOLD"><a href="#UNTREEIFY-THRESHOLD" class="headerlink" title="UNTREEIFY_THRESHOLD"></a>UNTREEIFY_THRESHOLD</h4><p>如果HashMap中桶的数量在remove的过程中逐渐变小，并越过了这个阈值，就untreeify这个map。换言之，使用Tree变为List。 取值为6。</p>
+<h4 id="MIN-TREEIFY-CAPACITY"><a href="#MIN-TREEIFY-CAPACITY" class="headerlink" title="MIN_TREEIFY_CAPACITY"></a>MIN_TREEIFY_CAPACITY</h4><p>如果table的capacity过小，是不允许treeify的，只有capacity超过这个值，并且某个桶的链表长度超过了threshold，才会将那个桶treeify。</p>
+<h3 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h3><h4 id="table"><a href="#table" class="headerlink" title="table"></a>table</h4><p>Node的列表。</p>
+<h4 id="entrySet"><a href="#entrySet" class="headerlink" title="entrySet"></a>entrySet</h4><p>将一对key-value看做一个entry，在以entry为单位遍历的时候，就需要一个容器来承载所有的entry，entrySet属性用于保存这个容器。它是一个Set<entry<k,v>></entry<k,v></p>
+<h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>下一个需要resize的值。</p>
+<h4 id="loadFactor"><a href="#loadFactor" class="headerlink" title="loadFactor"></a>loadFactor</h4><p>装载因子。size/capacity。</p>
+<h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>桶节点，多个Node组成了一个链表。每个Node保存自身的hash、key、value和next。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-03-24.jpg" srcset="/img/loading.gif" alt> 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。</p>
+<ol>
+<li>首先通过table[(table.length - 1) & hash]找到hash对应的桶。进行按位与的目的就是为了把hash的空间映射到表空间中，相当于hash%table.length。</li>
+<li>检查桶中的节点的hash、key是否和参数一致，确认是否是想要找的那个。</li>
+<li>如果通过散列找到的桶中的节点不是所要的节点的话，说明有冲突了，就需要进一步搜索。</li>
+<li>如果桶中的节点是树节点，调用getTreeNode方法进行搜索。其实是一颗红黑树。</li>
+<li>如果不是树节点，说明是一个链表，按照开链法的底层构造进行遍历搜索，直到找不到，返回null。这里判断是不是树节点使用了instanceof关键字。</li>
+</ol>
+<p>其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。<strong>由于table的长度始终是2的整数次方</strong>，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-12-49.jpg" srcset="/img/loading.gif" alt> 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：</p>
+<p>and</p>
+<p>or</p>
+<p>xor</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>1</p>
+<p>0</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>0</p>
+<p>0</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>0</p>
+<p>从表中可以看出，and和or得到的0和1的结果个数都不相同，只有xor得到的0和1的个数才是相同的。 使用hashCode的时候，通常要使得分布较为均匀，使用and和or运算都会造成0或者1的偏多或偏少，因此计算hashCode的代码常常用到异或操作。</p>
+<h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h3><p>hashCode方法是Object类定义的方法之一，用来返回某个对象的散列值。在Object类的定义中，hashCode的默认实现返回的是该对象所在内存的地址。通常在涉及到HashSet、HashMap、HashTable之类的容器时，需要开发者重新考虑自定义的类的hashCode计算方式。 hashCode的计算需要遵循一些规则，这有助于容器类操作效率的提升以及正确性的保证。</p>
+<blockquote>
+<ul>
+<li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.（一个Java程序运行的过程中，同一个对象返回的hashCode必须一致。）</li>
+<li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.（两个相等（equals）的对象的hashCode必须一致。）</li>
+<li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.（不想等的对象的hashCode不必不同，但不同更好。）</li>
+</ul>
+</blockquote>
+<p>针对最后一点，可以假设如下情境： 一系列数个对象返回的hashCode都是相等的，那么HashMap或其他Hash容器散列的时间复杂度接近于线性，因为需要逐个遍历一边。 在网上找到一个计算hashCode的较为合适的模式：通过加入两个质数成分，将一个对象的属性映射到不同的域上面，最后相加得到散列值。虽然这个计算方法中没有用到异或操作，但应该也是值得借鉴的一种写法。</p>
+<div class="hljs"><pre><code class="hljs plain">@Override
 public int hashCode() {
     int hash = 7;
     hash = 31 * hash + (int) id;
     hash = 31 * hash + (name == null ? 0 : name.hashCode());
     hash = 31 * hash + (email == null ? 0 : email.hashCode());
     return hash;
-}</code></pre></div><h3 id="putVal"><a href="#putVal" class="headerlink" title="putVal"></a>putVal</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-05-09.jpg" srcset="/img/loading.gif" alt> <strong>如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。</strong></p><ol><li>检查table是否时null或者capacity是否为0，如果是，resize，调整table，准备放东西进去了。</li><li>检查散列的桶table[(n-1)&hash]是否有元素，如果没有，就创建一个节点，把值放进去，就结束了。</li><li>散列冲突时，用变量e保存存放该key的位置。 3.1 如果桶中第一个节点的key和hash都一致，则只需要在后续步骤修改该节点的value。 3.2 如果桶中第一个节点是一个树节点（红黑树），调用putTreeVal函数存放键值。 3.3 否则，从第一个节点开始，沿着链表逐个遍历，找到hash和key都一致的链表中的某个节点，如果找不到，就存放在最后一个节点。如果走到头了发现这个链表过长，就会把这个链表变成一颗红黑树，即只有在链表尾部增加节点的时候才会检测是否需要treeify。</li><li>对找到的或者确定新增的节点，设定其value。如果是更新而不是新增，就返回原来的value。</li></ol><p>putVal的过程用流程图描述如下：（图片来源：<a href="https://www.cnblogs.com/softidea/p/7261111.html" target="_blank" rel="noopener">https://www.cnblogs.com/softidea/p/7261111.html</a>） <a href="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" srcset="/img/loading.gif" alt></a> 也就是说，经过多次putVal之后的HashMap应该是链表和红黑树并存的情况，画出来就是下面这种结构：（图片来源：<a href="https://www.cnblogs.com/zhangyinhua/p/7698642.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangyinhua/p/7698642.html</a>） <a href="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" srcset="/img/loading.gif" alt></a></p><h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>resize用于动态调整table的大小，是HashMap成员函数中代码行数最长的函数，虽然逻辑并不复杂，但是有很多细节需要仔细考虑。</p><div class="hljs"><pre><code class="hljs plain">final Node<k,v>[] resize() {
+}</code></pre></div>
+<h3 id="putVal"><a href="#putVal" class="headerlink" title="putVal"></a>putVal</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-05-09.jpg" srcset="/img/loading.gif" alt> <strong>如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。</strong></p>
+<ol>
+<li>检查table是否时null或者capacity是否为0，如果是，resize，调整table，准备放东西进去了。</li>
+<li>检查散列的桶table[(n-1)&hash]是否有元素，如果没有，就创建一个节点，把值放进去，就结束了。</li>
+<li>散列冲突时，用变量e保存存放该key的位置。 3.1 如果桶中第一个节点的key和hash都一致，则只需要在后续步骤修改该节点的value。 3.2 如果桶中第一个节点是一个树节点（红黑树），调用putTreeVal函数存放键值。 3.3 否则，从第一个节点开始，沿着链表逐个遍历，找到hash和key都一致的链表中的某个节点，如果找不到，就存放在最后一个节点。如果走到头了发现这个链表过长，就会把这个链表变成一颗红黑树，即只有在链表尾部增加节点的时候才会检测是否需要treeify。</li>
+<li>对找到的或者确定新增的节点，设定其value。如果是更新而不是新增，就返回原来的value。</li>
+</ol>
+<p>putVal的过程用流程图描述如下：（图片来源：<a href="https://www.cnblogs.com/softidea/p/7261111.html" target="_blank" rel="noopener">https://www.cnblogs.com/softidea/p/7261111.html</a>） <a href="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" srcset="/img/loading.gif" alt></a> 也就是说，经过多次putVal之后的HashMap应该是链表和红黑树并存的情况，画出来就是下面这种结构：（图片来源：<a href="https://www.cnblogs.com/zhangyinhua/p/7698642.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangyinhua/p/7698642.html</a>） <a href="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" srcset="/img/loading.gif" alt></a></p>
+<h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>resize用于动态调整table的大小，是HashMap成员函数中代码行数最长的函数，虽然逻辑并不复杂，但是有很多细节需要仔细考虑。</p>
+<div class="hljs"><pre><code class="hljs plain">final Node<k,v>[] resize() {
         Node<k,v>[] oldTab = table;
         int oldCap = (oldTab == null) ? 0 : oldTab.length;
         int oldThr = threshold;
@@ -39,7 +315,8 @@ public int hashCode() {
                 threshold = Integer.MAX_VALUE;
                 return oldTab;
             }
-            else if ((newCap = oldCap << 1) <MAXIMUM_CAPACITY && oldCap>= DEFAULT_INITIAL_CAPACITY)
+            else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                     oldCap >= DEFAULT_INITIAL_CAPACITY)
                 newThr = oldThr << 1; // double threshold
         }
         else if (oldThr > 0) // initial capacity was placed in threshold
@@ -100,7 +377,92 @@ public int hashCode() {
             }
         }
         return newTab;
-    }</k,v></k,v></k,v></k,v></k,v></k,v></k,v></k,v></k,v></code></pre></div><ol><li>根据当前的capacity、threshold的情况，调整新的capacity和threshold到一个合适的值。</li><li>创建新的table。</li><li>把原来table中的元素搬移到新的table中去，在搬移的过程中，就会出现这样的问题：原来有些元素是冲突的，但table扩容之后就不一定冲突了。 3.1 如果是链表，并且没有后继节点，即没有冲突的，就直接复制到新的table中去。 3.2 如果是树节点，调用split方法。 3.3 否则，就搬移整个链表。开始遍历。 3.3.1 把从该节点出发的链表拆分成两个链表，如果节点的hash超过原table的长度的，放在lo中，如果没有超过，放在hi中。 3.3.2 lo还放在table原来的位置，hi放在原来的位置+原table长度的位置。</li></ol><p>在1.7的时候，map的扩容是采用在链表头部插入元素的方式，是倒序的，在多线程并发的时候可能会导致循环链表的出现，在1.8中，我没有找出可能会出现循环链表的情况。</p><h3 id="treeifyBin"><a href="#treeifyBin" class="headerlink" title="treeifyBin"></a>treeifyBin</h3><p>如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-56-26.jpg" srcset="/img/loading.gif" alt></p><ol><li>检查table的capacity是否达到要求，也就是说如果table长度过短，桶中的链表是没有资格treeify的，在这种情况下，往往resize就能够使链表长度缩短。</li><li>从散列到的节点的首节点开始，逐个将链表中的节点替换为树节点，设置好每个节点的prev和next。</li><li>treeify。</li></ol><h3 id="removeNode"><a href="#removeNode" class="headerlink" title="removeNode"></a>removeNode</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-07-42.jpg" srcset="/img/loading.gif" alt></p><ol><li>根据hash和key，找到对应的节点node。</li><li>如果是树节点，调用removeTreeNode方法；如果是链表节点，从链表中删掉。</li></ol><h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>除了与其他数据结构中同样重要的conmodificatinexception之外，还需要关注一下遍历的顺序。</p><h3 id="HashIterator"><a href="#HashIterator" class="headerlink" title="HashIterator"></a>HashIterator</h3><p>是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-29-03.jpg" srcset="/img/loading.gif" alt> 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。</p><h4 id="nextNode"><a href="#nextNode" class="headerlink" title="nextNode"></a>nextNode</h4><p><img src="/images/402986213d9199094e5db333036c6532.png" srcset="/img/loading.gif" alt> 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。</p><h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><p>调用HashMap的removeNode方法。</p><h2 id="其他内部类-1"><a href="#其他内部类-1" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="TreeNode"><a href="#TreeNode" class="headerlink" title="TreeNode"></a>TreeNode</h3><p>继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-23-42.jpg" srcset="/img/loading.gif" alt></p><h3 id="KeySet、Values、EntrySet"><a href="#KeySet、Values、EntrySet" class="headerlink" title="KeySet、Values、EntrySet"></a>KeySet、Values、EntrySet</h3><p>都是基于对应的Iterator实现的。</p></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/Java-Collection/">Java Collection</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/807d354d/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/4e69e352/"><span class="hidden-mobile">Java Collection——HashSet</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+    }</k,v></k,v></k,v></k,v></k,v></k,v></k,v></k,v></k,v></code></pre></div>
+<ol>
+<li>根据当前的capacity、threshold的情况，调整新的capacity和threshold到一个合适的值。</li>
+<li>创建新的table。</li>
+<li>把原来table中的元素搬移到新的table中去，在搬移的过程中，就会出现这样的问题：原来有些元素是冲突的，但table扩容之后就不一定冲突了。 3.1 如果是链表，并且没有后继节点，即没有冲突的，就直接复制到新的table中去。 3.2 如果是树节点，调用split方法。 3.3 否则，就搬移整个链表。开始遍历。 3.3.1 把从该节点出发的链表拆分成两个链表，如果节点的hash超过原table的长度的，放在lo中，如果没有超过，放在hi中。 3.3.2 lo还放在table原来的位置，hi放在原来的位置+原table长度的位置。</li>
+</ol>
+<p>在1.7的时候，map的扩容是采用在链表头部插入元素的方式，是倒序的，在多线程并发的时候可能会导致循环链表的出现，在1.8中，我没有找出可能会出现循环链表的情况。</p>
+<h3 id="treeifyBin"><a href="#treeifyBin" class="headerlink" title="treeifyBin"></a>treeifyBin</h3><p>如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-56-26.jpg" srcset="/img/loading.gif" alt></p>
+<ol>
+<li>检查table的capacity是否达到要求，也就是说如果table长度过短，桶中的链表是没有资格treeify的，在这种情况下，往往resize就能够使链表长度缩短。</li>
+<li>从散列到的节点的首节点开始，逐个将链表中的节点替换为树节点，设置好每个节点的prev和next。</li>
+<li>treeify。</li>
+</ol>
+<h3 id="removeNode"><a href="#removeNode" class="headerlink" title="removeNode"></a>removeNode</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-07-42.jpg" srcset="/img/loading.gif" alt></p>
+<ol>
+<li>根据hash和key，找到对应的节点node。</li>
+<li>如果是树节点，调用removeTreeNode方法；如果是链表节点，从链表中删掉。</li>
+</ol>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>除了与其他数据结构中同样重要的conmodificatinexception之外，还需要关注一下遍历的顺序。</p>
+<h3 id="HashIterator"><a href="#HashIterator" class="headerlink" title="HashIterator"></a>HashIterator</h3><p>是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-29-03.jpg" srcset="/img/loading.gif" alt> 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。</p>
+<h4 id="nextNode"><a href="#nextNode" class="headerlink" title="nextNode"></a>nextNode</h4><p><img src="https://oss.kherrisan.cn/402986213d9199094e5db333036c6532.png" srcset="/img/loading.gif" alt> 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。</p>
+<h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><p>调用HashMap的removeNode方法。</p>
+<h2 id="其他内部类-1"><a href="#其他内部类-1" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="TreeNode"><a href="#TreeNode" class="headerlink" title="TreeNode"></a>TreeNode</h3><p>继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-23-42.jpg" srcset="/img/loading.gif" alt></p>
+<h3 id="KeySet、Values、EntrySet"><a href="#KeySet、Values、EntrySet" class="headerlink" title="KeySet、Values、EntrySet"></a>KeySet、Values、EntrySet</h3><p>都是基于对应的Iterator实现的。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java-Collection/">Java Collection</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/807d354d/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/4e69e352/">
+                        <span class="hidden-mobile">Java Collection——HashSet</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -120,7 +482,69 @@ public int hashCode() {
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -133,10 +557,75 @@ public int hashCode() {
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -158,7 +647,28 @@ public int hashCode() {
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -166,7 +676,12 @@ public int hashCode() {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -181,7 +696,21 @@ public int hashCode() {
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -196,7 +725,12 @@ public int hashCode() {
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -208,14 +742,26 @@ public int hashCode() {
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -224,7 +770,17 @@ public int hashCode() {
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -270,4 +826,19 @@ public int hashCode() {
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

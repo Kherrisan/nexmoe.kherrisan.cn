@@ -1,10 +1,225 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" href="/images/logo.jpg"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队"><meta name="author" content="Kherrisan"><meta name="keywords" content><title>Netty——Bootstrap - Kherrisan</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml"></head><body><header style="height: 70vh;"><nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/posts/a2c247c4/"><i class="iconfont iconserver1"></i> 项目</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/posts/fcad8979/"><i class="iconfont icon-user-fill"></i> 留言板</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a></li></ul></div></div></nav><div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
-           background-size: cover;"><div class="full-bg-img"><div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><div class="mt-3 post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2018-11-14 20:24">2018年11月14日 晚上</time></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 2.5k 字</span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 32 分钟</span></div></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><div class="post-content mx-auto" id="post"><article class="markdown-body"><p>以netty-example中的Echo（Server）为例，分析Netty源码的结构与运行过程。 跳过SSL相关的部分。从下面这一行代码开始：</p><div class="hljs"><pre><code class="hljs java">ChannelFuture f = b.bind(PORT).sync();</code></pre></div><a id="more"></a><p><code>sync</code>方法的功能是同步地等待该操作结束，因此对于server启动监听没有实质性的作用，这里可以忽略他。 首先进入到<code>bootstrap.bind</code>方法中，这个方法由<code>AbstractBootstrap</code>负责实现：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-comment">/**</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://oss.kherrisan.cn/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="正在从科瑞杉的折越节点向艾尔地表投放部队">
+  <meta name="author" content="Kherrisan">
+  <meta name="keywords" content>
+  <title>Netty——Bootstrap - Kherrisan</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/solarized-light.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1807639_npkndad6rc.css">
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/rss2.xml" title="Kherrisan" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"> <strong>Kherrisan</strong> </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/a2c247c4/">
+              <i class="iconfont iconserver1"></i>
+              项目</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              友链</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/fcad8979/">
+              <i class="iconfont icon-user-fill"></i>
+              留言板</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">  <i class="iconfont icon-search"></i>  </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax="true" style="background: url('/images/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2018-11-14 20:24">
+                    2018年11月14日 晚上
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    2.5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    32
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>以netty-example中的Echo（Server）为例，分析Netty源码的结构与运行过程。 跳过SSL相关的部分。从下面这一行代码开始：</p>
+<div class="hljs"><pre><code class="hljs java">ChannelFuture f = b.bind(PORT).sync();</code></pre></div>
+<a id="more"></a>
+<p><code>sync</code>方法的功能是同步地等待该操作结束，因此对于server启动监听没有实质性的作用，这里可以忽略他。 首先进入到<code>bootstrap.bind</code>方法中，这个方法由<code>AbstractBootstrap</code>负责实现：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-comment">/**</span>
 <span class="hljs-comment"> * Create a new {<span class="hljs-doctag">@link</span> Channel} and bind it.</span>
 <span class="hljs-comment"> */</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">bind</span><span class="hljs-params">(<span class="hljs-keyword">int</span> inetPort)</span> </span>{
     <span class="hljs-keyword">return</span> bind(<span class="hljs-keyword">new</span> InetSocketAddress(inetPort));
-}</code></pre></div><p>再进入到<code>bind</code>方法中：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-comment">/**</span>
+}</code></pre></div>
+<p>再进入到<code>bind</code>方法中：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-comment">/**</span>
 <span class="hljs-comment"> * Create a new {<span class="hljs-doctag">@link</span> Channel} and bind it.</span>
 <span class="hljs-comment"> */</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">bind</span><span class="hljs-params">(SocketAddress localAddress)</span> </span>{
@@ -13,7 +228,9 @@
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">"localAddress"</span>);
     }
     <span class="hljs-keyword">return</span> doBind(localAddress);
-}</code></pre></div><p><code>bind</code>方法做了两件事：1.做一些校验工作；2.调用<code>doBind</code>方法进行真正的监听地址绑定。校验操作一般无足轻重，因此不妨直接进入<code>doBind</code>方法中去：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ChannelFuture <span class="hljs-title">doBind</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketAddress localAddress)</span> </span>{
+}</code></pre></div>
+<p><code>bind</code>方法做了两件事：1.做一些校验工作；2.调用<code>doBind</code>方法进行真正的监听地址绑定。校验操作一般无足轻重，因此不妨直接进入<code>doBind</code>方法中去：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ChannelFuture <span class="hljs-title">doBind</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketAddress localAddress)</span> </span>{
     <span class="hljs-keyword">final</span> ChannelFuture regFuture = initAndRegister();
     <span class="hljs-keyword">final</span> Channel channel = regFuture.channel();
 
@@ -28,16 +245,35 @@
         });
         <span class="hljs-keyword">return</span> promise;
     }
-}</code></pre></div><p><strong>上面的代码并不完整，删除了一些细枝末节，因为目前阅读源码的目的是尽快尽可能完整地理清楚程序脉络，因此我删除了自认为对于程序总体认识没有太大帮助的代码。</strong> <code>doBind</code>方法主要做了两件事：</p><ol><li><code>initAndRegiter</code></li><li><code>doBind0</code></li></ol><p>暂时不知道这两个方法各自起了怎样的作用，一个一个来看。</p><h1 id="initAndRegister"><a href="#initAndRegister" class="headerlink" title="initAndRegister"></a>initAndRegister</h1><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> ChannelFuture <span class="hljs-title">initAndRegister</span><span class="hljs-params">()</span> </span>{
+}</code></pre></div>
+<p><strong>上面的代码并不完整，删除了一些细枝末节，因为目前阅读源码的目的是尽快尽可能完整地理清楚程序脉络，因此我删除了自认为对于程序总体认识没有太大帮助的代码。</strong> <code>doBind</code>方法主要做了两件事：</p>
+<ol>
+<li><code>initAndRegiter</code></li>
+<li><code>doBind0</code></li>
+</ol>
+<p>暂时不知道这两个方法各自起了怎样的作用，一个一个来看。</p>
+<h1 id="initAndRegister"><a href="#initAndRegister" class="headerlink" title="initAndRegister"></a>initAndRegister</h1><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> ChannelFuture <span class="hljs-title">initAndRegister</span><span class="hljs-params">()</span> </span>{
     ......
     channel = channelFactory.newChannel();
     init(channel);
     ......
     ChannelFuture regFuture = config().group().register(channel);
     ......
-}</code></pre></div><p><code>initAndRegister</code>方法所做的工作可以大致分为三块：</p><ol><li>调用<code>channelFactory</code>实例化<code>channel</code>；</li><li>初始化<code>channel</code>；</li><li>将<code>channel</code>注册到<code>group</code>返回的对象上去。</li></ol><h2 id="实例化Channel"><a href="#实例化Channel" class="headerlink" title="实例化Channel"></a>实例化Channel</h2><p><strong>Netty和NIO都有一个叫做Channel的概念，为了方便区分，这里及后续的分析中都将Netty中的称为Channel，而NIO中的称为JavaChannel。</strong> Channel是Netty中的核心概念之一，表示的是客户端或服务端与远程主机通讯的某个Socket。在大多数语言的网络通讯库中，客户端中只有一种Socket，但在服务端中有两种：ServerSocket和Socket，前者只负责监听端口，后者负责处理与远程主机的数据交换。 至于服务端为什么要使用两种Socket，我认为还是受限于OS系统调用的接口定义。</p><div class="hljs"><pre><code class="hljs java">channel = channelFactory.newChannel();</code></pre></div><p>和Spring等一众Java框架类似，对于核心概念的实例化采用了工厂模式。<code>ChannelFactory</code>接口结构很简单：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ChannelFactory</span><<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Channel</span>> </span>{
+}</code></pre></div>
+<p><code>initAndRegister</code>方法所做的工作可以大致分为三块：</p>
+<ol>
+<li>调用<code>channelFactory</code>实例化<code>channel</code>；</li>
+<li>初始化<code>channel</code>；</li>
+<li>将<code>channel</code>注册到<code>group</code>返回的对象上去。</li>
+</ol>
+<h2 id="实例化Channel"><a href="#实例化Channel" class="headerlink" title="实例化Channel"></a>实例化Channel</h2><p><strong>Netty和NIO都有一个叫做Channel的概念，为了方便区分，这里及后续的分析中都将Netty中的称为Channel，而NIO中的称为JavaChannel。</strong> Channel是Netty中的核心概念之一，表示的是客户端或服务端与远程主机通讯的某个Socket。在大多数语言的网络通讯库中，客户端中只有一种Socket，但在服务端中有两种：ServerSocket和Socket，前者只负责监听端口，后者负责处理与远程主机的数据交换。 至于服务端为什么要使用两种Socket，我认为还是受限于OS系统调用的接口定义。</p>
+<div class="hljs"><pre><code class="hljs java">channel = channelFactory.newChannel();</code></pre></div>
+<p>和Spring等一众Java框架类似，对于核心概念的实例化采用了工厂模式。<code>ChannelFactory</code>接口结构很简单：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ChannelFactory</span><<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Channel</span>> </span>{
     <span class="hljs-function">T <span class="hljs-title">newChannel</span><span class="hljs-params">()</span></span>;
-}</code></pre></div><p><img src="/images/5c8854379f983db74506487c2d562e67.png" srcset="/img/loading.gif" alt> 实现了<code>ChannelFactory</code>接口的类不多，工厂对象的实际类型多半就是<code>ReflectiveChannelFactory</code>了。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ReflectiveChannelFactory</span><span class="hljs-params">(Class<? extends T> clazz)</span> </span>{
+}</code></pre></div>
+<p><img src="https://oss.kherrisan.cn/5c8854379f983db74506487c2d562e67.png" srcset="/img/loading.gif" alt> 实现了<code>ChannelFactory</code>接口的类不多，工厂对象的实际类型多半就是<code>ReflectiveChannelFactory</code>了。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ReflectiveChannelFactory</span><span class="hljs-params">(Class<? extends T> clazz)</span> </span>{
     <span class="hljs-keyword">this</span>.clazz = clazz;
 }
 
@@ -105,7 +341,7 @@
 <li>将<code>AbstractBootstrap</code>负责维护的<code>options</code>和<code>attrs</code>无脑地全部设置到<code>channel</code>对象上去。为了避免另一个线程修改<code>options</code>和<code>attrs</code>，访问时都进行了同步，我认为这里的加锁在服务器启动阶段是不会对性能造成太大影响的。</li>
 <li>在该channel的<code>pipeline</code>尾部添加一个<code>ChannelInitializer</code>，何时调用其<code>initChannel</code>方法目前还不得而知，但是该<code>ChannelInitializer</code>的目的还是挺明确的： 2.1. 在<code>pipeline</code>尾部添加一个<code>ChannelHandler</code>。 2.2. 在该<code>channel</code>的线程中，异步地在其<code>pipeline</code>尾部添加一个<code>ServerBootstrapAcceptor</code>。</li>
 </ol>
-<h2 id="注册channel"><a href="#注册channel" class="headerlink" title="注册channel"></a>注册channel</h2><p><code>ChannelFuture regFuture = config().group().register(channel);</code> <code>group()</code>返回的是<code>EventLoopGroup</code>，即线程组，Netty中一个<code>EventLoop</code>即为一个线程，将多个线程组合起来管理就产生了“线程组”的概念（和OS中的线程组概念不同）。这里调用了<code>EventLoopGroup</code>接口里的<code>register</code>方法来注册<code>channel</code>，但暂时还无法判断是哪个实现了<code>EventLoopGroup</code>接口的小可爱。 在这一行代码加断点并以调试模式运行Echo Example。 <img src="/images/d94b109dc5c60ed0de2b23e7417abb6c.png" srcset="/img/loading.gif" alt> 发现<code>config().group()</code>返回的是一个<code>NioEventLoopGroup</code>对象，这个对象是<code>MultithreadEventLoopGroup</code>的子类，其<code>register</code>方法所做之事很简单。</p>
+<h2 id="注册channel"><a href="#注册channel" class="headerlink" title="注册channel"></a>注册channel</h2><p><code>ChannelFuture regFuture = config().group().register(channel);</code> <code>group()</code>返回的是<code>EventLoopGroup</code>，即线程组，Netty中一个<code>EventLoop</code>即为一个线程，将多个线程组合起来管理就产生了“线程组”的概念（和OS中的线程组概念不同）。这里调用了<code>EventLoopGroup</code>接口里的<code>register</code>方法来注册<code>channel</code>，但暂时还无法判断是哪个实现了<code>EventLoopGroup</code>接口的小可爱。 在这一行代码加断点并以调试模式运行Echo Example。 <img src="https://oss.kherrisan.cn/d94b109dc5c60ed0de2b23e7417abb6c.png" srcset="/img/loading.gif" alt> 发现<code>config().group()</code>返回的是一个<code>NioEventLoopGroup</code>对象，这个对象是<code>MultithreadEventLoopGroup</code>的子类，其<code>register</code>方法所做之事很简单。</p>
 <div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">register</span><span class="hljs-params">(Channel channel)</span> </span>{
     <span class="hljs-keyword">return</span> next().register(channel);
@@ -120,15 +356,21 @@
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Set<eventexecutor> readonlyChildren;
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> AtomicInteger terminatedChildren = <span class="hljs-keyword">new</span> AtomicInteger();
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Promise<?> terminationFuture = <span class="hljs-keyword">new</span> DefaultPromise(GlobalEventExecutor.INSTANCE);
-<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> EventExecutorChooserFactory.EventExecutorChooser chooser;</eventexecutor></code></pre></div><p>由于目前我们还只是专注于启动流程，而启动过程中线程的选择与切换的特点还不能很好地显现出来，因此先不管<code>chooser</code>，回到<code>register</code>方法中。 <code>next()</code>返回了一个<code>SingleThreadEventLoop</code>对象，通知他调用他自己实现的<code>register</code>方法。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> EventExecutorChooserFactory.EventExecutorChooser chooser;</eventexecutor></code></pre></div>
+<p>由于目前我们还只是专注于启动流程，而启动过程中线程的选择与切换的特点还不能很好地显现出来，因此先不管<code>chooser</code>，回到<code>register</code>方法中。 <code>next()</code>返回了一个<code>SingleThreadEventLoop</code>对象，通知他调用他自己实现的<code>register</code>方法。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">register</span><span class="hljs-params">(Channel channel)</span> </span>{
     <span class="hljs-keyword">return</span> register(<span class="hljs-keyword">new</span> DefaultChannelPromise(channel, <span class="hljs-keyword">this</span>));
-}</code></pre></div><p>这里实例化了一个<code>DefaultChannelPromise</code>，并把<code>channel</code>和<code>SingleThreadEventLoop</code>作为参数传入，估计<code>Promise</code>会把他们两人关联起来。 <img src="/images/d2d80e9027d11fab989d4dc9f3f2b4c1.png" srcset="/img/loading.gif" alt> 如果忘记了<code>channel</code>是什么东西的话，可以回溯到<code>ChannelFactory</code>的部分：<code>ChannelFactory</code>通过反射实例化<code>channel</code>对象，而其类型就是在<code>bootstrap</code>对象上进行方法链式调用时传入的<code>NioServerSocketChannel.class</code>。 实例化promise后并没有结束，因为还没有注册呢：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>这里实例化了一个<code>DefaultChannelPromise</code>，并把<code>channel</code>和<code>SingleThreadEventLoop</code>作为参数传入，估计<code>Promise</code>会把他们两人关联起来。 <img src="https://oss.kherrisan.cn/d2d80e9027d11fab989d4dc9f3f2b4c1.png" srcset="/img/loading.gif" alt> 如果忘记了<code>channel</code>是什么东西的话，可以回溯到<code>ChannelFactory</code>的部分：<code>ChannelFactory</code>通过反射实例化<code>channel</code>对象，而其类型就是在<code>bootstrap</code>对象上进行方法链式调用时传入的<code>NioServerSocketChannel.class</code>。 实例化promise后并没有结束，因为还没有注册呢：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ChannelFuture <span class="hljs-title">register</span><span class="hljs-params">(<span class="hljs-keyword">final</span> ChannelPromise promise)</span> </span>{
     ObjectUtil.checkNotNull(promise, <span class="hljs-string">"promise"</span>);
     promise.channel().unsafe().register(<span class="hljs-keyword">this</span>, promise);
     <span class="hljs-keyword">return</span> promise;
-}</code></pre></div><p>此时<code>promise.channel()</code>返回的就是刚才传入构造函数的<code>NioServerSocketChannel</code>。<code>unsafe</code>是个什么玩意儿还不是很清楚，但联想到JDK中有一个也叫<code>Unsafe</code>的组件，用于提供对内存的直接操作，就可以猜测这个<code>unsafe</code>应该是负责某些底层操作流程的。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>此时<code>promise.channel()</code>返回的就是刚才传入构造函数的<code>NioServerSocketChannel</code>。<code>unsafe</code>是个什么玩意儿还不是很清楚，但联想到JDK中有一个也叫<code>Unsafe</code>的组件，用于提供对内存的直接操作，就可以猜测这个<code>unsafe</code>应该是负责某些底层操作流程的。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(EventLoop eventLoop, <span class="hljs-keyword">final</span> ChannelPromise promise)</span> </span>{
             ......
             AbstractChannel.<span class="hljs-keyword">this</span>.eventLoop = eventLoop;<span class="hljs-comment">//从此这个channel有了属于自己的eventloop</span>
@@ -143,7 +385,9 @@
                     });
                     ......
             }
-        }</code></pre></div><p><code>unsafe</code>的<code>register</code>方法的主要内容如上，最终目的是调用<code>register0</code>方法，注册<code>promise</code>。直觉告诉我，名字里带0的方法都差不多快要到终点了。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register0</span><span class="hljs-params">(ChannelPromise promise)</span> </span>{
+        }</code></pre></div>
+<p><code>unsafe</code>的<code>register</code>方法的主要内容如上，最终目的是调用<code>register0</code>方法，注册<code>promise</code>。直觉告诉我，名字里带0的方法都差不多快要到终点了。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register0</span><span class="hljs-params">(ChannelPromise promise)</span> </span>{
         ......
         <span class="hljs-keyword">boolean</span> firstRegistration = neverRegistered;
         doRegister();
@@ -159,7 +403,9 @@
             }
         }
         ......
-}</code></pre></div><p>除了触发了几个事件之外，最神秘的当属<code>doRegister</code>方法，直觉告诉我，当看到带有do字样的方法的时候，就离终点不远了。</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>除了触发了几个事件之外，最神秘的当属<code>doRegister</code>方法，直觉告诉我，当看到带有do字样的方法的时候，就离终点不远了。</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doRegister</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
     <span class="hljs-keyword">boolean</span> selected = <span class="hljs-keyword">false</span>;
     <span class="hljs-keyword">for</span> (;;) {
@@ -179,7 +425,9 @@
             }
         }
     }
-}</code></pre></div><p><code>doRegister</code>的主体是一个死循环，虽然这个死循环只会重复一到两次，在<code>javaChannel</code>上注册<code>selector</code>以及感兴趣的事件，同时，由于<code>AbstractNioChannel</code>本身是一个<code>AttributeMap</code>，因此自己作为属性的持有者也被注册到了<code>javaChannel</code>上。 这个<code>register</code>方法以及属于<code>java.nio</code>中的代码，总算可以说到终点了。 现在回到<code>AbstractBootstrap</code>的<code>doBind0</code>方法。</p><h2 id="doBind0"><a href="#doBind0" class="headerlink" title="doBind0"></a>doBind0</h2><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doBind0</span><span class="hljs-params">(</span></span>
+}</code></pre></div>
+<p><code>doRegister</code>的主体是一个死循环，虽然这个死循环只会重复一到两次，在<code>javaChannel</code>上注册<code>selector</code>以及感兴趣的事件，同时，由于<code>AbstractNioChannel</code>本身是一个<code>AttributeMap</code>，因此自己作为属性的持有者也被注册到了<code>javaChannel</code>上。 这个<code>register</code>方法以及属于<code>java.nio</code>中的代码，总算可以说到终点了。 现在回到<code>AbstractBootstrap</code>的<code>doBind0</code>方法。</p>
+<h2 id="doBind0"><a href="#doBind0" class="headerlink" title="doBind0"></a>doBind0</h2><div class="hljs"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doBind0</span><span class="hljs-params">(</span></span>
 <span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ChannelFuture regFuture, <span class="hljs-keyword">final</span> Channel channel,</span></span>
 <span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> SocketAddress localAddress, <span class="hljs-keyword">final</span> ChannelPromise promise)</span> </span>{
     channel.eventLoop().execute(<span class="hljs-keyword">new</span> Runnable() {
@@ -190,15 +438,20 @@
                 ......
         }
     });
-}</code></pre></div><p><code>doBind0</code>在另一个线程中将监听的地址绑定到<code>channel</code>上去，猜测这个<code>channel</code>应该是一个<code>NioServerSocketChannel</code>。然而并不是：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p><code>doBind0</code>在另一个线程中将监听的地址绑定到<code>channel</code>上去，猜测这个<code>channel</code>应该是一个<code>NioServerSocketChannel</code>。然而并不是：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ChannelFuture <span class="hljs-title">bind</span><span class="hljs-params">(SocketAddress localAddress, ChannelPromise promise)</span> </span>{
     <span class="hljs-keyword">return</span> tail.bind(localAddress, promise);
-}</code></pre></div><p>netty试图找到<code>pipline</code>上的最后一个<code>OutboundHandler</code>，这个<code>handler</code>有一个与之关联的<code>HeadContext</code>，它的<code>bind</code>方法如下：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>netty试图找到<code>pipline</code>上的最后一个<code>OutboundHandler</code>，这个<code>handler</code>有一个与之关联的<code>HeadContext</code>，它的<code>bind</code>方法如下：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bind</span><span class="hljs-params">(</span></span>
 <span class="hljs-function"><span class="hljs-params">        ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise)</span></span>
 <span class="hljs-function">        <span class="hljs-keyword">throws</span> Exception </span>{
     unsafe.bind(localAddress, promise);
-}</code></pre></div><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bind</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketAddress localAddress, <span class="hljs-keyword">final</span> ChannelPromise promise)</span> </span>{
     ......
         doBind(localAddress);
@@ -211,21 +464,100 @@
             }
         });
     }
-}</code></pre></div><p><code>unsafe</code>的<code>bind</code>方法在调用<code>doBind</code>同时，不忘发起一个<code>channelActive</code>事件。 最终让<code>javaChannel</code>监听该地址：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p><code>unsafe</code>的<code>bind</code>方法在调用<code>doBind</code>同时，不忘发起一个<code>channelActive</code>事件。 最终让<code>javaChannel</code>监听该地址：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doBind</span><span class="hljs-params">(SocketAddress localAddress)</span> <span class="hljs-keyword">throws</span> Exception </span>{
     <span class="hljs-keyword">if</span> (PlatformDependent.javaVersion() >= <span class="hljs-number">7</span>) {
         javaChannel().bind(localAddress, config.getBacklog());
     } <span class="hljs-keyword">else</span> {
         javaChannel().socket().bind(localAddress, config.getBacklog());
     }
-}</code></pre></div><p>注意到，此时<code>javaChannel</code>上的<code>interestOps</code>只有0，也就是无论<code>channel</code>上发生什么事件，都不会被<code>selector</code>选中，作为一个服务器，是肯定要处理<code>ACCEPT</code>事件的，在<code>pipeline.fireChannelActive()</code>中，经过<code>pipline</code>，调用到了<code>unsafe.beginRead()</code>方法：</p><div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+}</code></pre></div>
+<p>注意到，此时<code>javaChannel</code>上的<code>interestOps</code>只有0，也就是无论<code>channel</code>上发生什么事件，都不会被<code>selector</code>选中，作为一个服务器，是肯定要处理<code>ACCEPT</code>事件的，在<code>pipeline.fireChannelActive()</code>中，经过<code>pipline</code>，调用到了<code>unsafe.beginRead()</code>方法：</p>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doBeginRead</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
     ......
     <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> interestOps = selectionKey.interestOps();
     <span class="hljs-keyword">if</span> ((interestOps & readInterestOp) == <span class="hljs-number">0</span>) {
         selectionKey.interestOps(interestOps | readInterestOp);
     }
-}</code></pre></div><p>这里的<code>readInterestOp</code>的值为16，对应的java nio中的<code>OP_ACCEPT</code>。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>netty启动过程还是很复杂的，启动过程总结如下：</p><ol><li><code>channelFactory</code>通过反射实例化<code>ServerSocketChannel</code>对象。</li><li>初始化<code>channel</code>的attrs和options。</li><li>要求新连接到来的时候，在<code>pipeline</code>尾部添加一个<code>ServerBootstrapAcceptor</code>。</li><li>选择一个<code>eventLoop</code>，注册到该<code>channel</code>上。</li><li>在<code>javaChannel</code>上注册这个<code>eventLoop</code>的<code>selector</code>。</li><li>触发<code>handlerAdded</code>和<code>channelRegistered</code>事件。</li><li>将<code>javaChannel</code>绑定到指定的地址和端口上去。</li><li>触发<code>channelActivated</code>事件。</li><li>注册<code>OP_ACCEPT</code>到<code>selector</code>上去。</li></ol></article><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/Netty/">Netty</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/java/">java</a> <a class="hover-with-bg" href="/tags/Netty/">Netty</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><div class="post-prev col-6"><a href="/posts/1169e0a5/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">Netty——下载、编译、调试源码</span> <span class="visible-mobile">上一篇</span></a></div><div class="post-next col-6"> <a href="/posts/b6a54201/"><span class="hidden-mobile">JUC——ConcurrentHashMap</span> <span class="visible-mobile">下一篇</span><i class="iconfont icon-arrowright"></i></a></div></div></div><div class="comments" id="comments"><div id="vcomments"></div><script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script><script type="text/javascript">
+}</code></pre></div>
+<p>这里的<code>readInterestOp</code>的值为16，对应的java nio中的<code>OP_ACCEPT</code>。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>netty启动过程还是很复杂的，启动过程总结如下：</p>
+<ol>
+<li><code>channelFactory</code>通过反射实例化<code>ServerSocketChannel</code>对象。</li>
+<li>初始化<code>channel</code>的attrs和options。</li>
+<li>要求新连接到来的时候，在<code>pipeline</code>尾部添加一个<code>ServerBootstrapAcceptor</code>。</li>
+<li>选择一个<code>eventLoop</code>，注册到该<code>channel</code>上。</li>
+<li>在<code>javaChannel</code>上注册这个<code>eventLoop</code>的<code>selector</code>。</li>
+<li>触发<code>handlerAdded</code>和<code>channelRegistered</code>事件。</li>
+<li>将<code>javaChannel</code>绑定到指定的地址和端口上去。</li>
+<li>触发<code>channelActivated</code>事件。</li>
+<li>注册<code>OP_ACCEPT</code>到<code>selector</code>上去。</li>
+</ol>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty/">Netty</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Netty/">Netty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/1169e0a5/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty——下载、编译、调试源码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/posts/b6a54201/">
+                        <span class="hidden-mobile">JUC——ConcurrentHashMap</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script defer src="https://cdn.staticfile.org/valine/1.4.14/Valine.min.js"></script>
+
+  <script type="text/javascript">
     var oldLoadVa = window.onload;
     window.onload = function () {
       oldLoadVa && oldLoadVa();
@@ -245,7 +577,69 @@
         serverURLs: "",
       });
     };
-  </script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments powered by Valine.</a></noscript></div></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i> 目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><div id="aplayer"></div><script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css"><script type="text/javascript">
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i> 目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css">
+<script type="text/javascript">
   var oldLoadAp = window.onload;
   window.onload = function () {
     oldLoadAp && oldLoadAp();
@@ -258,10 +652,75 @@
       order: 'random',
       theme: '#b7daff',
       preload: 'none',
-      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" /images/20200509135933.jpg"}]
+      audio: [{"name":"竈門炭治郎のうた","artist":"椎名豪","url":"https://oss.kherrisan.cn/tanjiro.mp3","cover":" https://oss.kherrisan.cn/20200509135933.jpg"}]
     });
   }
-</script><footer class="mt-5"><div class="text-center py-3"><div> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a><i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div> <span id="busuanzi_container_site_pv" style="display: none">总访问量<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style="display: none">总访客数<span id="busuanzi_value_site_uv"></span> 人</span></div><div> <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank"><span class="beian-police-sep"> | </span> <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon"> <span>苏公网安备32040202000292号</span></a></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp" rel="nofollow noopener">苏ICP备17065958号-2</a>
+    
+      <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32040202000292" rel="nofollow noopener" class="beian-police" target="_blank">
+        <span class="beian-police-sep"> | </span>
+        
+          <img src="/images/police_beian.png" srcset="/img/loading.gif" alt="police-icon">
+        
+        <span>苏公网安备32040202000292号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+  <script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script>
+  <script>
     $(document).ready(function () {
       var boardCtn = $('#board-ctn');
       var boardTop = boardCtn.offset().top;
@@ -283,7 +742,28 @@
         $('#toc').css('visibility', 'visible');
       }
     });
-  </script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script defer>
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script>
+  <script src="/js/clipboard-use.js"></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
@@ -291,7 +771,12 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    </script><script defer>
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
@@ -306,7 +791,21 @@
 
       ga('create', 'G-MC0BRNCVCQ', 'auto');
       ga('send', 'pageview');
-    </script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script>
+  <script>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
@@ -321,7 +820,12 @@
       $(".typed-cursor").addClass("h2");
       typed.start();
     });
-  </script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "hover",
@@ -333,14 +837,26 @@
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
       searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
-  </script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>
+  </script>
+
+
+
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <script>
     $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
       function () {
         var element = document.createElement('a');
@@ -349,7 +865,17 @@
         $(this).wrap(element);
       }
     );
-  </script><script>
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
       !function (e, t, a) {
         function r() {
           for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
@@ -395,4 +921,19 @@
           setTimeout(e, 1e3 / 60)
         }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
       }(window, document);
-    </script></body></html>
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
