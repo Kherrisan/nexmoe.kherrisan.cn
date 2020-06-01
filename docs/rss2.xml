@@ -9,18 +9,14 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>正在从科瑞杉的折越节点向艾尔地表投放部队</description>
-<<<<<<< HEAD
-    <pubDate>Wed, 13 May 2020 05:12:41 GMT</pubDate>
-=======
-    <pubDate>Wed, 13 May 2020 08:25:02 GMT</pubDate>
->>>>>>> e92a4c5258b1a7ef301ff2f15618a1df62e03fd3
+    <pubDate>Mon, 01 Jun 2020 07:06:50 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>留言板(ÒܫÓױ)</title>
       <link>http://www.kherrisan.cn/posts/fcad8979/</link>
       <guid>http://www.kherrisan.cn/posts/fcad8979/</guid>
-      <pubDate>Sun, 10 May 2020 05:13:44 GMT</pubDate>
+      <pubDate>Sun, 10 May 2020 13:13:44 GMT</pubDate>
       <description>
       
       </description>
@@ -33,7 +29,7 @@
       <title>我做的小玩意儿的</title>
       <link>http://www.kherrisan.cn/posts/a2c247c4/</link>
       <guid>http://www.kherrisan.cn/posts/a2c247c4/</guid>
-      <pubDate>Sun, 10 May 2020 05:07:34 GMT</pubDate>
+      <pubDate>Sun, 10 May 2020 13:07:34 GMT</pubDate>
       <description>
       
         
@@ -53,7 +49,7 @@
       <title>又一个新主题</title>
       <link>http://www.kherrisan.cn/posts/972280a7/</link>
       <guid>http://www.kherrisan.cn/posts/972280a7/</guid>
-      <pubDate>Sat, 09 May 2020 12:08:51 GMT</pubDate>
+      <pubDate>Sat, 09 May 2020 20:08:51 GMT</pubDate>
       <description>
       
         
@@ -74,7 +70,7 @@
       <title>53.最大子序和</title>
       <link>http://www.kherrisan.cn/posts/396fd427/</link>
       <guid>http://www.kherrisan.cn/posts/396fd427/</guid>
-      <pubDate>Sun, 03 May 2020 04:26:46 GMT</pubDate>
+      <pubDate>Sun, 03 May 2020 12:26:46 GMT</pubDate>
       <description>
       
         &lt;p&gt;给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。&lt;/p&gt;
@@ -94,7 +90,7 @@
       <title>我理想的文档管理模式</title>
       <link>http://www.kherrisan.cn/posts/25678d68/</link>
       <guid>http://www.kherrisan.cn/posts/25678d68/</guid>
-      <pubDate>Wed, 22 Apr 2020 13:23:16 GMT</pubDate>
+      <pubDate>Wed, 22 Apr 2020 21:23:16 GMT</pubDate>
       <description>
       
         
@@ -114,7 +110,7 @@
       <title>新的主题</title>
       <link>http://www.kherrisan.cn/posts/5ca0a75b/</link>
       <guid>http://www.kherrisan.cn/posts/5ca0a75b/</guid>
-      <pubDate>Fri, 10 Apr 2020 12:06:23 GMT</pubDate>
+      <pubDate>Fri, 10 Apr 2020 20:06:23 GMT</pubDate>
       <description>
       
         
@@ -126,7 +122,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>之前一直使用 Hexo 的 next 主题来呈现博客，最近觉得 next 太素了，想换一个花哨一些的~</p><h2 id="Fluid"><a href="#Fluid" class="headerlink" title="Fluid"></a>Fluid</h2><p>这个主题还是我在 Github 首页被推荐到的，看来 Github 的推荐算法越来越智能了，连博客主题的个人喜好都能作为推荐的标准了（开个玩笑）。</p><h2 id="额外的工作"><a href="#额外的工作" class="headerlink" title="额外的工作"></a>额外的工作</h2><h3 id="博文封面"><a href="#博文封面" class="headerlink" title="博文封面"></a>博文封面</h3><p>Nexmoe 支持为每篇文章配置一个漂漂亮亮的封面图，操作方法是在文章 md 文件的头部添加下面几行代码，分别是图片的 http 地址、长度和宽度。据作者说，之所要要显式地声明文件长宽，是为了消除图片的抖动。</p><div class="hljs"><pre><code class="hljs plain">---cover: https://i.loli.net/2019/07/21/5d33d5dc1531213134.pngcoverWidth: 1200coverHeight: 750---</code></pre></div><h3 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h3><p>作者的博客首页摆上了一堆社交网站的 Logo，特别可爱。</p><p><img src="https://oss.kherrisan.cn/20200410201550.png" srcset="/img/loading.gif" alt></p><p>在主题的 _config.yml 文件中，可以添加社交网站的 Logo 和个人链接。我暂时搞了四个。</p><div class="hljs"><pre><code class="hljs plain">social:  哔哩哔哩:    - https://space.bilibili.com/13288240    - icon-bilibili    - rgb(231, 106, 141)    - rgba(231, 106, 141, .15)  GitHub:    - https://github.com/kherrisan/    - icon-github    - rgb(25, 23, 23)    - rgba(25, 23, 23, .15)  Telegram:    - https://github.com/kherrisan/    - icon-telegram    - rgb(39,167,229)    - rgba(39,167,229,.1)  知乎:    - https://www.zhihu.com/people/smalldk    - icon-zhihu    - rgb(00,132, 256)    - rgba(00, 132, 256, .15)</code></pre></div><h3 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h3><p>Mexmoe 自带了代码高亮，需要把 Hexo 默认的代码高亮功能关掉，来避免功能冲突。</p><h3 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h3><p>我使用的是 Gittalk。先简单描述一下 Gitalk 的原理：</p><ol><li>博客的网页中包含 Gitalk 的 js 脚本，在打开文章页的时候，浏览器会加载 js 脚本的内容。</li><li>js 脚本会去请求 Github 的一个接口，通过这个接口去查询指定仓库的 issues，这个仓库就是在 <strong>_config.yml</strong> 中的 <strong>repo</strong>，repo 不是存放博客内容的仓库名，而是指存放评论的仓库名，当然很多人把评论直接放在博客内容的仓库里，所以 repo 就是 xxx.github.io 这个格式。使用 key 和 secret 来对接口进行鉴权。我另外新建了一个叫 gitalk 的仓库，故 repo 就只要写 gitalk 就行了。</li><li>Github 的服务器接口收到了查询 issues 的相关请求，同时会检查请求来自的 Host 是不是你博客真正部署所在的网址，对于大多数人是 xxx.github.io，如果使用自定义域名，也可以是 www.xxx.com 这样。至于到底是什么样，是由用户在 Github - OAuth App 中的 <strong>Authorization callback URL</strong> 指定的。如果你在本地调试，那就应该写为 localhost:4000。当然它也会验证 key 和 secret 是否匹配。至于 <strong>Homepage URL</strong> 我还不知道有什么用，貌似可以随便写。</li><li>Github 的接口返回 issues 给浏览器，浏览器呈现评论列表。</li></ol><p>我的 gitalk 是这么配置的：</p><div class="hljs"><pre><code class="hljs plain">gitalk:  admin: kherrisan  owner: kherrisan  repo: gitalk  clientID: cef6ec0ef4709xxxxxx  clientSecret: c184430c4d516f1f71911b1ba06947815fxxxxxx</code></pre></div><p>既然评论列表是浏览器直接从 Github 请求得到的，这就会产生一个问题：Github 服务器在国外，国内的用户在查看评论列表时可能会加载较长的时间。</p><h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="网页代码压缩"><a href="#网页代码压缩" class="headerlink" title="网页代码压缩"></a>网页代码压缩</h3><p>通过 gulp 来压缩 html、css、js 的代码，压缩完了之后的代码，在 chrome 的调试工具中，会变成特别长的一行~</p><h3 id="css-js内联"><a href="#css-js内联" class="headerlink" title="css/js内联"></a>css/js内联</h3><p>使用 <a href="https://github.com/JamesPan/hexo-filter-asset-inline" target="_blank" rel="noopener">hexo-filter-asset-inline</a>。</p><p>先 npm 下载这个库，然后在每个需要内联的 js、css 文件地址后面加上 <code>?__inline=true</code>。由于 hexo 没有一个统一的地方存放 css、js 的地址，而各个主题引用外部 css、js 的地方又各有不同，因此只能在编辑器里面搜索，然后一处处手动添加了。</p><p>全部地址修改完成后，打开网页应只需要加载 html 文件以及少数一个图片文件。</p><p><img src="https://oss.kherrisan.cn/20200410221659.png" srcset="/img/loading.gif" alt></p><h3 id="全站加速（氪金上云）"><a href="#全站加速（氪金上云）" class="headerlink" title="全站加速（氪金上云）"></a>全站加速（氪金上云）</h3><p>所有图片放到阿里云 OSS 上去，并且使用全站加速（实际上就是 CDN）来加速对 <a href="https://www.kherrisan.cn">https://www.kherrisan.cn</a> 这个域名下所有资源的访问。</p><h2 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h2><p>我想实现的效果是，我在本地完成撰写后，只需要提交 source 代码，然后 Github 的 Action 会自动帮我完成压缩、编译、部署的工作。代码如下：</p><div class="hljs"><pre><code class="hljs yml"><span class="hljs-attr">name:</span> <span class="hljs-string">Hexo</span> <span class="hljs-string">CI</span><span class="hljs-attr">on:</span>  <span class="hljs-attr">push:</span>    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">master</span> <span class="hljs-string">]</span>  <span class="hljs-attr">pull_request:</span>    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">master</span> <span class="hljs-string">]</span><span class="hljs-attr">jobs:</span>  <span class="hljs-attr">build:</span>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>    <span class="hljs-attr">strategy:</span>      <span class="hljs-attr">matrix:</span>        <span class="hljs-attr">node-version:</span> <span class="hljs-string">[12.x]</span>    <span class="hljs-attr">steps:</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">webfactory/ssh-agent</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">webfactory/ssh-agent@v0.2.0</span>      <span class="hljs-attr">with:</span>        <span class="hljs-comment"># Private SSH key to register in the SSH agent</span>        <span class="hljs-attr">ssh-private-key:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.SSH_PRIVATE_KEY</span> <span class="hljs-string">}}</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">snickerbockers/submodules-init@v4</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Use</span> <span class="hljs-string">Node.js</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v1</span>      <span class="hljs-attr">with:</span>        <span class="hljs-attr">node-version:</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span> <span class="hljs-string">-g</span> <span class="hljs-string">hexo-cli</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">hexo</span> <span class="hljs-string">clean</span> <span class="hljs-string">&&</span> <span class="hljs-string">hexo</span> <span class="hljs-string">g</span> <span class="hljs-string">--debug</span> <span class="hljs-string">&&</span> <span class="hljs-string">gulp</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Commit</span> <span class="hljs-string">files</span>      <span class="hljs-attr">run:</span> <span class="hljs-string">|</span>        <span class="hljs-string">git</span> <span class="hljs-string">add</span> <span class="hljs-string">.</span>        <span class="hljs-string">git</span> <span class="hljs-string">config</span> <span class="hljs-string">--local</span> <span class="hljs-string">user.email</span> <span class="hljs-string">"action@github.com"</span>        <span class="hljs-string">git</span> <span class="hljs-string">config</span> <span class="hljs-string">--local</span> <span class="hljs-string">user.name</span> <span class="hljs-string">"GitHub Action"</span>        <span class="hljs-string">git</span> <span class="hljs-string">commit</span> <span class="hljs-string">-m</span> <span class="hljs-string">"CI"</span> <span class="hljs-string">-a</span>        <span class="hljs-string">git</span> <span class="hljs-string">pull</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">GitHub</span> <span class="hljs-string">Push</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">ad-m/github-push-action@v0.5.0</span>      <span class="hljs-attr">with:</span>        <span class="hljs-comment"># Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}</span>        <span class="hljs-attr">github_token:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.CI_TOKEN</span> <span class="hljs-string">}}</span></code></pre></div><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://docs.nexmoe.com/hexo/#遇到问题怎么办？" target="_blank" rel="noopener">Nexmoe 文档</a><br><a href="https://nexmoe.com/661812793.html#资源合并" target="_blank" rel="noopener">博客，我优化了什么？</a><br><a href="https://todebug.com/use-gulp-with-hexo/" target="_blank" rel="noopener">hexo优化之——使用gulp压缩资源</a></p>]]></content:encoded>
+      <content:encoded><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>之前一直使用 Hexo 的 next 主题来呈现博客，最近觉得 next 太素了，想换一个花哨一些的~</p><h2 id="Fluid"><a href="#Fluid" class="headerlink" title="Fluid"></a>Fluid</h2><p>这个主题还是我在 Github 首页被推荐到的，看来 Github 的推荐算法越来越智能了，连博客主题的个人喜好都能作为推荐的标准了（开个玩笑）。</p><h2 id="额外的工作"><a href="#额外的工作" class="headerlink" title="额外的工作"></a>额外的工作</h2><h3 id="博文封面"><a href="#博文封面" class="headerlink" title="博文封面"></a>博文封面</h3><p>Nexmoe 支持为每篇文章配置一个漂漂亮亮的封面图，操作方法是在文章 md 文件的头部添加下面几行代码，分别是图片的 http 地址、长度和宽度。据作者说，之所要要显式地声明文件长宽，是为了消除图片的抖动。</p><div class="hljs"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><span class="hljs-attr">cover:</span> <span class="hljs-string">https://i.loli.net/2019/07/21/5d33d5dc1531213134.png</span><span class="hljs-attr">coverWidth:</span> <span class="hljs-number">1200</span><span class="hljs-attr">coverHeight:</span> <span class="hljs-number">750</span><span class="hljs-meta">---</span></code></pre></div><h3 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h3><p>作者的博客首页摆上了一堆社交网站的 Logo，特别可爱。</p><p><img src="https://oss.kherrisan.cn/20200410201550.png" srcset="/img/loading.gif" alt></p><p>在主题的 _config.yml 文件中，可以添加社交网站的 Logo 和个人链接。我暂时搞了四个。</p><div class="hljs"><pre><code class="hljs angelscript">social:  哔哩哔哩:    - https:<span class="hljs-comment">//space.bilibili.com/13288240</span>    - icon-bilibili    - rgb(<span class="hljs-number">231</span>, <span class="hljs-number">106</span>, <span class="hljs-number">141</span>)    - rgba(<span class="hljs-number">231</span>, <span class="hljs-number">106</span>, <span class="hljs-number">141</span>, <span class="hljs-number">.15</span>)  GitHub:    - https:<span class="hljs-comment">//github.com/kherrisan/</span>    - icon-github    - rgb(<span class="hljs-number">25</span>, <span class="hljs-number">23</span>, <span class="hljs-number">23</span>)    - rgba(<span class="hljs-number">25</span>, <span class="hljs-number">23</span>, <span class="hljs-number">23</span>, <span class="hljs-number">.15</span>)  Telegram:    - https:<span class="hljs-comment">//github.com/kherrisan/</span>    - icon-telegram    - rgb(<span class="hljs-number">39</span>,<span class="hljs-number">167</span>,<span class="hljs-number">229</span>)    - rgba(<span class="hljs-number">39</span>,<span class="hljs-number">167</span>,<span class="hljs-number">229</span>,<span class="hljs-number">.1</span>)  知乎:    - https:<span class="hljs-comment">//www.zhihu.com/people/smalldk</span>    - icon-zhihu    - rgb(<span class="hljs-number">00</span>,<span class="hljs-number">132</span>, <span class="hljs-number">256</span>)    - rgba(<span class="hljs-number">00</span>, <span class="hljs-number">132</span>, <span class="hljs-number">256</span>, <span class="hljs-number">.15</span>)</code></pre></div><h3 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h3><p>Mexmoe 自带了代码高亮，需要把 Hexo 默认的代码高亮功能关掉，来避免功能冲突。</p><h3 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h3><p>我使用的是 Gittalk。先简单描述一下 Gitalk 的原理：</p><ol><li>博客的网页中包含 Gitalk 的 js 脚本，在打开文章页的时候，浏览器会加载 js 脚本的内容。</li><li>js 脚本会去请求 Github 的一个接口，通过这个接口去查询指定仓库的 issues，这个仓库就是在 <strong>_config.yml</strong> 中的 <strong>repo</strong>，repo 不是存放博客内容的仓库名，而是指存放评论的仓库名，当然很多人把评论直接放在博客内容的仓库里，所以 repo 就是 xxx.github.io 这个格式。使用 key 和 secret 来对接口进行鉴权。我另外新建了一个叫 gitalk 的仓库，故 repo 就只要写 gitalk 就行了。</li><li>Github 的服务器接口收到了查询 issues 的相关请求，同时会检查请求来自的 Host 是不是你博客真正部署所在的网址，对于大多数人是 xxx.github.io，如果使用自定义域名，也可以是 www.xxx.com 这样。至于到底是什么样，是由用户在 Github - OAuth App 中的 <strong>Authorization callback URL</strong> 指定的。如果你在本地调试，那就应该写为 localhost:4000。当然它也会验证 key 和 secret 是否匹配。至于 <strong>Homepage URL</strong> 我还不知道有什么用，貌似可以随便写。</li><li>Github 的接口返回 issues 给浏览器，浏览器呈现评论列表。</li></ol><p>我的 gitalk 是这么配置的：</p><div class="hljs"><pre><code class="hljs dts"><span class="hljs-symbol">gitalk:</span><span class="hljs-symbol">  admin:</span> kherrisan<span class="hljs-symbol">  owner:</span> kherrisan<span class="hljs-symbol">  repo:</span> gitalk<span class="hljs-symbol">  clientID:</span> cef6ec0ef4709xxxxxx<span class="hljs-symbol">  clientSecret:</span> c184430c4d516f1f71911b1ba06947815fxxxxxx</code></pre></div><p>既然评论列表是浏览器直接从 Github 请求得到的，这就会产生一个问题：Github 服务器在国外，国内的用户在查看评论列表时可能会加载较长的时间。</p><h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="网页代码压缩"><a href="#网页代码压缩" class="headerlink" title="网页代码压缩"></a>网页代码压缩</h3><p>通过 gulp 来压缩 html、css、js 的代码，压缩完了之后的代码，在 chrome 的调试工具中，会变成特别长的一行~</p><h3 id="css-js内联"><a href="#css-js内联" class="headerlink" title="css/js内联"></a>css/js内联</h3><p>使用 <a href="https://github.com/JamesPan/hexo-filter-asset-inline" target="_blank" rel="noopener">hexo-filter-asset-inline</a>。</p><p>先 npm 下载这个库，然后在每个需要内联的 js、css 文件地址后面加上 <code>?__inline=true</code>。由于 hexo 没有一个统一的地方存放 css、js 的地址，而各个主题引用外部 css、js 的地方又各有不同，因此只能在编辑器里面搜索，然后一处处手动添加了。</p><p>全部地址修改完成后，打开网页应只需要加载 html 文件以及少数一个图片文件。</p><p><img src="https://oss.kherrisan.cn/20200410221659.png" srcset="/img/loading.gif" alt></p><h3 id="全站加速（氪金上云）"><a href="#全站加速（氪金上云）" class="headerlink" title="全站加速（氪金上云）"></a>全站加速（氪金上云）</h3><p>所有图片放到阿里云 OSS 上去，并且使用全站加速（实际上就是 CDN）来加速对 <a href="https://www.kherrisan.cn">https://www.kherrisan.cn</a> 这个域名下所有资源的访问。</p><h2 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h2><p>我想实现的效果是，我在本地完成撰写后，只需要提交 source 代码，然后 Github 的 Action 会自动帮我完成压缩、编译、部署的工作。代码如下：</p><div class="hljs"><pre><code class="hljs yml"><span class="hljs-attr">name:</span> <span class="hljs-string">Hexo</span> <span class="hljs-string">CI</span><span class="hljs-attr">on:</span>  <span class="hljs-attr">push:</span>    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">master</span> <span class="hljs-string">]</span>  <span class="hljs-attr">pull_request:</span>    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">master</span> <span class="hljs-string">]</span><span class="hljs-attr">jobs:</span>  <span class="hljs-attr">build:</span>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>    <span class="hljs-attr">strategy:</span>      <span class="hljs-attr">matrix:</span>        <span class="hljs-attr">node-version:</span> <span class="hljs-string">[12.x]</span>    <span class="hljs-attr">steps:</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">webfactory/ssh-agent</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">webfactory/ssh-agent@v0.2.0</span>      <span class="hljs-attr">with:</span>        <span class="hljs-comment"># Private SSH key to register in the SSH agent</span>        <span class="hljs-attr">ssh-private-key:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.SSH_PRIVATE_KEY</span> <span class="hljs-string">}}</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">snickerbockers/submodules-init@v4</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Use</span> <span class="hljs-string">Node.js</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v1</span>      <span class="hljs-attr">with:</span>        <span class="hljs-attr">node-version:</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span> <span class="hljs-string">-g</span> <span class="hljs-string">hexo-cli</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">hexo</span> <span class="hljs-string">clean</span> <span class="hljs-string">&&</span> <span class="hljs-string">hexo</span> <span class="hljs-string">g</span> <span class="hljs-string">--debug</span> <span class="hljs-string">&&</span> <span class="hljs-string">gulp</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Commit</span> <span class="hljs-string">files</span>      <span class="hljs-attr">run:</span> <span class="hljs-string">|</span>        <span class="hljs-string">git</span> <span class="hljs-string">add</span> <span class="hljs-string">.</span>        <span class="hljs-string">git</span> <span class="hljs-string">config</span> <span class="hljs-string">--local</span> <span class="hljs-string">user.email</span> <span class="hljs-string">"action@github.com"</span>        <span class="hljs-string">git</span> <span class="hljs-string">config</span> <span class="hljs-string">--local</span> <span class="hljs-string">user.name</span> <span class="hljs-string">"GitHub Action"</span>        <span class="hljs-string">git</span> <span class="hljs-string">commit</span> <span class="hljs-string">-m</span> <span class="hljs-string">"CI"</span> <span class="hljs-string">-a</span>        <span class="hljs-string">git</span> <span class="hljs-string">pull</span>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">GitHub</span> <span class="hljs-string">Push</span>      <span class="hljs-attr">uses:</span> <span class="hljs-string">ad-m/github-push-action@v0.5.0</span>      <span class="hljs-attr">with:</span>        <span class="hljs-comment"># Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}</span>        <span class="hljs-attr">github_token:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.CI_TOKEN</span> <span class="hljs-string">}}</span></code></pre></div><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://docs.nexmoe.com/hexo/#遇到问题怎么办？" target="_blank" rel="noopener">Nexmoe 文档</a><br><a href="https://nexmoe.com/661812793.html#资源合并" target="_blank" rel="noopener">博客，我优化了什么？</a><br><a href="https://todebug.com/use-gulp-with-hexo/" target="_blank" rel="noopener">hexo优化之——使用gulp压缩资源</a></p>]]></content:encoded>
       
       <comments>http://www.kherrisan.cn/posts/5ca0a75b/#disqus_thread</comments>
     </item>
@@ -135,7 +131,7 @@
       <title>2019年7月6日周记</title>
       <link>http://www.kherrisan.cn/posts/a9b253d5/</link>
       <guid>http://www.kherrisan.cn/posts/a9b253d5/</guid>
-      <pubDate>Sat, 06 Jul 2019 11:56:39 GMT</pubDate>
+      <pubDate>Sat, 06 Jul 2019 19:56:39 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;a href=&quot;#2019年6月31日-2019年7月6日&quot; class=&quot;headerlink&quot; title=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;/a&gt;2019年6月31日-2019年7月6日&lt;/h2&gt;&lt;p&gt;离校了，宿舍里的东西全都搬到了家里，也都收拾好了。6月26日开始的为期三天的招生工作也宣告结束，不知道未来还有没有机会和计软的招生老师们一起去一中玩（zhuang）耍（bi）。&lt;/p&gt;
@@ -152,7 +148,7 @@
       <title>2019年6月消费情况总结及7月预算</title>
       <link>http://www.kherrisan.cn/posts/fc2f84e6/</link>
       <guid>http://www.kherrisan.cn/posts/fc2f84e6/</guid>
-      <pubDate>Mon, 01 Jul 2019 01:34:36 GMT</pubDate>
+      <pubDate>Mon, 01 Jul 2019 09:34:36 GMT</pubDate>
       <description>
       
         
@@ -173,7 +169,7 @@
       <title>2019年5月消费情况总结及6月预算</title>
       <link>http://www.kherrisan.cn/posts/983ed1c1/</link>
       <guid>http://www.kherrisan.cn/posts/983ed1c1/</guid>
-      <pubDate>Sun, 02 Jun 2019 10:03:51 GMT</pubDate>
+      <pubDate>Sun, 02 Jun 2019 18:03:51 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;5月消费总结&quot;&gt;&lt;a href=&quot;#5月消费总结&quot; class=&quot;headerlink&quot; title=&quot;5月消费总结&quot;&gt;&lt;/a&gt;5月消费总结&lt;/h2&gt;&lt;p&gt;我在五月的消费非常地不按照常理出牌，收入方面：&lt;/p&gt;
@@ -195,7 +191,7 @@
       <title>2019年4月消费情况总结及5月预算</title>
       <link>http://www.kherrisan.cn/posts/bc977d0a/</link>
       <guid>http://www.kherrisan.cn/posts/bc977d0a/</guid>
-      <pubDate>Mon, 29 Apr 2019 12:01:13 GMT</pubDate>
+      <pubDate>Mon, 29 Apr 2019 20:01:13 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够及时对”不堪回首“的消费记录进行分析和总结，并对下一个月的消费做出有效可行的预算，在此为消费单独开辟一个栏目。&lt;/p&gt;
@@ -212,7 +208,7 @@
       <title>2019年4月29日周记</title>
       <link>http://www.kherrisan.cn/posts/8336f069/</link>
       <guid>http://www.kherrisan.cn/posts/8336f069/</guid>
-      <pubDate>Mon, 29 Apr 2019 11:56:39 GMT</pubDate>
+      <pubDate>Mon, 29 Apr 2019 19:56:39 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;a href=&quot;#2019年4月22日-2019年4月28日&quot; class=&quot;headerlink&quot; title=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;/a&gt;2019年4月22日-2019年4月28日&lt;/h2&gt;&lt;p&gt;本周是开始考研复习的第三周，实际上只复习了一天。在周一经过小伙伴提醒五一之后要交论文初稿，因此周一之后的所有时间都用来写论文了。但是论文进度比想象的慢，写作效率不高，可以形容为”&lt;strong&gt;以写论文的名义划水&lt;/strong&gt;“。&lt;/p&gt;
@@ -229,7 +225,7 @@
       <title>2019年4月19日周记</title>
       <link>http://www.kherrisan.cn/posts/1ad49668/</link>
       <guid>http://www.kherrisan.cn/posts/1ad49668/</guid>
-      <pubDate>Fri, 19 Apr 2019 14:55:29 GMT</pubDate>
+      <pubDate>Fri, 19 Apr 2019 22:55:29 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够记录自己平时的学习和生活，并进行一些有益的反思，我开始尝试写周记，同时也真心希望自己能够坚持下去。&lt;/p&gt;
@@ -246,7 +242,7 @@
       <title>Apple产品体验</title>
       <link>http://www.kherrisan.cn/posts/e19f7302/</link>
       <guid>http://www.kherrisan.cn/posts/e19f7302/</guid>
-      <pubDate>Sat, 06 Apr 2019 07:58:00 GMT</pubDate>
+      <pubDate>Sat, 06 Apr 2019 15:58:00 GMT</pubDate>
       <description>
       
         
@@ -267,7 +263,7 @@
       <title>休息一年，然后回来</title>
       <link>http://www.kherrisan.cn/posts/33352bc/</link>
       <guid>http://www.kherrisan.cn/posts/33352bc/</guid>
-      <pubDate>Sat, 06 Apr 2019 06:32:26 GMT</pubDate>
+      <pubDate>Sat, 06 Apr 2019 14:32:26 GMT</pubDate>
       <description>
       
         &lt;p&gt;本来在大三时打定主意，本科毕业了之后就直接参加工作，迅速进入资本积累的人生阶段。结果在大四秋招之后对职业生涯却产生了新的理解和认识。人生应该不至于此，我决定参加2019年考研。&lt;/p&gt;
@@ -284,7 +280,7 @@
       <title>如何看待江苏要南京提高首位度？</title>
       <link>http://www.kherrisan.cn/posts/a8d5d9dc/</link>
       <guid>http://www.kherrisan.cn/posts/a8d5d9dc/</guid>
-      <pubDate>Sun, 27 Jan 2019 12:31:04 GMT</pubDate>
+      <pubDate>Sun, 27 Jan 2019 20:31:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;这个主题来自&lt;a href=&quot;https://www.zhihu.com/question/266051194&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;知乎&lt;/a&gt;，今天在回家的高铁上偶然刷到。作为一个在南京生活了3年半的土生土长的常州人，我想围绕这个主体就知乎上的一些回答给出我自己的些许看法。&lt;/p&gt;
@@ -301,7 +297,7 @@
       <title>这是一个测试页</title>
       <link>http://www.kherrisan.cn/posts/1e12b02a/</link>
       <guid>http://www.kherrisan.cn/posts/1e12b02a/</guid>
-      <pubDate>Thu, 24 Jan 2019 05:46:26 GMT</pubDate>
+      <pubDate>Thu, 24 Jan 2019 13:46:26 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;Markdown语法渲染&quot;&gt;&lt;a href=&quot;#Markdown语法渲染&quot; class=&quot;headerlink&quot; title=&quot;Markdown语法渲染&quot;&gt;&lt;/a&gt;Markdown语法渲染&lt;/h2&gt;&lt;p&gt;这部分主要是为了测试Hexo渲染Markdown的编译器对常用记号的支持程度。&lt;/p&gt;
@@ -320,7 +316,7 @@
       <title>Netty——Pipeline(1)</title>
       <link>http://www.kherrisan.cn/posts/403de3e7/</link>
       <guid>http://www.kherrisan.cn/posts/403de3e7/</guid>
-      <pubDate>Tue, 08 Jan 2019 14:25:02 GMT</pubDate>
+      <pubDate>Tue, 08 Jan 2019 22:25:02 GMT</pubDate>
       <description>
       
         &lt;p&gt;)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 &lt;code&gt;Pipeline&lt;/code&gt;的继承结构： &lt;img src=&quot;https://oss.kherrisan.cn/e1fb7cb818b3cd0d10e25e3905f0efcb.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -337,7 +333,7 @@
       <title>JLink——借助JLink打包Java程序为可执行程序</title>
       <link>http://www.kherrisan.cn/posts/72407af/</link>
       <guid>http://www.kherrisan.cn/posts/72407af/</guid>
-      <pubDate>Sun, 06 Jan 2019 11:38:54 GMT</pubDate>
+      <pubDate>Sun, 06 Jan 2019 19:38:54 GMT</pubDate>
       <description>
       
         &lt;p&gt;JDK9中的模块化技术使得原本一两百兆的JRE能够被拆分成多个较小的模块，因此如果想要把Java程序打包成可执行程序，并在没有JRE环境的机器上运行，不再需要带上一个庞大的JRE，而只需要额外增加几个JDK中的module。 项目目录结构如下，仅仅是一个很简单的Hello World程序。代码中仅仅使用到了System.out.println这一个JDK中提供的函数。 &lt;img src=&quot;https://oss.kherrisan.cn/b6fc620903896d3ef034f5bed269fcaa.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 最重要的是module-info.jar文件，这个文件是module的定义文件，声明了我所编写的这个模块需要依赖哪些模块，以及对外暴露哪些东西。 由于只依赖java.base模块，而这个模块是默认包含的，因此module-info的大括号内可以为空。&lt;/p&gt;
@@ -345,7 +341,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<p>JDK9中的模块化技术使得原本一两百兆的JRE能够被拆分成多个较小的模块，因此如果想要把Java程序打包成可执行程序，并在没有JRE环境的机器上运行，不再需要带上一个庞大的JRE，而只需要额外增加几个JDK中的module。 项目目录结构如下，仅仅是一个很简单的Hello World程序。代码中仅仅使用到了System.out.println这一个JDK中提供的函数。 <img src="https://oss.kherrisan.cn/b6fc620903896d3ef034f5bed269fcaa.png" srcset="/img/loading.gif" alt> 最重要的是module-info.jar文件，这个文件是module的定义文件，声明了我所编写的这个模块需要依赖哪些模块，以及对外暴露哪些东西。 由于只依赖java.base模块，而这个模块是默认包含的，因此module-info的大括号内可以为空。</p><a id="more"></a><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">module</span> dkm {}</code></pre></div><p>build.gradle文件也十分简单。</p><div class="hljs"><pre><code class="hljs groovy">plugins {    id <span class="hljs-string">'java'</span>}apply <span class="hljs-string">plugin:</span> <span class="hljs-string">'application'</span>mainClassName = <span class="hljs-string">'com.dokyme.Main'</span>group <span class="hljs-string">'test-jlink-exe'</span>version <span class="hljs-string">'1.0-SNAPSHOT'</span>sourceCompatibility = <span class="hljs-number">1.9</span></code></pre></div><p>先运行<code>./gradlew build</code>，将该项目打成JAR包。接着再用JLink工具将多个模块链接成一个可执行文件，有没有一种C语言的链接器的既视感？</p><div class="hljs"><pre><code class="hljs plain">jlink --module-path /Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/jmods:build/libs --add-modules dkm --launcher dkm=dkm/com.dokyme.Main --output dist</code></pre></div><ul><li>—module-path 类似于CLASSPATH，JLink到哪里去找modules</li><li>—add-modules 要额外添加的module</li><li>—launcher dkm=dkm/com.dokyme.Main 启动器，或者说是可执行程序。后面跟着的是程序的名字以及入口主类的位置。</li><li>—output 输出路径</li></ul><p>命令执行结束之后就会多出一个dist目录，里面的bin文件夹下存放着可执行文件，这个dist目录大约30MB左右。 <img src="https://oss.kherrisan.cn/321c50d9e9ddc4d5a698214ac400d572.png" srcset="/img/loading.gif" alt> 这个入口文件实际上是一个shell脚本，调用同目录下的java程序载入模块中的主类，执行主类的代码。</p><div class="hljs"><pre><code class="hljs plain">#!/bin/shJLINK_VM_OPTIONS=DIR=`dirname $0`$DIR/java $JLINK_VM_OPTIONS -m dkm/com.dokyme.Main $@</code></pre></div><p>找到一个gradle的plugin，挺有意思： <a href="https://github.com/alkimiapps/gradle-dplink-plugin" target="_blank" rel="noopener">gradle-dplink-plugin</a></p>]]></content:encoded>
+      <content:encoded><![CDATA[<p>JDK9中的模块化技术使得原本一两百兆的JRE能够被拆分成多个较小的模块，因此如果想要把Java程序打包成可执行程序，并在没有JRE环境的机器上运行，不再需要带上一个庞大的JRE，而只需要额外增加几个JDK中的module。 项目目录结构如下，仅仅是一个很简单的Hello World程序。代码中仅仅使用到了System.out.println这一个JDK中提供的函数。 <img src="https://oss.kherrisan.cn/b6fc620903896d3ef034f5bed269fcaa.png" srcset="/img/loading.gif" alt> 最重要的是module-info.jar文件，这个文件是module的定义文件，声明了我所编写的这个模块需要依赖哪些模块，以及对外暴露哪些东西。 由于只依赖java.base模块，而这个模块是默认包含的，因此module-info的大括号内可以为空。</p><a id="more"></a><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">module</span> dkm {}</code></pre></div><p>build.gradle文件也十分简单。</p><div class="hljs"><pre><code class="hljs groovy">plugins {    id <span class="hljs-string">'java'</span>}apply <span class="hljs-string">plugin:</span> <span class="hljs-string">'application'</span>mainClassName = <span class="hljs-string">'com.dokyme.Main'</span>group <span class="hljs-string">'test-jlink-exe'</span>version <span class="hljs-string">'1.0-SNAPSHOT'</span>sourceCompatibility = <span class="hljs-number">1.9</span></code></pre></div><p>先运行<code>./gradlew build</code>，将该项目打成JAR包。接着再用JLink工具将多个模块链接成一个可执行文件，有没有一种C语言的链接器的既视感？</p><div class="hljs"><pre><code class="hljs jboss-cli">jlink <span class="hljs-params">--module-path</span> <span class="hljs-string">/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/jmods</span><span class="hljs-function">:build</span>/libs <span class="hljs-params">--add-modules</span> dkm <span class="hljs-params">--launcher</span> dkm=dkm/com.dokyme.Main <span class="hljs-params">--output</span> dist</code></pre></div><ul><li>—module-path 类似于CLASSPATH，JLink到哪里去找modules</li><li>—add-modules 要额外添加的module</li><li>—launcher dkm=dkm/com.dokyme.Main 启动器，或者说是可执行程序。后面跟着的是程序的名字以及入口主类的位置。</li><li>—output 输出路径</li></ul><p>命令执行结束之后就会多出一个dist目录，里面的bin文件夹下存放着可执行文件，这个dist目录大约30MB左右。 <img src="https://oss.kherrisan.cn/321c50d9e9ddc4d5a698214ac400d572.png" srcset="/img/loading.gif" alt> 这个入口文件实际上是一个shell脚本，调用同目录下的java程序载入模块中的主类，执行主类的代码。</p><div class="hljs"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span>JLINK_VM_OPTIONS=DIR=`dirname <span class="hljs-variable">$0</span>`<span class="hljs-variable">$DIR</span>/java <span class="hljs-variable">$JLINK_VM_OPTIONS</span> -m dkm/com.dokyme.Main <span class="hljs-variable">$@</span></code></pre></div><p>找到一个gradle的plugin，挺有意思： <a href="https://github.com/alkimiapps/gradle-dplink-plugin" target="_blank" rel="noopener">gradle-dplink-plugin</a></p>]]></content:encoded>
       
       <comments>http://www.kherrisan.cn/posts/72407af/#disqus_thread</comments>
     </item>
@@ -354,7 +350,7 @@
       <title>Netty——NioEventLoop(2)</title>
       <link>http://www.kherrisan.cn/posts/75327452/</link>
       <guid>http://www.kherrisan.cn/posts/75327452/</guid>
-      <pubDate>Sat, 05 Jan 2019 02:36:54 GMT</pubDate>
+      <pubDate>Sat, 05 Jan 2019 10:36:54 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Loop过程&quot;&gt;&lt;a href=&quot;#Loop过程&quot; class=&quot;headerlink&quot; title=&quot;Loop过程&quot;&gt;&lt;/a&gt;Loop过程&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NioEventLoop&lt;/code&gt;最核心的就是处理事件循环的&lt;code&gt;run&lt;/code&gt;方法。这个方法看起来不长，但实际上它承担了最重要的逻辑，并且对很多细节问题做了处理。&lt;/p&gt;
@@ -371,7 +367,7 @@
       <title>Netty——NioEventLoop(1)</title>
       <link>http://www.kherrisan.cn/posts/5e1f2791/</link>
       <guid>http://www.kherrisan.cn/posts/5e1f2791/</guid>
-      <pubDate>Mon, 24 Dec 2018 12:41:23 GMT</pubDate>
+      <pubDate>Mon, 24 Dec 2018 20:41:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;作为Netty中最核心的概念之一，&lt;code&gt;NioEventLoop&lt;/code&gt;作为线程实体承载Netty中几乎所有代码的运行、所有事件的检测和触发。&lt;code&gt;EventLoop&lt;/code&gt;这个单词并不陌生。在很多的图形用户界面（GUI）程序中，都会使用较少的数个线程来运行代码，以应对用户操作事件。 由于Netty的线程模型基于Java的&lt;strong&gt;NIO&lt;/strong&gt;，而NIO又是通过&lt;strong&gt;IO多路复用&lt;/strong&gt;实现的。IO多路复用是底层技术，在其之上则是负责管理多路IO的线程模型。Reactor模式就是一种经典的多线程IO设计模型。 &lt;/p&gt;
@@ -388,7 +384,7 @@
       <title>K2-PandoraBox-IPV6（教育网）配置过程</title>
       <link>http://www.kherrisan.cn/posts/96393751/</link>
       <guid>http://www.kherrisan.cn/posts/96393751/</guid>
-      <pubDate>Sun, 25 Nov 2018 10:06:38 GMT</pubDate>
+      <pubDate>Sun, 25 Nov 2018 18:06:38 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;strong&gt;坐标：东南大学九龙湖校区梅园4C某宿舍&lt;/strong&gt; 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。&lt;/p&gt;
@@ -396,7 +392,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<p><strong>坐标：东南大学九龙湖校区梅园4C某宿舍</strong> 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。</p><a id="more"></a><h1 id="K2固件相关工作"><a href="#K2固件相关工作" class="headerlink" title="K2固件相关工作"></a>K2固件相关工作</h1><ol><li>刷<strong>breed</strong>不死鸟固件。</li><li>刷<strong>PandoraBox</strong>固件。</li></ol><h2 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h2><p>在浏览器中打开<code>192.168.1.1</code>，输入默认密码<code>admin</code>，进入<code>PandoraBox</code>管理页面。 由于我此时已经将<code>IPV6</code>网口与路由去<code>WAN</code>口相连，因此在网络-接口界面可以看到<code>WAN6</code>口已经通过<code>DHCP</code>从上游路由器（DHCP服务器）得到了IPV6网址。 如果插入了<code>IPV6</code>网线，但页面上没有<code>IPV6</code>地址，可以尝试点击“连接”按钮重新连接上游路由器，并等待1分钟左右，一般就可以获得<code>IPV6</code>地址了。 <img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-35-37.png" srcset="/img/loading.gif" alt></p><h2 id="下载所需程序"><a href="#下载所需程序" class="headerlink" title="下载所需程序"></a>下载所需程序</h2><p>打开一个控制台，通过ssh连到路由器上，<strong>密码默认为admin</strong>：</p><div class="hljs"><pre><code class="hljs plain">ssh root@192.168.1.1</code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-37-31.png" srcset="/img/loading.gif" alt> 路由器的操作系统也是Linux的一种，因此熟悉PC端Linux操作的人应该不会有太大困难。</p><div class="hljs"><pre><code class="hljs plain">opkg update......opkg install ip6tables kmod-ipt-nat6</code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-38-30.png" srcset="/img/loading.gif" alt> 安装2个程序，装好了之后回到浏览器。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>进入网络-接口-LAN-DHCP服务器页面，勾选<strong>总是通告默认路由</strong>。 <img src="https://oss.kherrisan.cn/3adea32eb5cb208d4e481e3321a0b88d.png" srcset="/img/loading.gif" alt> 进入网络-防火墙-自定义规则页面，添加一条规则，并<strong>重启防火墙</strong>。</p><div class="hljs"><pre><code class="hljs plain">ip6tables -t nat -A POSTROUTING -o eth0.2 -j MASQUERADE</code></pre></div><p><img src="https://oss.kherrisan.cn/2ade23d4f609146101a4df4396b8621f.png" srcset="/img/loading.gif" alt> 回到路由器终端，找出IPV6的默认路由网关地址，然后添加一条新的路由规则：</p><div class="hljs"><pre><code class="hljs plain">ip -6 route | grep default假设输出的地址为xxxx::xxxxroute -A inet6 add default gw xxxx::xxxx dev eth0.2</code></pre></div><p><img src="https://oss.kherrisan.cn/339f07f8fd170d0765c79ed2027d2105.png" srcset="/img/loading.gif" alt> 最后，重启一下相关服务。</p><div class="hljs"><pre><code class="hljs plain">/etc/init.d/firewall restart/etc/init.d/network restart</code></pre></div><h2 id="测试连通性"><a href="#测试连通性" class="headerlink" title="测试连通性"></a>测试连通性</h2><p>重启结束之后，PC就可以<code>ping</code>通谷歌了，如果<code>ping</code>不通，可以重连一下路由器的<code>Wifi</code>。 <img src="https://oss.kherrisan.cn/259f944fc4663699a06f4f8ef77f6022.png" srcset="/img/loading.gif" alt></p><h2 id="打开网页"><a href="#打开网页" class="headerlink" title="打开网页"></a>打开网页</h2><p>离终点只有一步之遥了：由于<strong>chrome</strong>浏览器采用的策略是IPV6和IPV4共存，解析网址的<code>IPV6</code>和<code>IPV4</code>地址，然后优先与<code>IPV6</code>地址发起连接，当连接的时间超过300ms（具体数值不清楚）时，说明链路中的<code>IPV6</code>机制有问题，就会切换到<code>IPV4</code>地址发起<code>TCP</code>连接，最后发送<code>HTTP</code>请求报文。 这样的流程对于国内想要通过<code>IPV6</code>翻墙的用户而言是不合适的，因为连接远程主机的延迟一般会比较高，导致链路正常联通的<code>IPV6</code>链路被浏览器舍弃，转而尝试去访问无法连接的<code>IPV4</code>地址。 而我们希望的理想的过程是，浏览器先解析IPV6地址，只要<code>IPV6</code>地址存在，就直接去连接该地址，不要去管<code>IPV4</code>地址是多少。或者说串行地去请求做<code>IPV6</code>和<code>IPV4</code>地址的<code>DNS</code>解析操作。在<code>DNS</code>协议中，<code>IPV6</code>和<code>IPV4</code>对应报文头部的<code>type</code>值分别为<code>AAAA</code>和<code>A</code>。此外，需要在本机配置<code>DNS</code>服务器地址为本机地址。 我在Github上找到了这么一个好东西： <a href="https://github.com/adamyi/v6dns" target="_blank" rel="noopener">adamyi/v6dns</a> 这是一个<code>DNS</code>服务的中继程序，会在某个端口上监听所有<code>DNS</code>报文，并按照下面的逻辑运行： <img src="https://oss.kherrisan.cn/fafa577fd8ba1491f759bc03e039eacb.png" srcset="/img/loading.gif" alt> 为了解决<code>IPV4/6</code>优先级的问题，可以这么做：在本地运行v6dns程序，监听本机的53端口，并设置<code>DNS</code>查询服务器为某个远程的<code>DNS</code>服务器地址。这样，如果能够查询到某个网站的<code>IPV6</code>地址，那就直接发起连接，如果查不到，就再查询其<code>IPV4</code>地址。</p><h2 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h2><p>本文介绍了在教育网环境下使用K2的PandoraBox固件进行配置最终访问<code>IPV6</code>网站的过程，其中最核心的步骤就是配置<code>NAT6</code>，<code>NAT6</code>是基于<code>IPV6</code>的网络地址转换，目的是将上游<code>DHCP6</code>分配的一个<code>IPV6</code>地址转换成内网的多个地址分配给多个主机。 最终测试的效果不佳，在Youtube上看视频时常常出现卡顿的现象，记忆中原来看视频能够达到4K画质，并且帧率为60fps的网速水准。推测原因如下：</p><ol><li>K2路由器不够稳定。</li><li>PandoraBox固件或NAT6机制不够成熟。</li></ol>]]></content:encoded>
+      <content:encoded><![CDATA[<p><strong>坐标：东南大学九龙湖校区梅园4C某宿舍</strong> 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。</p><a id="more"></a><h1 id="K2固件相关工作"><a href="#K2固件相关工作" class="headerlink" title="K2固件相关工作"></a>K2固件相关工作</h1><ol><li>刷<strong>breed</strong>不死鸟固件。</li><li>刷<strong>PandoraBox</strong>固件。</li></ol><h2 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h2><p>在浏览器中打开<code>192.168.1.1</code>，输入默认密码<code>admin</code>，进入<code>PandoraBox</code>管理页面。 由于我此时已经将<code>IPV6</code>网口与路由去<code>WAN</code>口相连，因此在网络-接口界面可以看到<code>WAN6</code>口已经通过<code>DHCP</code>从上游路由器（DHCP服务器）得到了IPV6网址。 如果插入了<code>IPV6</code>网线，但页面上没有<code>IPV6</code>地址，可以尝试点击“连接”按钮重新连接上游路由器，并等待1分钟左右，一般就可以获得<code>IPV6</code>地址了。 <img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-35-37.png" srcset="/img/loading.gif" alt></p><h2 id="下载所需程序"><a href="#下载所需程序" class="headerlink" title="下载所需程序"></a>下载所需程序</h2><p>打开一个控制台，通过ssh连到路由器上，<strong>密码默认为admin</strong>：</p><div class="hljs"><pre><code class="hljs angelscript">ssh <span class="hljs-symbol">root@</span><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span></code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-37-31.png" srcset="/img/loading.gif" alt> 路由器的操作系统也是Linux的一种，因此熟悉PC端Linux操作的人应该不会有太大困难。</p><div class="hljs"><pre><code class="hljs routeros">opkg update<span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span>opkg install ip6tables kmod-ipt-nat6</code></pre></div><p><img src="https://oss.kherrisan.cn/Snipaste_2018-11-24_13-38-30.png" srcset="/img/loading.gif" alt> 安装2个程序，装好了之后回到浏览器。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>进入网络-接口-LAN-DHCP服务器页面，勾选<strong>总是通告默认路由</strong>。 <img src="https://oss.kherrisan.cn/3adea32eb5cb208d4e481e3321a0b88d.png" srcset="/img/loading.gif" alt> 进入网络-防火墙-自定义规则页面，添加一条规则，并<strong>重启防火墙</strong>。</p><div class="hljs"><pre><code class="hljs routeros">ip6tables -t<span class="hljs-built_in"> nat </span>-A POSTROUTING -o eth0.2 -j MASQUERADE</code></pre></div><p><img src="https://oss.kherrisan.cn/2ade23d4f609146101a4df4396b8621f.png" srcset="/img/loading.gif" alt> 回到路由器终端，找出IPV6的默认路由网关地址，然后添加一条新的路由规则：</p><div class="hljs"><pre><code class="hljs routeros">ip -6<span class="hljs-built_in"> route </span>| grep default假设输出的地址为xxxx::xxxxroute -A inet6 <span class="hljs-builtin-name">add</span><span class="hljs-built_in"> default </span>gw xxxx::xxxx dev eth0.2</code></pre></div><p><img src="https://oss.kherrisan.cn/339f07f8fd170d0765c79ed2027d2105.png" srcset="/img/loading.gif" alt> 最后，重启一下相关服务。</p><div class="hljs"><pre><code class="hljs routeros">/etc/init.d<span class="hljs-built_in">/firewall </span>restart/etc/init.d<span class="hljs-built_in">/network </span>restart</code></pre></div><h2 id="测试连通性"><a href="#测试连通性" class="headerlink" title="测试连通性"></a>测试连通性</h2><p>重启结束之后，PC就可以<code>ping</code>通谷歌了，如果<code>ping</code>不通，可以重连一下路由器的<code>Wifi</code>。 <img src="https://oss.kherrisan.cn/259f944fc4663699a06f4f8ef77f6022.png" srcset="/img/loading.gif" alt></p><h2 id="打开网页"><a href="#打开网页" class="headerlink" title="打开网页"></a>打开网页</h2><p>离终点只有一步之遥了：由于<strong>chrome</strong>浏览器采用的策略是IPV6和IPV4共存，解析网址的<code>IPV6</code>和<code>IPV4</code>地址，然后优先与<code>IPV6</code>地址发起连接，当连接的时间超过300ms（具体数值不清楚）时，说明链路中的<code>IPV6</code>机制有问题，就会切换到<code>IPV4</code>地址发起<code>TCP</code>连接，最后发送<code>HTTP</code>请求报文。 这样的流程对于国内想要通过<code>IPV6</code>翻墙的用户而言是不合适的，因为连接远程主机的延迟一般会比较高，导致链路正常联通的<code>IPV6</code>链路被浏览器舍弃，转而尝试去访问无法连接的<code>IPV4</code>地址。 而我们希望的理想的过程是，浏览器先解析IPV6地址，只要<code>IPV6</code>地址存在，就直接去连接该地址，不要去管<code>IPV4</code>地址是多少。或者说串行地去请求做<code>IPV6</code>和<code>IPV4</code>地址的<code>DNS</code>解析操作。在<code>DNS</code>协议中，<code>IPV6</code>和<code>IPV4</code>对应报文头部的<code>type</code>值分别为<code>AAAA</code>和<code>A</code>。此外，需要在本机配置<code>DNS</code>服务器地址为本机地址。 我在Github上找到了这么一个好东西： <a href="https://github.com/adamyi/v6dns" target="_blank" rel="noopener">adamyi/v6dns</a> 这是一个<code>DNS</code>服务的中继程序，会在某个端口上监听所有<code>DNS</code>报文，并按照下面的逻辑运行： <img src="https://oss.kherrisan.cn/fafa577fd8ba1491f759bc03e039eacb.png" srcset="/img/loading.gif" alt> 为了解决<code>IPV4/6</code>优先级的问题，可以这么做：在本地运行v6dns程序，监听本机的53端口，并设置<code>DNS</code>查询服务器为某个远程的<code>DNS</code>服务器地址。这样，如果能够查询到某个网站的<code>IPV6</code>地址，那就直接发起连接，如果查不到，就再查询其<code>IPV4</code>地址。</p><h2 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h2><p>本文介绍了在教育网环境下使用K2的PandoraBox固件进行配置最终访问<code>IPV6</code>网站的过程，其中最核心的步骤就是配置<code>NAT6</code>，<code>NAT6</code>是基于<code>IPV6</code>的网络地址转换，目的是将上游<code>DHCP6</code>分配的一个<code>IPV6</code>地址转换成内网的多个地址分配给多个主机。 最终测试的效果不佳，在Youtube上看视频时常常出现卡顿的现象，记忆中原来看视频能够达到4K画质，并且帧率为60fps的网速水准。推测原因如下：</p><ol><li>K2路由器不够稳定。</li><li>PandoraBox固件或NAT6机制不够成熟。</li></ol>]]></content:encoded>
       
       <comments>http://www.kherrisan.cn/posts/96393751/#disqus_thread</comments>
     </item>
@@ -405,7 +401,7 @@
       <title>Netty——下载、编译、调试源码</title>
       <link>http://www.kherrisan.cn/posts/1169e0a5/</link>
       <guid>http://www.kherrisan.cn/posts/1169e0a5/</guid>
-      <pubDate>Thu, 15 Nov 2018 12:39:40 GMT</pubDate>
+      <pubDate>Thu, 15 Nov 2018 20:39:40 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Intellij，启动！&quot;&gt;&lt;a href=&quot;#Intellij，启动！&quot; class=&quot;headerlink&quot; title=&quot;Intellij，启动！&quot;&gt;&lt;/a&gt;Intellij，启动！&lt;/h1&gt;&lt;h2 id=&quot;参考资料：&quot;&gt;&lt;a href=&quot;#参考资料：&quot; class=&quot;headerlink&quot; title=&quot;参考资料：&quot;&gt;&lt;/a&gt;参考资料：&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/9160684f134b&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Netty分享之动态生成重复性的代码&lt;/a&gt;&lt;/p&gt;
@@ -422,7 +418,7 @@
       <title>Netty——Bootstrap</title>
       <link>http://www.kherrisan.cn/posts/7c7e2239/</link>
       <guid>http://www.kherrisan.cn/posts/7c7e2239/</guid>
-      <pubDate>Wed, 14 Nov 2018 12:24:36 GMT</pubDate>
+      <pubDate>Wed, 14 Nov 2018 20:24:36 GMT</pubDate>
       <description>
       
         &lt;p&gt;以netty-example中的Echo（Server）为例，分析Netty源码的结构与运行过程。 跳过SSL相关的部分。从下面这一行代码开始：&lt;/p&gt;
@@ -440,7 +436,7 @@
       <title>JUC——ConcurrentHashMap</title>
       <link>http://www.kherrisan.cn/posts/b6a54201/</link>
       <guid>http://www.kherrisan.cn/posts/b6a54201/</guid>
-      <pubDate>Sun, 14 Oct 2018 09:14:51 GMT</pubDate>
+      <pubDate>Sun, 14 Oct 2018 17:14:51 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/dbdcdc86ee06761292636a46d6fc8878.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 1.7中的ConcurrentHashMap使用分段锁来解决并发线程之间的同步竞争问题，本文总结1.8中的实现。&lt;/p&gt;
@@ -457,7 +453,7 @@
       <title>JUC——ReentrantLock</title>
       <link>http://www.kherrisan.cn/posts/994661cc/</link>
       <guid>http://www.kherrisan.cn/posts/994661cc/</guid>
-      <pubDate>Sat, 06 Oct 2018 08:32:27 GMT</pubDate>
+      <pubDate>Sat, 06 Oct 2018 16:32:27 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/ce7ae3e6bb8915c9daaf1b1cc426ad33.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 单线程持有的、可重入的锁。&lt;/p&gt;
@@ -477,7 +473,7 @@
       <title>JUC——AQS</title>
       <link>http://www.kherrisan.cn/posts/794bdde7/</link>
       <guid>http://www.kherrisan.cn/posts/794bdde7/</guid>
-      <pubDate>Sat, 06 Oct 2018 07:08:33 GMT</pubDate>
+      <pubDate>Sat, 06 Oct 2018 15:08:33 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/6de3aa05c56e9c4d58266c20b05abb9c.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; AQS————AbstractQueuedSynchronizor，队列同步器，AQS是一个抽象类，它为开发者编写同步工具（比如锁、信号量）提供了开发框架，这个框架封装了对线程和竞态条件的细节，使得开发者能够只关注于锁的逻辑，而无需关注线程的维护以及竞态条件的控制。 JUC中很多锁都是基于AQS进行开发的。&lt;/p&gt;
@@ -485,7 +481,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<p><img src="https://oss.kherrisan.cn/6de3aa05c56e9c4d58266c20b05abb9c.png" srcset="/img/loading.gif" alt> AQS————AbstractQueuedSynchronizor，队列同步器，AQS是一个抽象类，它为开发者编写同步工具（比如锁、信号量）提供了开发框架，这个框架封装了对线程和竞态条件的细节，使得开发者能够只关注于锁的逻辑，而无需关注线程的维护以及竞态条件的控制。 JUC中很多锁都是基于AQS进行开发的。</p><a id="more"></a><h1 id="Node类"><a href="#Node类" class="headerlink" title="Node类"></a>Node类</h1><p>由于AQS是队列，需要有一个类来封装每个节点的状态，Node类代表队列中的每一个节点。除了构造函数之外没有方法。 <img src="https://oss.kherrisan.cn/910b221f6636d393b151869bb9fab175.png" srcset="/img/loading.gif" alt></p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><ol><li>waitStatus，等待状态。状态值可能为SIGNAL(-1)、CANCELLED(1)、CONDITION(-2)、PROPAGATE(-3)、0。</li><li>prev，队列中的前驱节点。</li><li>next，队列中的后继节点。</li><li>thread，线程对象</li><li>nextWaiter，</li></ol><h1 id="AQS实现——Mutex"><a href="#AQS实现——Mutex" class="headerlink" title="AQS实现——Mutex"></a>AQS实现——Mutex</h1><p>AQS框架使用了模板方法模式来实现自身功能，某个锁的实现通常要继承AQS并重写数个方法，因此脱离具体的锁去谈AQS是有些不切实际的。</p><div class="hljs"><pre><code class="hljs plain">public class MutexLock implements Lock {      private static final int LOCK = 1;      private static final int UNLOCK = 0;      private final Sync sync = new Sync();      @Override      public void lock() {          sync.acquire(LOCK);      }      @Override      public void lockInterruptibly() throws InterruptedException {          sync.acquireInterruptibly(LOCK);      }      @Override      public boolean tryLock() {          return sync.tryAcquire(LOCK);      }      @Override      public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {          return false;      }      @Override      public void unlock() {          sync.release(UNLOCK);      }      @Override      public Condition newCondition() {          return sync.newCondition();      }      public boolean isLock() {          return sync.isHeldExclusively();      }      /**      * 一般同步器都使用静态内部类去控制外部类的状态      */      private static class Sync extends AbstractQueuedSynchronizer {          /**          * 独占模式          * *          */          // 获取锁          @Override          protected boolean tryAcquire(int arg) {              if (compareAndSetState(UNLOCK, LOCK)) { //状态为0的时候获取锁                  setExclusiveOwnerThread(Thread.currentThread());                  return true;              }              return false;          }          //释放锁          @Override          protected boolean tryRelease(int arg) {              if (getState() == UNLOCK) throw new IllegalMonitorStateException();              setExclusiveOwnerThread(null);              setState(UNLOCK);              return true;          }          //锁是否被占用          @Override          protected boolean isHeldExclusively() {              return getState() == LOCK;          }  /*        //共享模式         @Override         protected int tryAcquireShared(int arg) {             return super.tryAcquireShared(arg);         }         @Override         protected boolean tryReleaseShared(int arg) {             return super.tryReleaseShared(arg);         }*/          final ConditionObject newCondition() {              return new ConditionObject();          }      }  }</code></pre></div><h1 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h1><h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="acquire"><a href="#acquire" class="headerlink" title="acquire"></a>acquire</h2><p><img src="https://oss.kherrisan.cn/a89a145141c87e969ff8b307bb1d18e6.png" srcset="/img/loading.gif" alt></p><ol><li>tryAcquire，尝试直接获取锁。tryAcquire方法是子类实现的。以Mutex为例。</li></ol><div class="hljs"><pre><code class="hljs plain">@Override          protected boolean tryAcquire(int arg) {              if (compareAndSetState(UNLOCK, LOCK)) { //状态为0的时候获取锁                  setExclusiveOwnerThread(Thread.currentThread());                  return true;              }              return false;          }</code></pre></div><p>通过CAS操作尝试修改锁状态，注意这个state状态是volatile的，没有做其他同步。 <img src="https://oss.kherrisan.cn/426c7493ece8b4de68444256c69df35a.png" srcset="/img/loading.gif" alt> 使用unsafe对象类进行CAS操作，成功返回true，失败为false。如果CAS修改成功了，将当前线程设为持有该锁的线程。这里设置持有线程并没CAS，因为只有一个线程能够执行这行代码，不会产生竞争。</p><ol><li>如果tryAcquire失败，说明这个时刻有其他线程持有锁了，如果锁是非共享的话，当前线程是无法获取锁的，先添加一个waiter，然后调用acquireQueued。</li></ol><p><img src="https://oss.kherrisan.cn/0d388868ea1d8690dc18b73aaf69c09f.png" srcset="/img/loading.gif" alt> 主体也是一个死循环（<strong>实际上这里就有点像自旋锁的旋转了</strong>）：</p><ol><li>如果刚刚插入的新节点的前驱节点是head，说明刚刚插入的新节点是队列里的第二个。这时候再tryAcquire一下试试，如果试成功了，那刚刚插入的新节点就是锁的持有者了，把他当成head，setHead方法只会有一个线程访问因此不需要CAS。</li><li>如果刚刚插入的新的节点不是第二个节点，或者他是第二个但是tryAcquire失败了，需要判断一下当前线程是否需要阻塞（park）。判断规则挺复杂： 2.1. 前驱节点为SIGNAL，说明应该阻塞。 2.2. 前驱节点状态>0，说明前驱节点状态为CANCELLED，从队列中删除掉前驱节点，并继续判断前驱的前驱。不要阻塞。 2.3. 前驱节点状态为其他（CONDITION、PROPOGATE），通过CAS把前驱节点状态设为SIGNAL。同样不要阻塞。</li><li>如果要阻塞，LockSupport.park来阻塞当前线程。唤醒当前线程可以通过3种方式： 3.1. unpark当前线程 3.2. interrupt当前线程 3.3. unsafe.park意外返回了！</li><li>线程不管通过哪种方式醒了，也不代表他可以拿到锁了，还是要进入循环中，判断是否是第二个节点并且tryAcquire的。</li></ol><p><img src="https://oss.kherrisan.cn/50c1a58ad4a28e0da82216dc6f06aff2.png" srcset="/img/loading.gif" alt> 从acquireQueued可以看出队列中线程的竞争有以下特点：</p><ol><li>只有第二个节点才有资格获得锁，第一个节点是正在持有锁的节点。</li><li>队列中线程的等待和争夺模式类似于自旋的概念，阻塞——>尝试获取——>阻塞——>尝试获取——>获取成功~。</li></ol><h2 id="release"><a href="#release" class="headerlink" title="release"></a>release</h2><p>从概念上来说，release操作应该比acquire操作简单一些。。。 <img src="https://oss.kherrisan.cn/9eb55c91d37eafb1e53659cb33e6ea76.png" srcset="/img/loading.gif" alt></p><ol><li>首先调用子类的tryRelease方法，直接设置状态为unlock即可，都不用CAS。如果tryRelease失败了的话，说明那个线程本来就没有拿到锁，是个非法调用。</li><li>拿到head节点，只要head存在并且head状态不为0，就通过unparkSuccessor唤醒他的后继节点。如果他刚刚tryRelease成功之后立刻有线程拿到锁，成为了头节点，那这时候头节点就不是这个释放锁的节点了。但还是要尝试唤醒一下这个节点（虽然他极有可能是拿不到锁的）。</li></ol><p><img src="https://oss.kherrisan.cn/8d547ef41afc3e63df08e02eb03a39c5.png" srcset="/img/loading.gif" alt> 如果这个节点的后继节点变为null了，或者状态时CANCLLED，就从tail节点开始沿队列往前找，直到找到一个状态不为CANCELLED的节点。唤醒这个节点上的正在沉睡的线程。</p><h1 id="简单的Mutex的加锁解锁过程总结"><a href="#简单的Mutex的加锁解锁过程总结" class="headerlink" title="简单的Mutex的加锁解锁过程总结"></a>简单的Mutex的加锁解锁过程总结</h1><h2 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h2><ol><li>首先尝试能否通过CAS操作直接设置锁标志位，如果成功，说明当前线程很轻易地抢到了锁，加锁结束。</li><li>如果失败，把当前线程封装到一个node对象里，尝试通过CAS操作将该node插入队列尾部。如果一次CAS失败，进入一个死循环，不停地检查队列是否为空，不停地尝试通过CAS将node插入队列尾部，直到成功。</li><li>进入正式等待的死循环，如果当前节点为第二个节点，说明有资格获取锁，通过CAS尝试修改锁标志位，如果成功，当前节点升级为头节点，加锁结束。</li><li>如果失败，判断当前节点是否需要睡眠。只要其前驱节点状态为SIGNAL，就说明需要睡眠，通过unsafe的park方法让当前线程睡眠。</li></ol><h2 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h2><ol><li>直接修改锁标志位，表示自己释放了锁。</li><li>调用LockSupport的unpark方法，唤醒他后继节点的线程。如果在唤醒之前发现他的后继节点为null了，就从tail往前找第一个状态不为CANCELLED的节点。</li></ol>]]></content:encoded>
+      <content:encoded><![CDATA[<p><img src="https://oss.kherrisan.cn/6de3aa05c56e9c4d58266c20b05abb9c.png" srcset="/img/loading.gif" alt> AQS————AbstractQueuedSynchronizor，队列同步器，AQS是一个抽象类，它为开发者编写同步工具（比如锁、信号量）提供了开发框架，这个框架封装了对线程和竞态条件的细节，使得开发者能够只关注于锁的逻辑，而无需关注线程的维护以及竞态条件的控制。 JUC中很多锁都是基于AQS进行开发的。</p><a id="more"></a><h1 id="Node类"><a href="#Node类" class="headerlink" title="Node类"></a>Node类</h1><p>由于AQS是队列，需要有一个类来封装每个节点的状态，Node类代表队列中的每一个节点。除了构造函数之外没有方法。 <img src="https://oss.kherrisan.cn/910b221f6636d393b151869bb9fab175.png" srcset="/img/loading.gif" alt></p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><ol><li>waitStatus，等待状态。状态值可能为SIGNAL(-1)、CANCELLED(1)、CONDITION(-2)、PROPAGATE(-3)、0。</li><li>prev，队列中的前驱节点。</li><li>next，队列中的后继节点。</li><li>thread，线程对象</li><li>nextWaiter，</li></ol><h1 id="AQS实现——Mutex"><a href="#AQS实现——Mutex" class="headerlink" title="AQS实现——Mutex"></a>AQS实现——Mutex</h1><p>AQS框架使用了模板方法模式来实现自身功能，某个锁的实现通常要继承AQS并重写数个方法，因此脱离具体的锁去谈AQS是有些不切实际的。</p><div class="hljs"><pre><code class="hljs aspectj"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MutexLock</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Lock</span> </span>{      <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> LOCK = <span class="hljs-number">1</span>;      <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> UNLOCK = <span class="hljs-number">0</span>;      <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Sync sync = <span class="hljs-keyword">new</span> Sync();      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span> </span>{          sync.acquire(LOCK);      }      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lockInterruptibly</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{          sync.acquireInterruptibly(LOCK);      }      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">tryLock</span><span class="hljs-params">()</span> </span>{          <span class="hljs-function"><span class="hljs-keyword">return</span> sync.<span class="hljs-title">tryAcquire</span><span class="hljs-params">(LOCK)</span></span>;      }      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">tryLock</span><span class="hljs-params">(<span class="hljs-keyword">long</span> time, TimeUnit unit)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{          <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;      }      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span> </span>{          sync.release(UNLOCK);      }      <span class="hljs-meta">@Override</span>      <span class="hljs-keyword">public</span> <span class="hljs-function">Condition <span class="hljs-title">newCondition</span><span class="hljs-params">()</span> </span>{          <span class="hljs-function"><span class="hljs-keyword">return</span> sync.<span class="hljs-title">newCondition</span><span class="hljs-params">()</span></span>;      }      <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isLock</span><span class="hljs-params">()</span> </span>{          <span class="hljs-function"><span class="hljs-keyword">return</span> sync.<span class="hljs-title">isHeldExclusively</span><span class="hljs-params">()</span></span>;      }      <span class="hljs-comment">/** </span><span class="hljs-comment">     * 一般同步器都使用静态内部类去控制外部类的状态 </span><span class="hljs-comment">     */</span>      <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Sync</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractQueuedSynchronizer</span> </span>{          <span class="hljs-comment">/** </span><span class="hljs-comment">         * 独占模式 </span><span class="hljs-comment">         * * </span><span class="hljs-comment">         */</span>          <span class="hljs-comment">// 获取锁  </span>        <span class="hljs-meta">@Override</span>          <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">tryAcquire</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arg)</span> </span>{              <span class="hljs-keyword">if</span> (compareAndSetState(UNLOCK, LOCK)) { <span class="hljs-comment">//状态为0的时候获取锁  </span>                setExclusiveOwnerThread(Thread.currentThread());                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;              }              <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;          }          <span class="hljs-comment">//释放锁  </span>        <span class="hljs-meta">@Override</span>          <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">tryRelease</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arg)</span> </span>{              <span class="hljs-keyword">if</span> (getState() == UNLOCK) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalMonitorStateException();              setExclusiveOwnerThread(<span class="hljs-keyword">null</span>);              setState(UNLOCK);              <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;          }          <span class="hljs-comment">//锁是否被占用  </span>        <span class="hljs-meta">@Override</span>          <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isHeldExclusively</span><span class="hljs-params">()</span> </span>{              <span class="hljs-keyword">return</span> getState() == LOCK;          }  <span class="hljs-comment">/*        //共享模式 </span><span class="hljs-comment">        @Override </span><span class="hljs-comment">        protected int tryAcquireShared(int arg) { </span><span class="hljs-comment">            return super.tryAcquireShared(arg); </span><span class="hljs-comment">        } </span><span class="hljs-comment"></span><span class="hljs-comment">        @Override </span><span class="hljs-comment">        protected boolean tryReleaseShared(int arg) { </span><span class="hljs-comment">            return super.tryReleaseShared(arg); </span><span class="hljs-comment">        }*/</span>          <span class="hljs-keyword">final</span> <span class="hljs-function">ConditionObject <span class="hljs-title">newCondition</span><span class="hljs-params">()</span> </span>{              <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ConditionObject();          }      }  }</code></pre></div><h1 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h1><h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="acquire"><a href="#acquire" class="headerlink" title="acquire"></a>acquire</h2><p><img src="https://oss.kherrisan.cn/a89a145141c87e969ff8b307bb1d18e6.png" srcset="/img/loading.gif" alt></p><ol><li>tryAcquire，尝试直接获取锁。tryAcquire方法是子类实现的。以Mutex为例。</li></ol><div class="hljs"><pre><code class="hljs aspectj"><span class="hljs-meta">@Override</span>          <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">tryAcquire</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arg)</span> </span>{              <span class="hljs-keyword">if</span> (compareAndSetState(UNLOCK, LOCK)) { <span class="hljs-comment">//状态为0的时候获取锁  </span>                setExclusiveOwnerThread(Thread.currentThread());                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;              }              <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;          }</code></pre></div><p>通过CAS操作尝试修改锁状态，注意这个state状态是volatile的，没有做其他同步。 <img src="https://oss.kherrisan.cn/426c7493ece8b4de68444256c69df35a.png" srcset="/img/loading.gif" alt> 使用unsafe对象类进行CAS操作，成功返回true，失败为false。如果CAS修改成功了，将当前线程设为持有该锁的线程。这里设置持有线程并没CAS，因为只有一个线程能够执行这行代码，不会产生竞争。</p><ol><li>如果tryAcquire失败，说明这个时刻有其他线程持有锁了，如果锁是非共享的话，当前线程是无法获取锁的，先添加一个waiter，然后调用acquireQueued。</li></ol><p><img src="https://oss.kherrisan.cn/0d388868ea1d8690dc18b73aaf69c09f.png" srcset="/img/loading.gif" alt> 主体也是一个死循环（<strong>实际上这里就有点像自旋锁的旋转了</strong>）：</p><ol><li>如果刚刚插入的新节点的前驱节点是head，说明刚刚插入的新节点是队列里的第二个。这时候再tryAcquire一下试试，如果试成功了，那刚刚插入的新节点就是锁的持有者了，把他当成head，setHead方法只会有一个线程访问因此不需要CAS。</li><li>如果刚刚插入的新的节点不是第二个节点，或者他是第二个但是tryAcquire失败了，需要判断一下当前线程是否需要阻塞（park）。判断规则挺复杂： 2.1. 前驱节点为SIGNAL，说明应该阻塞。 2.2. 前驱节点状态>0，说明前驱节点状态为CANCELLED，从队列中删除掉前驱节点，并继续判断前驱的前驱。不要阻塞。 2.3. 前驱节点状态为其他（CONDITION、PROPOGATE），通过CAS把前驱节点状态设为SIGNAL。同样不要阻塞。</li><li>如果要阻塞，LockSupport.park来阻塞当前线程。唤醒当前线程可以通过3种方式： 3.1. unpark当前线程 3.2. interrupt当前线程 3.3. unsafe.park意外返回了！</li><li>线程不管通过哪种方式醒了，也不代表他可以拿到锁了，还是要进入循环中，判断是否是第二个节点并且tryAcquire的。</li></ol><p><img src="https://oss.kherrisan.cn/50c1a58ad4a28e0da82216dc6f06aff2.png" srcset="/img/loading.gif" alt> 从acquireQueued可以看出队列中线程的竞争有以下特点：</p><ol><li>只有第二个节点才有资格获得锁，第一个节点是正在持有锁的节点。</li><li>队列中线程的等待和争夺模式类似于自旋的概念，阻塞——>尝试获取——>阻塞——>尝试获取——>获取成功~。</li></ol><h2 id="release"><a href="#release" class="headerlink" title="release"></a>release</h2><p>从概念上来说，release操作应该比acquire操作简单一些。。。 <img src="https://oss.kherrisan.cn/9eb55c91d37eafb1e53659cb33e6ea76.png" srcset="/img/loading.gif" alt></p><ol><li>首先调用子类的tryRelease方法，直接设置状态为unlock即可，都不用CAS。如果tryRelease失败了的话，说明那个线程本来就没有拿到锁，是个非法调用。</li><li>拿到head节点，只要head存在并且head状态不为0，就通过unparkSuccessor唤醒他的后继节点。如果他刚刚tryRelease成功之后立刻有线程拿到锁，成为了头节点，那这时候头节点就不是这个释放锁的节点了。但还是要尝试唤醒一下这个节点（虽然他极有可能是拿不到锁的）。</li></ol><p><img src="https://oss.kherrisan.cn/8d547ef41afc3e63df08e02eb03a39c5.png" srcset="/img/loading.gif" alt> 如果这个节点的后继节点变为null了，或者状态时CANCLLED，就从tail节点开始沿队列往前找，直到找到一个状态不为CANCELLED的节点。唤醒这个节点上的正在沉睡的线程。</p><h1 id="简单的Mutex的加锁解锁过程总结"><a href="#简单的Mutex的加锁解锁过程总结" class="headerlink" title="简单的Mutex的加锁解锁过程总结"></a>简单的Mutex的加锁解锁过程总结</h1><h2 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h2><ol><li>首先尝试能否通过CAS操作直接设置锁标志位，如果成功，说明当前线程很轻易地抢到了锁，加锁结束。</li><li>如果失败，把当前线程封装到一个node对象里，尝试通过CAS操作将该node插入队列尾部。如果一次CAS失败，进入一个死循环，不停地检查队列是否为空，不停地尝试通过CAS将node插入队列尾部，直到成功。</li><li>进入正式等待的死循环，如果当前节点为第二个节点，说明有资格获取锁，通过CAS尝试修改锁标志位，如果成功，当前节点升级为头节点，加锁结束。</li><li>如果失败，判断当前节点是否需要睡眠。只要其前驱节点状态为SIGNAL，就说明需要睡眠，通过unsafe的park方法让当前线程睡眠。</li></ol><h2 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h2><ol><li>直接修改锁标志位，表示自己释放了锁。</li><li>调用LockSupport的unpark方法，唤醒他后继节点的线程。如果在唤醒之前发现他的后继节点为null了，就从tail往前找第一个状态不为CANCELLED的节点。</li></ol>]]></content:encoded>
       
       <comments>http://www.kherrisan.cn/posts/794bdde7/#disqus_thread</comments>
     </item>
@@ -494,7 +490,7 @@
       <title>Java Collection——PriorityQueue</title>
       <link>http://www.kherrisan.cn/posts/ecb1842/</link>
       <guid>http://www.kherrisan.cn/posts/ecb1842/</guid>
-      <pubDate>Fri, 05 Oct 2018 10:31:50 GMT</pubDate>
+      <pubDate>Fri, 05 Oct 2018 18:31:50 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/5e8210e35fb88ecb1fdf30acb61e0c78.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Java中的优先队列采用的是最小堆的结构，即使用数组来保存一棵完全二叉树。&lt;strong&gt;无界&lt;/strong&gt;，可以自动扩容。用于比较的元素值必须是不可变的否则最小堆的性质会被破坏。&lt;/p&gt;
@@ -511,7 +507,7 @@
       <title>Java Collection——HashTable</title>
       <link>http://www.kherrisan.cn/posts/212ef57b/</link>
       <guid>http://www.kherrisan.cn/posts/212ef57b/</guid>
-      <pubDate>Fri, 05 Oct 2018 07:00:47 GMT</pubDate>
+      <pubDate>Fri, 05 Oct 2018 15:00:47 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-09_16-06-28.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; HashTable继承了Dictionary类，这个抽象类没有在HashMap中见到过。进入该Dictionary抽象类中，发现所有的方法都没有实现，而且和Map接口很相似。 初步浏览了一下HashTable，感觉比HashMap更轻量一些，同时额外地提供了同步机制（在方法之前加synchronized关键字，类似于Vector之于ArrayList）。&lt;/p&gt;
@@ -528,7 +524,7 @@
       <title>Linux——进程管理</title>
       <link>http://www.kherrisan.cn/posts/2b8650f6/</link>
       <guid>http://www.kherrisan.cn/posts/2b8650f6/</guid>
-      <pubDate>Sun, 26 Aug 2018 10:36:06 GMT</pubDate>
+      <pubDate>Sun, 26 Aug 2018 18:36:06 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h1&gt;&lt;p&gt;进程（Process）是处于执行期程序以及其相关资源的总和，不仅仅局限于可执行程序代码，通常还包括其他资源如打开的文件、挂起的信号、内核内部数据、处理器的状态、一个或多个内存映射的内存地址空间以及一个或多个执行线程、全局变量数据段等。 在现代操作系统中，提供两种虚拟机制：虚拟CPU和虚拟内存，都给进程一种独占设备的假象。&lt;/p&gt;
@@ -536,7 +532,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>进程（Process）是处于执行期程序以及其相关资源的总和，不仅仅局限于可执行程序代码，通常还包括其他资源如打开的文件、挂起的信号、内核内部数据、处理器的状态、一个或多个内存映射的内存地址空间以及一个或多个执行线程、全局变量数据段等。 在现代操作系统中，提供两种虚拟机制：虚拟CPU和虚拟内存，都给进程一种独占设备的假象。</p><a id="more"></a><hr><h1 id="进程描述符"><a href="#进程描述符" class="headerlink" title="进程描述符"></a>进程描述符</h1><p>内核把进程存放在一个叫<strong>任务队列</strong>的双向链表中。链表中的每一个项的类型为<strong>task<em>struct</em></strong>_。task_struct结构体相对比较大，在32位机器上大约有1.7KB。</p><div class="hljs"><pre><code class="hljs plain">struct task_struct{    unsigned long state;    int prio;    unsigned long policy;    struct task_struct *parent;    struct list_head tasks;    pid_t pid;    ......}</code></pre></div><h2 id="pid和tpid"><a href="#pid和tpid" class="headerlink" title="pid和tpid"></a>pid和tpid</h2><p>pid是进程的唯一标识符，Linux中使用task_struct来表示进程和线程，为了能够表达多个线程从属于一个进程的意思，使用tpid来记录<strong>线程组</strong>的标号。某个进程的第一个创建的线程的pid和tpid相同，其后创建的线程的tpid为第一个线程的pid。</p><h2 id="内核栈"><a href="#内核栈" class="headerlink" title="内核栈"></a>内核栈</h2><p>一个进程在调用系统调用的时候，必然会陷入到内核态中，此时运行的代码所操作的栈不再是用户态的进程栈，而是一个内核栈。在内核栈的底部（从高地址生长的栈）存放了一个<strong>thread<em>info</em></strong>_，这个结构指向当前进程的task_struct，从而使系统能够高效地获取到当前进程的信息。 <img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_14-31-03.png" srcset="/img/loading.gif" alt></p><hr><h1 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h1><p><img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_14-47-35.png" srcset="/img/loading.gif" alt> Linux进程一般有5种状态</p><ol><li>RUNNING：进程在运行或者在运行队列中等待运行</li><li>INTERRUPTIBLE：可中断</li><li>UNINTERRUPTIBLE：不可中断</li><li>TRACED\STOPPED：被追踪\暂停，比如在用gdb调试的时候</li><li>DEAD：退出</li></ol><hr><h1 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h1><h2 id="fork系统调用"><a href="#fork系统调用" class="headerlink" title="fork系统调用"></a>fork系统调用</h2><ol><li>为新进程创建一个内核栈、thread_info和task_struct</li><li>检查当前用户有没有超出分配资源的限制</li><li>将统计信息清0或初始化</li><li>子进程变为UNINTERRUPTIBLE</li><li>分配一个pid</li><li>根据clone的参数，拷贝父进程的对应资源（文件、系统信息、信号处理函数、地址空间和命名空间等）</li><li>扫尾 传统的fork会拷贝所有父进程的所有资源，Linux使用了一种<strong>写时拷贝</strong>的技术：当fork时先只做浅拷贝（共享内存空间），当有数据需要写入内存空间时，再拷贝原内存空间副本给子进程，并做写入操作。这样，<strong>fork的职责就只剩下：复制页表、分配进程描述符</strong>。 Linux会倾向于让子进程先执行，因为他希望子进程能够尽快调用exec，这样就可以避免写时拷贝的开销。</li></ol><h2 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h2><p>在使用了写时拷贝的技术后，vfork与fork的区别就仅仅在于vfork不需要复制父进程页表。</p><h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>在Linux中，线程仅仅是进程进行共享资源的手段，他使用完全相同的task_struct结构来维护线程信息。因此创建线程就相当于分配新的task_struct。</p><h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><p>可以通过clone的参数来指定创建线程时需要共享的资源：打开的文件、文件系统资源、信号响应程序等。 <img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_15-11-54.png" srcset="/img/loading.gif" alt></p><h2 id="内核线程"><a href="#内核线程" class="headerlink" title="内核线程"></a>内核线程</h2><p>一些内核任务由内核线程执行，内核线程与普通线程的区别在于内核线程没有独立的地址空间，只在内核空间执行。他参与内核调度也参与内核抢占。 Linux内核程序是一个进程，其中的多个指令流分别运行在多个内核线程中。 常用的内核线程：</p><ul><li>kthreadd：管理调度其他内核线程</li><li>events：将软硬时间包装为event，并分发给感兴趣的线程</li><li>pdflush：脏页写回</li><li>kswapd0：回收内存</li></ul><h1 id="进程终结"><a href="#进程终结" class="headerlink" title="进程终结"></a>进程终结</h1><p>进程终结有两种情况：</p><ul><li>exit系统调用</li><li>接收到了不能处理但也不能忽略的信号或异常 进程退出时，一般会先释放内存空间资源，释放文件资源，设置退出代码，并向父进程发送退出的信号。此时进程还有内核栈、thread_info、task_struct这三样没有被释放，并且其状态变为ZOMBIE。</li></ul><p>进程终结时，内核必须释放他所占用的所有资源并且告知父进程。</p><ol><li>修改task_struct中的标志</li><li>删除任一内核定时器</li><li><p>释放mm_struct，如果这个地址空间计数变为0，则彻底释放这个地址空间。</p></li><li><p>分别递减文件描述符和文件系统数据的引用计数，如果计数变为0，则彻底释放。</p></li><li>设置task_struct的exit_code为exit提供的参数</li><li>向父进程发信号，给该进程的子进程重新找养父（找养父的规则是在终结进程的线程组中找存活的其他进程——即该进程是否还有存活的线程，如果没有，则选择init进程），线程状态变为ZOMBIE</li><li>schedule切换到新的进程</li></ol><p>在ZOMBIE状态中，进程所占有的资源只有内核栈、thread_info、task_struct，此时进程存在的唯一目的是向他父进程提供信息。</p>]]></content:encoded>
+      <content:encoded><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>进程（Process）是处于执行期程序以及其相关资源的总和，不仅仅局限于可执行程序代码，通常还包括其他资源如打开的文件、挂起的信号、内核内部数据、处理器的状态、一个或多个内存映射的内存地址空间以及一个或多个执行线程、全局变量数据段等。 在现代操作系统中，提供两种虚拟机制：虚拟CPU和虚拟内存，都给进程一种独占设备的假象。</p><a id="more"></a><hr><h1 id="进程描述符"><a href="#进程描述符" class="headerlink" title="进程描述符"></a>进程描述符</h1><p>内核把进程存放在一个叫<strong>任务队列</strong>的双向链表中。链表中的每一个项的类型为<strong>task<em>struct</em></strong>_。task_struct结构体相对比较大，在32位机器上大约有1.7KB。</p><div class="hljs"><pre><code class="hljs routeros">struct task_struct{    unsigned long state;    int prio;    unsigned long policy;    struct task_struct *parent;    struct list_head tasks;    pid_t pid;    <span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span>}</code></pre></div><h2 id="pid和tpid"><a href="#pid和tpid" class="headerlink" title="pid和tpid"></a>pid和tpid</h2><p>pid是进程的唯一标识符，Linux中使用task_struct来表示进程和线程，为了能够表达多个线程从属于一个进程的意思，使用tpid来记录<strong>线程组</strong>的标号。某个进程的第一个创建的线程的pid和tpid相同，其后创建的线程的tpid为第一个线程的pid。</p><h2 id="内核栈"><a href="#内核栈" class="headerlink" title="内核栈"></a>内核栈</h2><p>一个进程在调用系统调用的时候，必然会陷入到内核态中，此时运行的代码所操作的栈不再是用户态的进程栈，而是一个内核栈。在内核栈的底部（从高地址生长的栈）存放了一个<strong>thread<em>info</em></strong>_，这个结构指向当前进程的task_struct，从而使系统能够高效地获取到当前进程的信息。 <img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_14-31-03.png" srcset="/img/loading.gif" alt></p><hr><h1 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h1><p><img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_14-47-35.png" srcset="/img/loading.gif" alt> Linux进程一般有5种状态</p><ol><li>RUNNING：进程在运行或者在运行队列中等待运行</li><li>INTERRUPTIBLE：可中断</li><li>UNINTERRUPTIBLE：不可中断</li><li>TRACED\STOPPED：被追踪\暂停，比如在用gdb调试的时候</li><li>DEAD：退出</li></ol><hr><h1 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h1><h2 id="fork系统调用"><a href="#fork系统调用" class="headerlink" title="fork系统调用"></a>fork系统调用</h2><ol><li>为新进程创建一个内核栈、thread_info和task_struct</li><li>检查当前用户有没有超出分配资源的限制</li><li>将统计信息清0或初始化</li><li>子进程变为UNINTERRUPTIBLE</li><li>分配一个pid</li><li>根据clone的参数，拷贝父进程的对应资源（文件、系统信息、信号处理函数、地址空间和命名空间等）</li><li>扫尾 传统的fork会拷贝所有父进程的所有资源，Linux使用了一种<strong>写时拷贝</strong>的技术：当fork时先只做浅拷贝（共享内存空间），当有数据需要写入内存空间时，再拷贝原内存空间副本给子进程，并做写入操作。这样，<strong>fork的职责就只剩下：复制页表、分配进程描述符</strong>。 Linux会倾向于让子进程先执行，因为他希望子进程能够尽快调用exec，这样就可以避免写时拷贝的开销。</li></ol><h2 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h2><p>在使用了写时拷贝的技术后，vfork与fork的区别就仅仅在于vfork不需要复制父进程页表。</p><h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>在Linux中，线程仅仅是进程进行共享资源的手段，他使用完全相同的task_struct结构来维护线程信息。因此创建线程就相当于分配新的task_struct。</p><h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><p>可以通过clone的参数来指定创建线程时需要共享的资源：打开的文件、文件系统资源、信号响应程序等。 <img src="https://oss.kherrisan.cn/Snipaste_2018-08-26_15-11-54.png" srcset="/img/loading.gif" alt></p><h2 id="内核线程"><a href="#内核线程" class="headerlink" title="内核线程"></a>内核线程</h2><p>一些内核任务由内核线程执行，内核线程与普通线程的区别在于内核线程没有独立的地址空间，只在内核空间执行。他参与内核调度也参与内核抢占。 Linux内核程序是一个进程，其中的多个指令流分别运行在多个内核线程中。 常用的内核线程：</p><ul><li>kthreadd：管理调度其他内核线程</li><li>events：将软硬时间包装为event，并分发给感兴趣的线程</li><li>pdflush：脏页写回</li><li>kswapd0：回收内存</li></ul><h1 id="进程终结"><a href="#进程终结" class="headerlink" title="进程终结"></a>进程终结</h1><p>进程终结有两种情况：</p><ul><li>exit系统调用</li><li>接收到了不能处理但也不能忽略的信号或异常 进程退出时，一般会先释放内存空间资源，释放文件资源，设置退出代码，并向父进程发送退出的信号。此时进程还有内核栈、thread_info、task_struct这三样没有被释放，并且其状态变为ZOMBIE。</li></ul><p>进程终结时，内核必须释放他所占用的所有资源并且告知父进程。</p><ol><li>修改task_struct中的标志</li><li>删除任一内核定时器</li><li><p>释放mm_struct，如果这个地址空间计数变为0，则彻底释放这个地址空间。</p></li><li><p>分别递减文件描述符和文件系统数据的引用计数，如果计数变为0，则彻底释放。</p></li><li>设置task_struct的exit_code为exit提供的参数</li><li>向父进程发信号，给该进程的子进程重新找养父（找养父的规则是在终结进程的线程组中找存活的其他进程——即该进程是否还有存活的线程，如果没有，则选择init进程），线程状态变为ZOMBIE</li><li>schedule切换到新的进程</li></ol><p>在ZOMBIE状态中，进程所占有的资源只有内核栈、thread_info、task_struct，此时进程存在的唯一目的是向他父进程提供信息。</p>]]></content:encoded>
       
       
     </item>
@@ -545,7 +541,7 @@
       <title>Orange&#39;S——学习笔记</title>
       <link>http://www.kherrisan.cn/posts/45017174/</link>
       <guid>http://www.kherrisan.cn/posts/45017174/</guid>
-      <pubDate>Sat, 18 Aug 2018 13:47:33 GMT</pubDate>
+      <pubDate>Sat, 18 Aug 2018 21:47:33 GMT</pubDate>
       <description>
       
         &lt;p&gt;由于时间关系，不能够跟着书的进度自己一点点动手写出一个操作系统，因此想着先把书的内容过一遍，只要了解到OS底层运作思路即可。Orang’S下文简称为OS。&lt;/p&gt;
@@ -563,7 +559,7 @@
       <title>Spring——IOC流程概述</title>
       <link>http://www.kherrisan.cn/posts/e6be9c71/</link>
       <guid>http://www.kherrisan.cn/posts/e6be9c71/</guid>
-      <pubDate>Tue, 07 Aug 2018 14:29:11 GMT</pubDate>
+      <pubDate>Tue, 07 Aug 2018 22:29:11 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;tiny-spring&quot;&gt;&lt;a href=&quot;#tiny-spring&quot; class=&quot;headerlink&quot; title=&quot;tiny-spring&quot;&gt;&lt;/a&gt;tiny-spring&lt;/h1&gt;&lt;p&gt;这是一个简化版的spring框架，模仿spring的思路实现了IOC和AOP的功能，是github上的一位开发者编写的。 &lt;a href=&quot;https://github.com/Dokyme/tiny-spring&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/Dokyme/tiny-spring&lt;/a&gt; 其实spring IOC的步骤并不复杂，和把大象装进冰箱的过程（三步）是基本一致的，也可以说成是两步，根据我的理解：&lt;/p&gt;
@@ -584,7 +580,7 @@
       <title>Dell XPS 9360上安装Ubuntu 18.04失败的情况</title>
       <link>http://www.kherrisan.cn/posts/befdb876/</link>
       <guid>http://www.kherrisan.cn/posts/befdb876/</guid>
-      <pubDate>Thu, 05 Jul 2018 03:59:58 GMT</pubDate>
+      <pubDate>Thu, 05 Jul 2018 11:59:58 GMT</pubDate>
       <description>
       
         
@@ -604,7 +600,7 @@
       <title>HTTP协议详解</title>
       <link>http://www.kherrisan.cn/posts/b9e67ec1/</link>
       <guid>http://www.kherrisan.cn/posts/b9e67ec1/</guid>
-      <pubDate>Sat, 30 Jun 2018 12:45:00 GMT</pubDate>
+      <pubDate>Sat, 30 Jun 2018 20:45:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;HTTP协议应该是如今互联网中使用范围最广的协议了。现在对HTTP协议进行一个全面的分析，力求能够把常用的协议功能都覆盖到。&lt;/p&gt;
@@ -622,7 +618,7 @@
       <title>Spring Framework——概览及目录</title>
       <link>http://www.kherrisan.cn/posts/2591264a/</link>
       <guid>http://www.kherrisan.cn/posts/2591264a/</guid>
-      <pubDate>Mon, 07 May 2018 10:49:19 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 18:49:19 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-08-06_10-45-57.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; SpringFramework由十多个模块组成，其中最最核心的模块有：&lt;/p&gt;
@@ -645,7 +641,7 @@
       <title>JavaEE——JSP概览</title>
       <link>http://www.kherrisan.cn/posts/a85d6717/</link>
       <guid>http://www.kherrisan.cn/posts/a85d6717/</guid>
-      <pubDate>Mon, 07 May 2018 10:24:37 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 18:24:37 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-07_18-25-12.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; JSP是基于Servlet和模板渲染技术发展出来的一种后端开发技术（虽然现在JavaEE说到底都是用的Servlet）。其原理非常简单，模板引擎解析JSP文件之后，将其中的Java对象取出，其余的字面常量统统放入print函数中，以最为淳朴的字符串连接的操作组成最终完整的响应，填充到servlet的对应函数中。&lt;/p&gt;
@@ -662,7 +658,7 @@
       <title>Java——IO体系概览</title>
       <link>http://www.kherrisan.cn/posts/5088f3cd/</link>
       <guid>http://www.kherrisan.cn/posts/5088f3cd/</guid>
-      <pubDate>Mon, 07 May 2018 08:53:04 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 16:53:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;java整个io包主要分为四块：字节流、字符流、File、RandomAccessFile。其中最复杂的是字节流和字符流两个簇，File和RandomAccessFile的功能较为单一。从名字可以看出，RandomAccessFile用于随机读写，字节流和字符流则用于顺序读写。 &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-07_16-01-04.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -679,7 +675,7 @@
       <title>JVM——垃圾收集（GC）和内存分配</title>
       <link>http://www.kherrisan.cn/posts/2118eccf/</link>
       <guid>http://www.kherrisan.cn/posts/2118eccf/</guid>
-      <pubDate>Sun, 06 May 2018 03:04:37 GMT</pubDate>
+      <pubDate>Sun, 06 May 2018 11:04:37 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;GC日志&quot;&gt;&lt;a href=&quot;#GC日志&quot; class=&quot;headerlink&quot; title=&quot;GC日志&quot;&gt;&lt;/a&gt;GC日志&lt;/h1&gt;&lt;p&gt;JVM可以输出GC日志供开发者分析GC过程。 -XX:+PrintGC 输出GC日志 -XX:+PrintGCDetails 输出GC的详细日志 -XX:+PrintGCTimeStamps 输出GC的时间戳（以基准时间的形式） -XX:+PrintGCDateStamps 输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800） -XX:+PrintHeapAtGC 在进行GC的前后打印出堆的信息 -Xloggc:../logs/gc.log 日志文件的输出路径&lt;/p&gt;
@@ -696,7 +692,7 @@
       <title>JavaEE——Servlet总结</title>
       <link>http://www.kherrisan.cn/posts/d1de75a8/</link>
       <guid>http://www.kherrisan.cn/posts/d1de75a8/</guid>
-      <pubDate>Tue, 01 May 2018 07:54:58 GMT</pubDate>
+      <pubDate>Tue, 01 May 2018 15:54:58 GMT</pubDate>
       <description>
       
         &lt;p&gt;谈到JavaEE，虽然如今绝大部分场合使用的都是SSH、SSM等框架，但这些都是基于Servlet技术所做的进一步发展，也就是说底层实现还是servlet，只是做了针对业务需求做了进一步的封装，使得开发人员能够更加有针对性的、更加高效的编写代码。这里稍微总结一下servlet技术的几个重要概念。 从没有在实际项目过程中使用过servlet，因此这里就从一个开发者的角度来考虑几个问题。&lt;/p&gt;
@@ -713,7 +709,7 @@
       <title>MySQL——总体架构</title>
       <link>http://www.kherrisan.cn/posts/77a52e0d/</link>
       <guid>http://www.kherrisan.cn/posts/77a52e0d/</guid>
-      <pubDate>Mon, 30 Apr 2018 12:09:58 GMT</pubDate>
+      <pubDate>Mon, 30 Apr 2018 20:09:58 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://s3.51cto.com/wyfs02/M02/11/8A/wKiom1LUF8DS1inQAAE8bwOlNTY150.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -737,7 +733,7 @@
       <title>OS——The Abstraction: The Process</title>
       <link>http://www.kherrisan.cn/posts/f2b26827/</link>
       <guid>http://www.kherrisan.cn/posts/f2b26827/</guid>
-      <pubDate>Wed, 25 Apr 2018 11:41:59 GMT</pubDate>
+      <pubDate>Wed, 25 Apr 2018 19:41:59 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;抽象的概念&quot;&gt;&lt;a href=&quot;#抽象的概念&quot; class=&quot;headerlink&quot; title=&quot;抽象的概念&quot;&gt;&lt;/a&gt;抽象的概念&lt;/h2&gt;&lt;p&gt;进程（Process），指运行着的程序。程序指静静躺在在外存中的数据和代码，是静态概念，但是进程是动态的概念，他反应了程序在运行的时候的功能和性质。 现代典型的操作系统都是同时运行数十个至数百个进程的，使用分时（Time Sharing）的技术来实现看似每个进程都能独占一个CPU的效果，当然，分时是要付出性能上的代价的。 进程的组成部分：&lt;/p&gt;
@@ -754,7 +750,7 @@
       <title>Gradle——从各个“关键字”理解gradle</title>
       <link>http://www.kherrisan.cn/posts/c39d8650/</link>
       <guid>http://www.kherrisan.cn/posts/c39d8650/</guid>
-      <pubDate>Wed, 18 Apr 2018 14:34:09 GMT</pubDate>
+      <pubDate>Wed, 18 Apr 2018 22:34:09 GMT</pubDate>
       <description>
       
         &lt;p&gt;buildscript {&lt;br&gt;    ext {&lt;br&gt;        springBootVersion = ‘2.0.1.RELEASE’&lt;br&gt;    }&lt;br&gt;    repositories {&lt;br&gt;        mavenCentral()&lt;br&gt;    }&lt;br&gt;    dependencies {&lt;br&gt;        classpath(“org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}”)&lt;br&gt;    }&lt;br&gt;}&lt;/p&gt;
@@ -771,7 +767,7 @@
       <title>Gradle——从groovy语法角度理解Project</title>
       <link>http://www.kherrisan.cn/posts/35e8bc6d/</link>
       <guid>http://www.kherrisan.cn/posts/35e8bc6d/</guid>
-      <pubDate>Wed, 18 Apr 2018 14:31:37 GMT</pubDate>
+      <pubDate>Wed, 18 Apr 2018 22:31:37 GMT</pubDate>
       <description>
       
         &lt;p&gt;这是一个Spring Boot项目的build.gradle文件。&lt;/p&gt;
@@ -788,7 +784,7 @@
       <title>Java Collection——TreeMap</title>
       <link>http://www.kherrisan.cn/posts/3265045/</link>
       <guid>http://www.kherrisan.cn/posts/3265045/</guid>
-      <pubDate>Wed, 21 Feb 2018 06:12:22 GMT</pubDate>
+      <pubDate>Wed, 21 Feb 2018 14:12:22 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-21_14-15-34.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; TreeMap继承了AbstractMap抽象类，实现了NavigableMap接口。这个接口是HashMap和LinkedHashMap的定义中都没有见过的，从字面意思上来看，应该是“可导航Map”，到底是怎么个导航法，需要先了解一下这个接口。 &lt;/p&gt;
@@ -805,7 +801,7 @@
       <title>Java Collection——LinkedHashSet</title>
       <link>http://www.kherrisan.cn/posts/b728d676/</link>
       <guid>http://www.kherrisan.cn/posts/b728d676/</guid>
-      <pubDate>Mon, 19 Feb 2018 11:06:22 GMT</pubDate>
+      <pubDate>Mon, 19 Feb 2018 19:06:22 GMT</pubDate>
       <description>
       
         
@@ -825,7 +821,7 @@
       <title>Java Collection——LinkedHashMap</title>
       <link>http://www.kherrisan.cn/posts/c2915911/</link>
       <guid>http://www.kherrisan.cn/posts/c2915911/</guid>
-      <pubDate>Sat, 17 Feb 2018 06:31:56 GMT</pubDate>
+      <pubDate>Sat, 17 Feb 2018 14:31:56 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-17_12-14-56.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; LinkedHashMap和HashMap的区别在于前者在HashMap的基础上还维护了一个贯穿所有节点的双向链表，该链表决定了遍历的顺序，形如一个队列。 当然，这个链表并不会影响HashMap的结构，和HashMap的table或者链表或者红黑树是完全独立的一个结构。该链表的顺序可以是插入元素的顺序也可以是访问元素的顺序，具体选择何种顺序取决于accessOrder属性是true还是false。 在hashmap中预留了几个抽象方法，并在put和get等操作内调用了这些方法，为子类提供了可扩展的点。&lt;strong&gt;我认为这是“模板方法模式”的体现。&lt;/strong&gt; &lt;/p&gt;
@@ -842,7 +838,7 @@
       <title>JVM——内存区域和内存溢出异常</title>
       <link>http://www.kherrisan.cn/posts/e9b37112/</link>
       <guid>http://www.kherrisan.cn/posts/e9b37112/</guid>
-      <pubDate>Fri, 16 Feb 2018 08:00:32 GMT</pubDate>
+      <pubDate>Fri, 16 Feb 2018 16:00:32 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;内存区域&quot;&gt;&lt;a href=&quot;#内存区域&quot; class=&quot;headerlink&quot; title=&quot;内存区域&quot;&gt;&lt;/a&gt;内存区域&lt;/h2&gt;&lt;p&gt;作为VM，Java Virtual Machine模拟了操作系统的一些功能，其中之一就是对内存进行管理。JVM内存大致分为下面几个区域： &lt;a href=&quot;https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/a&gt;&lt;/p&gt;
@@ -862,7 +858,7 @@
       <title>MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</title>
       <link>http://www.kherrisan.cn/posts/807d354d/</link>
       <guid>http://www.kherrisan.cn/posts/807d354d/</guid>
-      <pubDate>Fri, 16 Feb 2018 07:41:27 GMT</pubDate>
+      <pubDate>Fri, 16 Feb 2018 15:41:27 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Boot-a-PC&quot;&gt;&lt;a href=&quot;#Boot-a-PC&quot; class=&quot;headerlink&quot; title=&quot;Boot a PC&quot;&gt;&lt;/a&gt;Boot a PC&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-01-30_18-18-06.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 熟悉汇编语言，由于去年学过IO，问题应该不大。这里就不复习了。&lt;/p&gt;
@@ -879,7 +875,7 @@
       <title>Java Collection——HashMap</title>
       <link>http://www.kherrisan.cn/posts/3bd06c35/</link>
       <guid>http://www.kherrisan.cn/posts/3bd06c35/</guid>
-      <pubDate>Wed, 14 Feb 2018 08:08:09 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 16:08:09 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;strong&gt;本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。&lt;/strong&gt; &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。&lt;/p&gt;
@@ -887,7 +883,7 @@
       </description>
       
       
-      <content:encoded><![CDATA[<p><strong>本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。</strong> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg" srcset="/img/loading.gif" alt> Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。</p><a id="more"></a><p> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_15-53-23.jpg" srcset="/img/loading.gif" alt> HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：</p><div class="hljs"><pre><code class="hljs plain">public interface Map<K,V>{    int size();    boolean isEmpty();    boolean containsKey(key);    boolean containsValue(value);    get(key);    put(key,value);    remove(key);    putAll(map);    clea();    keySet();    values();    entrySet();    getOrDefault(key,defaultValue);    forEach(action);    replaceAll(function);    putIfAbsent(key,value);    remove(key,value);    replace(key,oldValue,newValue);    replace(key,value);    computeIfAbsent(key,mappingFunction);    compute(key,remappingFUnction);    merge(key,value,remappingFunction);}</code></pre></div><p>大部分函数的参数和返回值都是Key的类型或Value的类型，少数几个Java 8中的方法为函数式编程提供了支持，能够传lambda表达式为参数。 回到HashMap。</p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="静态类属性"><a href="#静态类属性" class="headerlink" title="静态类属性"></a>静态类属性</h3><p>静态属性中，除了两个用来约束capacity的属性之外：</p><h4 id="DEFAULT-LOAD-FACTOR"><a href="#DEFAULT-LOAD-FACTOR" class="headerlink" title="DEFAULT_LOAD_FACTOR"></a>DEFAULT_LOAD_FACTOR</h4><p>默认装载因子，0.75。装载因子是一个很影响Hash容器效率的属性，反映的是Hash容器中数据的疏密程度。装载因子过大，Hash容器中绝大多数桶都放有元素，但每个桶中的链表很有可能会很长，这样在散列冲突的时候进行搜索就会花费一定的时间；装载因子过小，会导致空间利用率过低。 从直观上来说，装载因子决定了capacity的动态调节。</p><h4 id="TREEIFY-THRESHOLD"><a href="#TREEIFY-THRESHOLD" class="headerlink" title="TREEIFY_THRESHOLD"></a>TREEIFY_THRESHOLD</h4><p>HashMap使用的结构是可以动态变化的，可以是List或者Tree，做出选择的标准就是bucket（桶）的数量，如果数量大于这个阈值，就由List变为Tree。 取值为8。</p><h4 id="UNTREEIFY-THRESHOLD"><a href="#UNTREEIFY-THRESHOLD" class="headerlink" title="UNTREEIFY_THRESHOLD"></a>UNTREEIFY_THRESHOLD</h4><p>如果HashMap中桶的数量在remove的过程中逐渐变小，并越过了这个阈值，就untreeify这个map。换言之，使用Tree变为List。 取值为6。</p><h4 id="MIN-TREEIFY-CAPACITY"><a href="#MIN-TREEIFY-CAPACITY" class="headerlink" title="MIN_TREEIFY_CAPACITY"></a>MIN_TREEIFY_CAPACITY</h4><p>如果table的capacity过小，是不允许treeify的，只有capacity超过这个值，并且某个桶的链表长度超过了threshold，才会将那个桶treeify。</p><h3 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h3><h4 id="table"><a href="#table" class="headerlink" title="table"></a>table</h4><p>Node的列表。</p><h4 id="entrySet"><a href="#entrySet" class="headerlink" title="entrySet"></a>entrySet</h4><p>将一对key-value看做一个entry，在以entry为单位遍历的时候，就需要一个容器来承载所有的entry，entrySet属性用于保存这个容器。它是一个Set<entry<k,v>></entry<k,v></p><h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>下一个需要resize的值。</p><h4 id="loadFactor"><a href="#loadFactor" class="headerlink" title="loadFactor"></a>loadFactor</h4><p>装载因子。size/capacity。</p><h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>桶节点，多个Node组成了一个链表。每个Node保存自身的hash、key、value和next。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-03-24.jpg" srcset="/img/loading.gif" alt> 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。</p><ol><li>首先通过table[(table.length - 1) & hash]找到hash对应的桶。进行按位与的目的就是为了把hash的空间映射到表空间中，相当于hash%table.length。</li><li>检查桶中的节点的hash、key是否和参数一致，确认是否是想要找的那个。</li><li>如果通过散列找到的桶中的节点不是所要的节点的话，说明有冲突了，就需要进一步搜索。</li><li>如果桶中的节点是树节点，调用getTreeNode方法进行搜索。其实是一颗红黑树。</li><li>如果不是树节点，说明是一个链表，按照开链法的底层构造进行遍历搜索，直到找不到，返回null。这里判断是不是树节点使用了instanceof关键字。</li></ol><p>其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。<strong>由于table的长度始终是2的整数次方</strong>，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-12-49.jpg" srcset="/img/loading.gif" alt> 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：</p><p>and</p><p>or</p><p>xor</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>1</p><p>0</p><p>1</p><p>1</p><p>1</p><p>0</p><p>0</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>0</p><p>从表中可以看出，and和or得到的0和1的结果个数都不相同，只有xor得到的0和1的个数才是相同的。 使用hashCode的时候，通常要使得分布较为均匀，使用and和or运算都会造成0或者1的偏多或偏少，因此计算hashCode的代码常常用到异或操作。</p><h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h3><p>hashCode方法是Object类定义的方法之一，用来返回某个对象的散列值。在Object类的定义中，hashCode的默认实现返回的是该对象所在内存的地址。通常在涉及到HashSet、HashMap、HashTable之类的容器时，需要开发者重新考虑自定义的类的hashCode计算方式。 hashCode的计算需要遵循一些规则，这有助于容器类操作效率的提升以及正确性的保证。</p><blockquote><ul><li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.（一个Java程序运行的过程中，同一个对象返回的hashCode必须一致。）</li><li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.（两个相等（equals）的对象的hashCode必须一致。）</li><li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.（不想等的对象的hashCode不必不同，但不同更好。）</li></ul></blockquote><p>针对最后一点，可以假设如下情境： 一系列数个对象返回的hashCode都是相等的，那么HashMap或其他Hash容器散列的时间复杂度接近于线性，因为需要逐个遍历一边。 在网上找到一个计算hashCode的较为合适的模式：通过加入两个质数成分，将一个对象的属性映射到不同的域上面，最后相加得到散列值。虽然这个计算方法中没有用到异或操作，但应该也是值得借鉴的一种写法。</p><div class="hljs"><pre><code class="hljs plain">@Overridepublic int hashCode() {    int hash = 7;    hash = 31 * hash + (int) id;    hash = 31 * hash + (name == null ? 0 : name.hashCode());    hash = 31 * hash + (email == null ? 0 : email.hashCode());    return hash;}</code></pre></div><h3 id="putVal"><a href="#putVal" class="headerlink" title="putVal"></a>putVal</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-05-09.jpg" srcset="/img/loading.gif" alt> <strong>如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。</strong></p><ol><li>检查table是否时null或者capacity是否为0，如果是，resize，调整table，准备放东西进去了。</li><li>检查散列的桶table[(n-1)&hash]是否有元素，如果没有，就创建一个节点，把值放进去，就结束了。</li><li>散列冲突时，用变量e保存存放该key的位置。 3.1 如果桶中第一个节点的key和hash都一致，则只需要在后续步骤修改该节点的value。 3.2 如果桶中第一个节点是一个树节点（红黑树），调用putTreeVal函数存放键值。 3.3 否则，从第一个节点开始，沿着链表逐个遍历，找到hash和key都一致的链表中的某个节点，如果找不到，就存放在最后一个节点。如果走到头了发现这个链表过长，就会把这个链表变成一颗红黑树，即只有在链表尾部增加节点的时候才会检测是否需要treeify。</li><li>对找到的或者确定新增的节点，设定其value。如果是更新而不是新增，就返回原来的value。</li></ol><p>putVal的过程用流程图描述如下：（图片来源：<a href="https://www.cnblogs.com/softidea/p/7261111.html" target="_blank" rel="noopener">https://www.cnblogs.com/softidea/p/7261111.html</a>） <a href="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" srcset="/img/loading.gif" alt></a> 也就是说，经过多次putVal之后的HashMap应该是链表和红黑树并存的情况，画出来就是下面这种结构：（图片来源：<a href="https://www.cnblogs.com/zhangyinhua/p/7698642.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangyinhua/p/7698642.html</a>） <a href="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" srcset="/img/loading.gif" alt></a></p><h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>resize用于动态调整table的大小，是HashMap成员函数中代码行数最长的函数，虽然逻辑并不复杂，但是有很多细节需要仔细考虑。</p><div class="hljs"><pre><code class="hljs plain">final Node<K,V>[] resize() {        Node<K,V>[] oldTab = table;        int oldCap = (oldTab == null) ? 0 : oldTab.length;        int oldThr = threshold;        int newCap, newThr = 0;        if (oldCap > 0) {            if (oldCap >= MAXIMUM_CAPACITY) {                threshold = Integer.MAX_VALUE;                return oldTab;            }            else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&                     oldCap >= DEFAULT_INITIAL_CAPACITY)                newThr = oldThr << 1; // double threshold        }        else if (oldThr > 0) // initial capacity was placed in threshold            newCap = oldThr;        else {               // zero initial threshold signifies using defaults            newCap = DEFAULT_INITIAL_CAPACITY;            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);        }        if (newThr == 0) {            float ft = (float)newCap * loadFactor;            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?                      (int)ft : Integer.MAX_VALUE);        }        threshold = newThr;        @SuppressWarnings({"rawtypes","unchecked"})            Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];        table = newTab;        if (oldTab != null) {            for (int j = 0; j < oldCap; ++j) {                Node<K,V> e;                if ((e = oldTab[j]) != null) {                    oldTab[j] = null;                    if (e.next == null)                        newTab[e.hash & (newCap - 1)] = e;                    else if (e instanceof TreeNode)                        ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);                    else { // preserve order                        Node<K,V> loHead = null, loTail = null;                        Node<K,V> hiHead = null, hiTail = null;                        Node<K,V> next;                        do {                            next = e.next;                            if ((e.hash & oldCap) == 0) {                                if (loTail == null)                                    loHead = e;                                else                                    loTail.next = e;                                loTail = e;                            }                            else {                                if (hiTail == null)                                    hiHead = e;                                else                                    hiTail.next = e;                                hiTail = e;                            }                        } while ((e = next) != null);                        if (loTail != null) {                            loTail.next = null;                            newTab[j] = loHead;                        }                        if (hiTail != null) {                            hiTail.next = null;                            newTab[j + oldCap] = hiHead;                        }                    }                }            }        }        return newTab;    }</code></pre></div><ol><li>根据当前的capacity、threshold的情况，调整新的capacity和threshold到一个合适的值。</li><li>创建新的table。</li><li>把原来table中的元素搬移到新的table中去，在搬移的过程中，就会出现这样的问题：原来有些元素是冲突的，但table扩容之后就不一定冲突了。 3.1 如果是链表，并且没有后继节点，即没有冲突的，就直接复制到新的table中去。 3.2 如果是树节点，调用split方法。 3.3 否则，就搬移整个链表。开始遍历。 3.3.1 把从该节点出发的链表拆分成两个链表，如果节点的hash超过原table的长度的，放在lo中，如果没有超过，放在hi中。 3.3.2 lo还放在table原来的位置，hi放在原来的位置+原table长度的位置。</li></ol><p>在1.7的时候，map的扩容是采用在链表头部插入元素的方式，是倒序的，在多线程并发的时候可能会导致循环链表的出现，在1.8中，我没有找出可能会出现循环链表的情况。</p><h3 id="treeifyBin"><a href="#treeifyBin" class="headerlink" title="treeifyBin"></a>treeifyBin</h3><p>如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-56-26.jpg" srcset="/img/loading.gif" alt></p><ol><li>检查table的capacity是否达到要求，也就是说如果table长度过短，桶中的链表是没有资格treeify的，在这种情况下，往往resize就能够使链表长度缩短。</li><li>从散列到的节点的首节点开始，逐个将链表中的节点替换为树节点，设置好每个节点的prev和next。</li><li>treeify。</li></ol><h3 id="removeNode"><a href="#removeNode" class="headerlink" title="removeNode"></a>removeNode</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-07-42.jpg" srcset="/img/loading.gif" alt></p><ol><li>根据hash和key，找到对应的节点node。</li><li>如果是树节点，调用removeTreeNode方法；如果是链表节点，从链表中删掉。</li></ol><h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>除了与其他数据结构中同样重要的conmodificatinexception之外，还需要关注一下遍历的顺序。</p><h3 id="HashIterator"><a href="#HashIterator" class="headerlink" title="HashIterator"></a>HashIterator</h3><p>是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-29-03.jpg" srcset="/img/loading.gif" alt> 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。</p><h4 id="nextNode"><a href="#nextNode" class="headerlink" title="nextNode"></a>nextNode</h4><p><img src="https://oss.kherrisan.cn/402986213d9199094e5db333036c6532.png" srcset="/img/loading.gif" alt> 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。</p><h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><p>调用HashMap的removeNode方法。</p><h2 id="其他内部类-1"><a href="#其他内部类-1" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="TreeNode"><a href="#TreeNode" class="headerlink" title="TreeNode"></a>TreeNode</h3><p>继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-23-42.jpg" srcset="/img/loading.gif" alt></p><h3 id="KeySet、Values、EntrySet"><a href="#KeySet、Values、EntrySet" class="headerlink" title="KeySet、Values、EntrySet"></a>KeySet、Values、EntrySet</h3><p>都是基于对应的Iterator实现的。</p>]]></content:encoded>
+      <content:encoded><![CDATA[<p><strong>本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。</strong> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg" srcset="/img/loading.gif" alt> Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。</p><a id="more"></a><p> <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_15-53-23.jpg" srcset="/img/loading.gif" alt> HashMap继承了AbstractMap，实现了Map、Cloneable和Serializable接口。 其中Map接口如下：</p><div class="hljs"><pre><code class="hljs xquery">public interface Map<K,V>{    int size();   <span class="hljs-built_in"> boolean</span> isEmpty();   <span class="hljs-built_in"> boolean</span> containsKey<span class="hljs-built_in">(key</span>);   <span class="hljs-built_in"> boolean</span> containsValue(<span class="hljs-keyword">value</span>);    get<span class="hljs-built_in">(key</span>);    put<span class="hljs-built_in">(key</span>,<span class="hljs-keyword">value</span>);   <span class="hljs-built_in"> remove</span><span class="hljs-built_in">(key</span>);    putAll(<span class="hljs-keyword">map</span>);    clea();    keySet();    values();    entrySet();    getOrDefault<span class="hljs-built_in">(key</span>,defaultValue);    forEach(action);    replaceAll(<span class="hljs-keyword">function</span>);    putIfAbsent<span class="hljs-built_in">(key</span>,<span class="hljs-keyword">value</span>);   <span class="hljs-built_in"> remove</span><span class="hljs-built_in">(key</span>,<span class="hljs-keyword">value</span>);   <span class="hljs-built_in"> replace</span><span class="hljs-built_in">(key</span>,oldValue,newValue);   <span class="hljs-built_in"> replace</span><span class="hljs-built_in">(key</span>,<span class="hljs-keyword">value</span>);    computeIfAbsent<span class="hljs-built_in">(key</span>,mappingFunction);    compute<span class="hljs-built_in">(key</span>,remappingFUnction);    merge<span class="hljs-built_in">(key</span>,<span class="hljs-keyword">value</span>,remappingFunction);}</code></pre></div><p>大部分函数的参数和返回值都是Key的类型或Value的类型，少数几个Java 8中的方法为函数式编程提供了支持，能够传lambda表达式为参数。 回到HashMap。</p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="静态类属性"><a href="#静态类属性" class="headerlink" title="静态类属性"></a>静态类属性</h3><p>静态属性中，除了两个用来约束capacity的属性之外：</p><h4 id="DEFAULT-LOAD-FACTOR"><a href="#DEFAULT-LOAD-FACTOR" class="headerlink" title="DEFAULT_LOAD_FACTOR"></a>DEFAULT_LOAD_FACTOR</h4><p>默认装载因子，0.75。装载因子是一个很影响Hash容器效率的属性，反映的是Hash容器中数据的疏密程度。装载因子过大，Hash容器中绝大多数桶都放有元素，但每个桶中的链表很有可能会很长，这样在散列冲突的时候进行搜索就会花费一定的时间；装载因子过小，会导致空间利用率过低。 从直观上来说，装载因子决定了capacity的动态调节。</p><h4 id="TREEIFY-THRESHOLD"><a href="#TREEIFY-THRESHOLD" class="headerlink" title="TREEIFY_THRESHOLD"></a>TREEIFY_THRESHOLD</h4><p>HashMap使用的结构是可以动态变化的，可以是List或者Tree，做出选择的标准就是bucket（桶）的数量，如果数量大于这个阈值，就由List变为Tree。 取值为8。</p><h4 id="UNTREEIFY-THRESHOLD"><a href="#UNTREEIFY-THRESHOLD" class="headerlink" title="UNTREEIFY_THRESHOLD"></a>UNTREEIFY_THRESHOLD</h4><p>如果HashMap中桶的数量在remove的过程中逐渐变小，并越过了这个阈值，就untreeify这个map。换言之，使用Tree变为List。 取值为6。</p><h4 id="MIN-TREEIFY-CAPACITY"><a href="#MIN-TREEIFY-CAPACITY" class="headerlink" title="MIN_TREEIFY_CAPACITY"></a>MIN_TREEIFY_CAPACITY</h4><p>如果table的capacity过小，是不允许treeify的，只有capacity超过这个值，并且某个桶的链表长度超过了threshold，才会将那个桶treeify。</p><h3 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h3><h4 id="table"><a href="#table" class="headerlink" title="table"></a>table</h4><p>Node的列表。</p><h4 id="entrySet"><a href="#entrySet" class="headerlink" title="entrySet"></a>entrySet</h4><p>将一对key-value看做一个entry，在以entry为单位遍历的时候，就需要一个容器来承载所有的entry，entrySet属性用于保存这个容器。它是一个Set<entry<k,v>></entry<k,v></p><h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>下一个需要resize的值。</p><h4 id="loadFactor"><a href="#loadFactor" class="headerlink" title="loadFactor"></a>loadFactor</h4><p>装载因子。size/capacity。</p><h2 id="其他内部类"><a href="#其他内部类" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>桶节点，多个Node组成了一个链表。每个Node保存自身的hash、key、value和next。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>其实各个方法所起的作用大都很简单，无非就是增删改查，重点在于散列的原理和解决冲突的办法。首先来看getNode方法如何根据hash值找到对应的节点。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-03-24.jpg" srcset="/img/loading.gif" alt> 该函数有两个参数，一个是hash值，一个是key值，hash值用来找到对应的bucket，key值用来验证或解决冲突。</p><ol><li>首先通过table[(table.length - 1) & hash]找到hash对应的桶。进行按位与的目的就是为了把hash的空间映射到表空间中，相当于hash%table.length。</li><li>检查桶中的节点的hash、key是否和参数一致，确认是否是想要找的那个。</li><li>如果通过散列找到的桶中的节点不是所要的节点的话，说明有冲突了，就需要进一步搜索。</li><li>如果桶中的节点是树节点，调用getTreeNode方法进行搜索。其实是一颗红黑树。</li><li>如果不是树节点，说明是一个链表，按照开链法的底层构造进行遍历搜索，直到找不到，返回null。这里判断是不是树节点使用了instanceof关键字。</li></ol><p>其中第一步从table中取对应的桶，使用了按位与运算，将hash映射到table.length-1的空间内。<strong>由于table的长度始终是2的整数次方</strong>，转为二进制后各位均为1，因此这里的按位与运算从结果上看相当于取余（mod）运算。至于这里使用按位与而不是取余运算，我认为还是处于效率的考虑。 操作Map时，大部分函数都需要key作为参数，在HashMap结构内部通过key计算出一个hash值，hash值的计算过程如下图所示： <img src="https://oss.kherrisan.cn/Snipaste_2018-02-14_19-12-49.jpg" srcset="/img/loading.gif" alt> 通过将key的hashCode方法的返回值无符号右移16位，再与自身异或，得到正式的用于散列的hash值。显然，在这个过程中，hashCode方法起到了较为重要的作用。先右移16位再与自己异或的目的是为了让低16位和高16位能够充分参与到散列键的运算中，16位是个不小的数字。 异或是一个神奇的运算符，他之所以神奇，是因为他和与、或相比，能够使结果最为均匀的分布。就像洗牌洗的最均匀一样。真值表就能说明这个问题：</p><p>and</p><p>or</p><p>xor</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>0</p><p>1</p><p>0</p><p>1</p><p>1</p><p>1</p><p>0</p><p>0</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>0</p><p>从表中可以看出，and和or得到的0和1的结果个数都不相同，只有xor得到的0和1的个数才是相同的。 使用hashCode的时候，通常要使得分布较为均匀，使用and和or运算都会造成0或者1的偏多或偏少，因此计算hashCode的代码常常用到异或操作。</p><h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h3><p>hashCode方法是Object类定义的方法之一，用来返回某个对象的散列值。在Object类的定义中，hashCode的默认实现返回的是该对象所在内存的地址。通常在涉及到HashSet、HashMap、HashTable之类的容器时，需要开发者重新考虑自定义的类的hashCode计算方式。 hashCode的计算需要遵循一些规则，这有助于容器类操作效率的提升以及正确性的保证。</p><blockquote><ul><li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.（一个Java程序运行的过程中，同一个对象返回的hashCode必须一致。）</li><li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.（两个相等（equals）的对象的hashCode必须一致。）</li><li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.（不想等的对象的hashCode不必不同，但不同更好。）</li></ul></blockquote><p>针对最后一点，可以假设如下情境： 一系列数个对象返回的hashCode都是相等的，那么HashMap或其他Hash容器散列的时间复杂度接近于线性，因为需要逐个遍历一边。 在网上找到一个计算hashCode的较为合适的模式：通过加入两个质数成分，将一个对象的属性映射到不同的域上面，最后相加得到散列值。虽然这个计算方法中没有用到异或操作，但应该也是值得借鉴的一种写法。</p><div class="hljs"><pre><code class="hljs angelscript">@Override<span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> hashCode() {    <span class="hljs-built_in">int</span> hash = <span class="hljs-number">7</span>;    hash = <span class="hljs-number">31</span> * hash + (<span class="hljs-built_in">int</span>) id;    hash = <span class="hljs-number">31</span> * hash + (name == <span class="hljs-literal">null</span> ? <span class="hljs-number">0</span> : name.hashCode());    hash = <span class="hljs-number">31</span> * hash + (email == <span class="hljs-literal">null</span> ? <span class="hljs-number">0</span> : email.hashCode());    <span class="hljs-keyword">return</span> hash;}</code></pre></div><h3 id="putVal"><a href="#putVal" class="headerlink" title="putVal"></a>putVal</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-05-09.jpg" srcset="/img/loading.gif" alt> <strong>如果有多个线程同时运行到上面代码截图的光标所在行，会出现put的值丢失的问题。</strong></p><ol><li>检查table是否时null或者capacity是否为0，如果是，resize，调整table，准备放东西进去了。</li><li>检查散列的桶table[(n-1)&hash]是否有元素，如果没有，就创建一个节点，把值放进去，就结束了。</li><li>散列冲突时，用变量e保存存放该key的位置。 3.1 如果桶中第一个节点的key和hash都一致，则只需要在后续步骤修改该节点的value。 3.2 如果桶中第一个节点是一个树节点（红黑树），调用putTreeVal函数存放键值。 3.3 否则，从第一个节点开始，沿着链表逐个遍历，找到hash和key都一致的链表中的某个节点，如果找不到，就存放在最后一个节点。如果走到头了发现这个链表过长，就会把这个链表变成一颗红黑树，即只有在链表尾部增加节点的时候才会检测是否需要treeify。</li><li>对找到的或者确定新增的节点，设定其value。如果是更新而不是新增，就返回原来的value。</li></ol><p>putVal的过程用流程图描述如下：（图片来源：<a href="https://www.cnblogs.com/softidea/p/7261111.html" target="_blank" rel="noopener">https://www.cnblogs.com/softidea/p/7261111.html</a>） <a href="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/280044/201707/280044-20170731003658755-1433505876.png" srcset="/img/loading.gif" alt></a> 也就是说，经过多次putVal之后的HashMap应该是链表和红黑树并存的情况，画出来就是下面这种结构：（图片来源：<a href="https://www.cnblogs.com/zhangyinhua/p/7698642.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangyinhua/p/7698642.html</a>） <a href="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" target="_blank" rel="noopener"><img src="https://images2017.cnblogs.com/blog/999804/201710/999804-20171020102900959-842879038.png" srcset="/img/loading.gif" alt></a></p><h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>resize用于动态调整table的大小，是HashMap成员函数中代码行数最长的函数，虽然逻辑并不复杂，但是有很多细节需要仔细考虑。</p><div class="hljs"><pre><code class="hljs haxe">final Node<K,V>[] resize() {        Node<K,V>[] oldTab = table;        int oldCap = (oldTab == <span class="hljs-literal">null</span>) ? <span class="hljs-number">0</span> : <span class="hljs-type">oldTab</span>.length;        int oldThr = threshold;        int <span class="hljs-keyword">new</span><span class="hljs-type">Cap</span>, <span class="hljs-keyword">new</span><span class="hljs-type">Thr</span> = <span class="hljs-number">0</span>;        <span class="hljs-keyword">if</span> (oldCap > <span class="hljs-number">0</span>) {            <span class="hljs-keyword">if</span> (oldCap >= MAXIMUM_CAPACITY) {                threshold = Integer.MAX_VALUE;                <span class="hljs-keyword">return</span> oldTab;            }            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> = oldCap << <span class="hljs-number">1</span>) < MAXIMUM_CAPACITY &&                     oldCap >= DEFAULT_INITIAL_CAPACITY)                <span class="hljs-keyword">new</span><span class="hljs-type">Thr</span> = oldThr << <span class="hljs-number">1</span>; <span class="hljs-comment">// double threshold</span>        }        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldThr > <span class="hljs-number">0</span>) <span class="hljs-comment">// initial capacity was placed in threshold</span>            <span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> = oldThr;        <span class="hljs-keyword">else</span> {               <span class="hljs-comment">// zero initial threshold signifies using defaults</span>            <span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> = DEFAULT_INITIAL_CAPACITY;            <span class="hljs-keyword">new</span><span class="hljs-type">Thr</span> = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);        }        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span><span class="hljs-type">Thr</span> == <span class="hljs-number">0</span>) {            float ft = (float)<span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> * loadFactor;            <span class="hljs-keyword">new</span><span class="hljs-type">Thr</span> = (<span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?                      (int)ft : <span class="hljs-type">Integer</span>.MAX_VALUE);        }        threshold = <span class="hljs-keyword">new</span><span class="hljs-type">Thr</span>;        @SuppressWarnings({<span class="hljs-string">"rawtypes"</span>,<span class="hljs-string">"unchecked"</span>})            Node<K,V>[] <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span> = (Node<K,V>[])<span class="hljs-keyword">new</span> <span class="hljs-type">Node</span>[<span class="hljs-keyword">new</span><span class="hljs-type">Cap</span>];        table = <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>;        <span class="hljs-keyword">if</span> (oldTab != <span class="hljs-literal">null</span>) {            <span class="hljs-keyword">for</span> (int j = <span class="hljs-number">0</span>; j < oldCap; ++j) {                Node<K,V> e;                <span class="hljs-keyword">if</span> ((e = oldTab[j]) != <span class="hljs-literal">null</span>) {                    oldTab[j] = <span class="hljs-literal">null</span>;                    <span class="hljs-keyword">if</span> (e.next == <span class="hljs-literal">null</span>)                        <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>[e.hash & (<span class="hljs-keyword">new</span><span class="hljs-type">Cap</span> - <span class="hljs-number">1</span>)] = e;                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e instanceof TreeNode)                        ((TreeNode<K,V>)e).split(<span class="hljs-built_in">this</span>, <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>, j, oldCap);                    <span class="hljs-keyword">else</span> { <span class="hljs-comment">// preserve order</span>                        Node<K,V> loHead = <span class="hljs-literal">null</span>, loTail = <span class="hljs-literal">null</span>;                        Node<K,V> hiHead = <span class="hljs-literal">null</span>, hiTail = <span class="hljs-literal">null</span>;                        Node<K,V> next;                        <span class="hljs-keyword">do</span> {                            next = e.next;                            <span class="hljs-keyword">if</span> ((e.hash & oldCap) == <span class="hljs-number">0</span>) {                                <span class="hljs-keyword">if</span> (loTail == <span class="hljs-literal">null</span>)                                    loHead = e;                                <span class="hljs-keyword">else</span>                                    loTail.next = e;                                loTail = e;                            }                            <span class="hljs-keyword">else</span> {                                <span class="hljs-keyword">if</span> (hiTail == <span class="hljs-literal">null</span>)                                    hiHead = e;                                <span class="hljs-keyword">else</span>                                    hiTail.next = e;                                hiTail = e;                            }                        } <span class="hljs-keyword">while</span> ((e = next) != <span class="hljs-literal">null</span>);                        <span class="hljs-keyword">if</span> (loTail != <span class="hljs-literal">null</span>) {                            loTail.next = <span class="hljs-literal">null</span>;                            <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>[j] = loHead;                        }                        <span class="hljs-keyword">if</span> (hiTail != <span class="hljs-literal">null</span>) {                            hiTail.next = <span class="hljs-literal">null</span>;                            <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>[j + oldCap] = hiHead;                        }                    }                }            }        }        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span><span class="hljs-type">Tab</span>;    }</code></pre></div><ol><li>根据当前的capacity、threshold的情况，调整新的capacity和threshold到一个合适的值。</li><li>创建新的table。</li><li>把原来table中的元素搬移到新的table中去，在搬移的过程中，就会出现这样的问题：原来有些元素是冲突的，但table扩容之后就不一定冲突了。 3.1 如果是链表，并且没有后继节点，即没有冲突的，就直接复制到新的table中去。 3.2 如果是树节点，调用split方法。 3.3 否则，就搬移整个链表。开始遍历。 3.3.1 把从该节点出发的链表拆分成两个链表，如果节点的hash超过原table的长度的，放在lo中，如果没有超过，放在hi中。 3.3.2 lo还放在table原来的位置，hi放在原来的位置+原table长度的位置。</li></ol><p>在1.7的时候，map的扩容是采用在链表头部插入元素的方式，是倒序的，在多线程并发的时候可能会导致循环链表的出现，在1.8中，我没有找出可能会出现循环链表的情况。</p><h3 id="treeifyBin"><a href="#treeifyBin" class="headerlink" title="treeifyBin"></a>treeifyBin</h3><p>如果一个桶中链表存放的元素过多，在冲突后进行线性查找显然需要花费较多的时间，因此把结构修改为树型结构可以提高搜索的效率。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_12-56-26.jpg" srcset="/img/loading.gif" alt></p><ol><li>检查table的capacity是否达到要求，也就是说如果table长度过短，桶中的链表是没有资格treeify的，在这种情况下，往往resize就能够使链表长度缩短。</li><li>从散列到的节点的首节点开始，逐个将链表中的节点替换为树节点，设置好每个节点的prev和next。</li><li>treeify。</li></ol><h3 id="removeNode"><a href="#removeNode" class="headerlink" title="removeNode"></a>removeNode</h3><p><img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-07-42.jpg" srcset="/img/loading.gif" alt></p><ol><li>根据hash和key，找到对应的节点node。</li><li>如果是树节点，调用removeTreeNode方法；如果是链表节点，从链表中删掉。</li></ol><h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>除了与其他数据结构中同样重要的conmodificatinexception之外，还需要关注一下遍历的顺序。</p><h3 id="HashIterator"><a href="#HashIterator" class="headerlink" title="HashIterator"></a>HashIterator</h3><p>是KeyIterator、ValueIterator、EntryIterator的基类，但并没有实现Iterator的接口。KeyIterator、ValueIterator、EntryIterator的next方法都是基于HashIterator的nextNode实现的。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-29-03.jpg" srcset="/img/loading.gif" alt> 在构造时进行迭代器的初始化工作，从table的0开始，找到第一个不为null的桶，作为第一个桶。</p><h4 id="nextNode"><a href="#nextNode" class="headerlink" title="nextNode"></a>nextNode</h4><p><img src="https://oss.kherrisan.cn/402986213d9199094e5db333036c6532.png" srcset="/img/loading.gif" alt> 首先检查conModification，如果modCount不一致就立刻fail。如果当前桶的链表中还存在下一个元素，就返回下一个元素；否则返回table中下一个不为null的桶。 显然next的顺序和存放元素的顺序没有太大关系，但是散列到同一个桶中的元素的先后与被遍历到的先后顺序可能是一致的。</p><h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><p>调用HashMap的removeNode方法。</p><h2 id="其他内部类-1"><a href="#其他内部类-1" class="headerlink" title="其他内部类"></a>其他内部类</h2><h3 id="TreeNode"><a href="#TreeNode" class="headerlink" title="TreeNode"></a>TreeNode</h3><p>继承了LinkedHashMap.Entry类。为了尽可能的减少搜索的时间，使用的是红黑树。 <img src="https://oss.kherrisan.cn/Snipaste_2018-02-15_13-23-42.jpg" srcset="/img/loading.gif" alt></p><h3 id="KeySet、Values、EntrySet"><a href="#KeySet、Values、EntrySet" class="headerlink" title="KeySet、Values、EntrySet"></a>KeySet、Values、EntrySet</h3><p>都是基于对应的Iterator实现的。</p>]]></content:encoded>
       
       <comments>http://www.kherrisan.cn/posts/3bd06c35/#disqus_thread</comments>
     </item>
@@ -896,7 +892,7 @@
       <title>Java Collection——HashSet</title>
       <link>http://www.kherrisan.cn/posts/4e69e352/</link>
       <guid>http://www.kherrisan.cn/posts/4e69e352/</guid>
-      <pubDate>Wed, 14 Feb 2018 06:57:23 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 14:57:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-16_15-13-28.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; HashSet的实现是基于HashMap的，与Map不同的地方在于HashSet中Key对应的Value只需要一个标记即可。 由于HashSet最核心的部分————Hash已经由HashMap完成，因此只要加一个包装即可。&lt;/p&gt;
@@ -913,7 +909,7 @@
       <title>Java Collection——Vector</title>
       <link>http://www.kherrisan.cn/posts/1b534228/</link>
       <guid>http://www.kherrisan.cn/posts/1b534228/</guid>
-      <pubDate>Wed, 14 Feb 2018 06:45:43 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 14:45:43 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-14_13-22-11.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Vector类的原型和ArrayList是一模一样的，实现了RandomAccess接口说明遍历的时候使用get方法比使用迭代器方法快（LinkedList就不必实现该接口），继承了AbstractList提供的一些较为基础和简单的方法实现（比如常常提到的modCount）。&lt;/p&gt;
@@ -930,7 +926,7 @@
       <title>JUC——CopyOnWriteArrayList</title>
       <link>http://www.kherrisan.cn/posts/c1bdaf6f/</link>
       <guid>http://www.kherrisan.cn/posts/c1bdaf6f/</guid>
-      <pubDate>Sun, 11 Feb 2018 06:08:44 GMT</pubDate>
+      <pubDate>Sun, 11 Feb 2018 14:08:44 GMT</pubDate>
       <description>
       
         &lt;p&gt;ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。 &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-11_12-06-22.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 光看这个类的原型好像还挺简单的。&lt;/p&gt;
@@ -948,7 +944,7 @@
       <title>Java Collection——LinkedList</title>
       <link>http://www.kherrisan.cn/posts/7b8114a5/</link>
       <guid>http://www.kherrisan.cn/posts/7b8114a5/</guid>
-      <pubDate>Sat, 10 Feb 2018 04:43:22 GMT</pubDate>
+      <pubDate>Sat, 10 Feb 2018 12:43:22 GMT</pubDate>
       <description>
       
         &lt;p&gt;LinkedList不同于ArrayList，虽然二者都是List，呈现给用户的都是顺序列表容器，但是底层的实现是不一样的。ArrayList直接以Java的数组作为底层实现，数组中相邻元素在元素中也是相邻的，保持一致的顺序排列。而LinkedList的底层实现使用的是链表，即LinkedList中的元素在内存中不必相邻，不必连续排列，可以分散在各处，元素花费额外的空间存放指针来记录相邻元素的位置。 链表与数组各有各的优劣，数组的随机访问效率最高，但是要插入删除元素时必须要搬移其他元素；链表插入删除元素只需要常数时间复杂度，但是随机访问需要逐个遍历元素。 比较一下LinkedList和ArrayList分别继承了哪些类，实现了哪些接口。&lt;/p&gt;
@@ -965,7 +961,7 @@
       <title>Java Collection——ArrayList</title>
       <link>http://www.kherrisan.cn/posts/3e77724f/</link>
       <guid>http://www.kherrisan.cn/posts/3e77724f/</guid>
-      <pubDate>Fri, 09 Feb 2018 10:18:05 GMT</pubDate>
+      <pubDate>Fri, 09 Feb 2018 18:18:05 GMT</pubDate>
       <description>
       
         &lt;div class=&quot;hljs&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs null&quot;&gt;public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; 
@@ -984,7 +980,7 @@
       <title>Java Collection——总览</title>
       <link>http://www.kherrisan.cn/posts/a80f8f54/</link>
       <guid>http://www.kherrisan.cn/posts/a80f8f54/</guid>
-      <pubDate>Fri, 09 Feb 2018 05:00:50 GMT</pubDate>
+      <pubDate>Fri, 09 Feb 2018 13:00:50 GMT</pubDate>
       <description>
       
         &lt;p&gt;说明： 1. 本系列的内容主要为基于相关源码分析Java Collection的实现，包含List、Queue、Set 、Map这四大块。 2. 在学习和整理笔记的过程中，参考了网上其他前辈的资料，由于笔记最终会发布到网上，出于对原创的尊重和对原作者的感谢，需要在引用了前辈的文字、图片、代码处标记出处，但是为了方便（懒），我就不一一标注了，改为集中在本文开始部分罗列参考资料链接。&lt;strong&gt;再次对把自己的研究成果和学习资源上传到互联网上供他人参考和学习的前辈们表示感谢&lt;/strong&gt; 参考链接： &lt;a href=&quot;https://github.com/CarpenterLee/JCFInternals&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; title=&quot;深入理解Java集合框架&quot;&gt;[CarpenterLee/JCFInternals]深入理解Java集合框架&lt;/a&gt;&lt;/p&gt;
@@ -1001,7 +997,7 @@
       <title>自制Lex程序总结</title>
       <link>http://www.kherrisan.cn/posts/4fe1d90d/</link>
       <guid>http://www.kherrisan.cn/posts/4fe1d90d/</guid>
-      <pubDate>Thu, 21 Dec 2017 16:12:11 GMT</pubDate>
+      <pubDate>Fri, 22 Dec 2017 00:12:11 GMT</pubDate>
       <description>
       
         &lt;p&gt;编译原理实验一提供了三个层面的选择，第一层是最简单的，简单到我都忘记了是什么要求了；第二层是用程序实现基于DFA的词法分析器；第三层有些复杂，模仿Lex的功能，设计一个能够生成词法分析器源代码的程序，即“编译器的编译器”。我不自量力地选了第三层。 其实，第三次说难也不难，说简单的话倒真的到处都是坑。我停停写写，大概写了两三周，更加深刻地体会都自己写业务代码写的飞快，但是一旦碰到有些技术含量的代码就要开始面向Google编程的事实。 现在，程序写的差不多了，以及传到了Github上，还发了两个release版本，先贴上链接。 &lt;a href=&quot;https://github.com/Dokyme/DokymeLex&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DokymeLex&lt;/a&gt; 我作此文的目的是，对于程序的结构，设计和实现的思路，做一个记录和总结，也包括一些反思。&lt;/p&gt;
@@ -1018,7 +1014,7 @@
       <title>有关上线的微信小程序说明</title>
       <link>http://www.kherrisan.cn/posts/b89a4960/</link>
       <guid>http://www.kherrisan.cn/posts/b89a4960/</guid>
-      <pubDate>Tue, 19 Dec 2017 15:09:40 GMT</pubDate>
+      <pubDate>Tue, 19 Dec 2017 23:09:40 GMT</pubDate>
       <description>
       
         
@@ -1038,7 +1034,7 @@
       <title>Ubuntu Server配置BBR拥塞控制算法</title>
       <link>http://www.kherrisan.cn/posts/4aebf7b7/</link>
       <guid>http://www.kherrisan.cn/posts/4aebf7b7/</guid>
-      <pubDate>Tue, 19 Dec 2017 15:04:32 GMT</pubDate>
+      <pubDate>Tue, 19 Dec 2017 23:04:32 GMT</pubDate>
       <description>
       
         
@@ -1058,7 +1054,7 @@
       <title>2017-2018 SRTP项目心得体会</title>
       <link>http://www.kherrisan.cn/posts/ac366cab/</link>
       <guid>http://www.kherrisan.cn/posts/ac366cab/</guid>
-      <pubDate>Mon, 20 Nov 2017 06:38:19 GMT</pubDate>
+      <pubDate>Mon, 20 Nov 2017 14:38:19 GMT</pubDate>
       <description>
       
         
@@ -1078,7 +1074,7 @@
       <title>TCP/IP协议 TCP Timeout and Retransmission</title>
       <link>http://www.kherrisan.cn/posts/1d215dd1/</link>
       <guid>http://www.kherrisan.cn/posts/1d215dd1/</guid>
-      <pubDate>Wed, 18 Oct 2017 05:24:42 GMT</pubDate>
+      <pubDate>Wed, 18 Oct 2017 13:24:42 GMT</pubDate>
       <description>
       
       </description>
@@ -1091,7 +1087,7 @@
       <title>TCP/IP实验 到指定目标的路由追踪（实现tracert功能）</title>
       <link>http://www.kherrisan.cn/posts/652e246f/</link>
       <guid>http://www.kherrisan.cn/posts/652e246f/</guid>
-      <pubDate>Fri, 29 Sep 2017 13:28:23 GMT</pubDate>
+      <pubDate>Fri, 29 Sep 2017 21:28:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;路由追踪指当访问一个远程的设备时，能够得到沿途的路由器的IP。这个功能已经由tracert（traceroute）程序实现了，我一来闲的没事，而来早就想做一些关于主机发现和路由追踪的小程序，因此就研究了一下。 使用python的scapy库进行数据包的收发，由于scapy已经实现了traceroute功能，更何况windows和linux都有tracert（traceroute）命令，但是我还是想从底层搞清楚原理，所有先用traceroute做追踪，同时使用wireshark抓包，研究一下包的结构和原理，再自己用scapy实现一下traceroute。 &lt;strong&gt;注意：Win10 &amp; Python2.7 环境下，使用pip安装scapy可能会遇到问题（global name xxx is not defined），建议直接clone github上的仓库，然后python setup.py install。&lt;/strong&gt; 使用我们学校jwc网站作为实验对象，所有实验都在seu内网进行（感觉内网变化小一些）。 先抓个包看看jwc网站ip地址是多少。其实应该是有更加简便的方法的，只是我不知道。而且tracert直接填主机名好像不行。&lt;/p&gt;
@@ -1108,7 +1104,7 @@
       <title>爱奇艺视频广告流量分析</title>
       <link>http://www.kherrisan.cn/posts/7270ded8/</link>
       <guid>http://www.kherrisan.cn/posts/7270ded8/</guid>
-      <pubDate>Wed, 13 Sep 2017 15:32:04 GMT</pubDate>
+      <pubDate>Wed, 13 Sep 2017 23:32:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;按照老师教的步骤，在wifi环境下抓安卓端的爱奇艺app的数据包，并从中分析出广告的流量。 三生三世十里桃花01 首先进行tcp会话的统计，我比较喜欢把rel start和duration两栏拉长： 先按照数据量排序： &lt;img src=&quot;https://i.loli.net/2017/09/13/59b9519bf02ab.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 好像看不出什么来，老师的经验之谈是高清的视频1s大概100kb。&lt;/p&gt;
@@ -1125,7 +1121,7 @@
       <title>Git 算是比较系统的学习笔记</title>
       <link>http://www.kherrisan.cn/posts/5151ce74/</link>
       <guid>http://www.kherrisan.cn/posts/5151ce74/</guid>
-      <pubDate>Thu, 07 Sep 2017 11:50:05 GMT</pubDate>
+      <pubDate>Thu, 07 Sep 2017 19:50:05 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Git-基础&quot;&gt;&lt;a href=&quot;#Git-基础&quot; class=&quot;headerlink&quot; title=&quot;Git 基础&quot;&gt;&lt;/a&gt;Git 基础&lt;/h1&gt;&lt;p&gt;git是一个分布式的版本管理工具。所谓的分布式就是每个人的电脑上都可以安装完整的git管理系统，进行本地的版本管理，而不需要中央服务器的集中管理。 git不同于其他版本管理系统，它保存的是一个项目中所有文件的集合的快照，如果文件没有被修改那就用一个指针指向之前那个版本。 &lt;img src=&quot;https://git-scm.com/book/en/v2/images/snapshots.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -1142,7 +1138,7 @@
       <title>Git 面向项目开发的git教程</title>
       <link>http://www.kherrisan.cn/posts/4d8d0ed2/</link>
       <guid>http://www.kherrisan.cn/posts/4d8d0ed2/</guid>
-      <pubDate>Mon, 04 Sep 2017 11:28:24 GMT</pubDate>
+      <pubDate>Mon, 04 Sep 2017 19:28:24 GMT</pubDate>
       <description>
       
         &lt;p&gt;Git是一种版本控制工具，Github是提供git服务器支持的一个社区。&lt;/p&gt;
@@ -1160,7 +1156,7 @@
       <title>TCP/IP协议 TCP Connection Mnagement</title>
       <link>http://www.kherrisan.cn/posts/b225a4eb/</link>
       <guid>http://www.kherrisan.cn/posts/b225a4eb/</guid>
-      <pubDate>Thu, 27 Jul 2017 13:39:01 GMT</pubDate>
+      <pubDate>Thu, 27 Jul 2017 21:39:01 GMT</pubDate>
       <description>
       
         &lt;p&gt;因为TCP是一个面向连接的协议，所以建立释放连接的过程是很重要的。&lt;/p&gt;
@@ -1178,7 +1174,7 @@
       <title>TCP/IP协议 TCP(Preliminaries)</title>
       <link>http://www.kherrisan.cn/posts/ad7bd9a4/</link>
       <guid>http://www.kherrisan.cn/posts/ad7bd9a4/</guid>
-      <pubDate>Wed, 26 Jul 2017 11:16:59 GMT</pubDate>
+      <pubDate>Wed, 26 Jul 2017 19:16:59 GMT</pubDate>
       <description>
       
         &lt;p&gt;本章应是介绍TCP的引言，后面有5个章节是详细介绍TCP协议各个部分的。&lt;/p&gt;
@@ -1196,7 +1192,7 @@
       <title>Typescript 函数</title>
       <link>http://www.kherrisan.cn/posts/f8eab2f8/</link>
       <guid>http://www.kherrisan.cn/posts/f8eab2f8/</guid>
-      <pubDate>Sat, 22 Jul 2017 13:52:40 GMT</pubDate>
+      <pubDate>Sat, 22 Jul 2017 21:52:40 GMT</pubDate>
       <description>
       
         
@@ -1221,7 +1217,7 @@ let myAdd:
       <title>MIT_6.828 Homework: boot xv6</title>
       <link>http://www.kherrisan.cn/posts/7ce108b4/</link>
       <guid>http://www.kherrisan.cn/posts/7ce108b4/</guid>
-      <pubDate>Wed, 19 Jul 2017 08:13:44 GMT</pubDate>
+      <pubDate>Wed, 19 Jul 2017 16:13:44 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;a href=&quot;https://gyazo.com/43c38a68a3753834a69995cd0a6ee24b&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://i.gyazo.com/43c38a68a3753834a69995cd0a6ee24b.png&quot; srcset=&quot;/img/loading.gif&quot; alt=&quot;https://gyazo.com/43c38a68a3753834a69995cd0a6ee24b&quot;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1238,7 +1234,7 @@ let myAdd:
       <title>TCP/IP协议 Introduction</title>
       <link>http://www.kherrisan.cn/posts/379185ba/</link>
       <guid>http://www.kherrisan.cn/posts/379185ba/</guid>
-      <pubDate>Tue, 18 Jul 2017 09:38:05 GMT</pubDate>
+      <pubDate>Tue, 18 Jul 2017 17:38:05 GMT</pubDate>
       <description>
       
         &lt;p&gt;一边看书，一边做一些笔记。刚刚开始看第一章，书是全英文版的，一上来就感觉很难，一改这类书第一章都是导论所以很简单的印象。&lt;/p&gt;
@@ -1256,7 +1252,7 @@ let myAdd:
       <title>MIT_6.828 简介，环境搭建</title>
       <link>http://www.kherrisan.cn/posts/d949f9e1/</link>
       <guid>http://www.kherrisan.cn/posts/d949f9e1/</guid>
-      <pubDate>Mon, 17 Jul 2017 08:13:22 GMT</pubDate>
+      <pubDate>Mon, 17 Jul 2017 16:13:22 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;MIT大名鼎鼎的操作系统课程，6.828，根据我初步的了解，这门课非常注重动手能力。大二下学期刚刚上了操作系统课，但是总共就做了两个实验，感觉动手的成分非常的少，作业都是以做题为主。所以想亲自动手尝试一下。 整个课程基于linux的xv6系统，使用qemu模拟器进行运行和调试，同时涉及c语言编译链接的工具链的使用。&lt;/p&gt;
@@ -1273,7 +1269,7 @@ let myAdd:
       <title>Typescript 类</title>
       <link>http://www.kherrisan.cn/posts/f5fd3baa/</link>
       <guid>http://www.kherrisan.cn/posts/f5fd3baa/</guid>
-      <pubDate>Thu, 13 Jul 2017 03:22:11 GMT</pubDate>
+      <pubDate>Thu, 13 Jul 2017 11:22:11 GMT</pubDate>
       <description>
       
         
@@ -1297,7 +1293,7 @@ let myAdd:
       <title>Typescript 接口</title>
       <link>http://www.kherrisan.cn/posts/d016d80b/</link>
       <guid>http://www.kherrisan.cn/posts/d016d80b/</guid>
-      <pubDate>Thu, 13 Jul 2017 02:40:41 GMT</pubDate>
+      <pubDate>Thu, 13 Jul 2017 10:40:41 GMT</pubDate>
       <description>
       
         
@@ -1321,7 +1317,7 @@ let
       <title>Typescript 类型和变量</title>
       <link>http://www.kherrisan.cn/posts/6eb1636b/</link>
       <guid>http://www.kherrisan.cn/posts/6eb1636b/</guid>
-      <pubDate>Tue, 11 Jul 2017 15:01:04 GMT</pubDate>
+      <pubDate>Tue, 11 Jul 2017 23:01:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;因为我js没有认真学，所以从typescript学起的话要从基础的一点一点来了。&lt;/p&gt;
@@ -1338,7 +1334,7 @@ let
       <title>Typescript 简述，安装，开发环境配置</title>
       <link>http://www.kherrisan.cn/posts/f576dfeb/</link>
       <guid>http://www.kherrisan.cn/posts/f576dfeb/</guid>
-      <pubDate>Tue, 11 Jul 2017 06:20:15 GMT</pubDate>
+      <pubDate>Tue, 11 Jul 2017 14:20:15 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h1&gt;&lt;p&gt;Typescript是一个由微软开发的编程语言，听说有C#的首席架构师助阵Typescript的开发。是Javascript的超集，提供了可选的静态类型和基于类的面向对象编程，感觉就像C#和JavaScript之间的一种语言。 废话少说，先把环境搞起来，环境搭好了就可以码代码了。 以下所有的代码都来自于 &lt;a href=&quot;http://www.typescriptlang.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; title=&quot;Typescript&quot;&gt;Typescriptlang&lt;/a&gt; 这个网站，感觉比较良心，大家可以参考一下。&lt;/p&gt;
@@ -1355,7 +1351,7 @@ let
       <title>首</title>
       <link>http://www.kherrisan.cn/posts/b8431f23/</link>
       <guid>http://www.kherrisan.cn/posts/b8431f23/</guid>
-      <pubDate>Sun, 25 Jun 2017 05:20:53 GMT</pubDate>
+      <pubDate>Sun, 25 Jun 2017 13:20:53 GMT</pubDate>
       <description>
       
         
