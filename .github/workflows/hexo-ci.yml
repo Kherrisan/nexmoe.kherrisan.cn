@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: webfactory/ssh-agent
-      uses: webfactory/ssh-agent@v0.2.0
+      uses: webfactory/ssh-agent@v0.4.1
       with:
         # Private SSH key to register in the SSH agent
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -46,7 +46,7 @@ jobs:
         # Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}
         github_token: ${{ secrets.CI_TOKEN }}
     - name: ssh deploy
-      uses: easingthemes/ssh-deploy@v2.1.2
+      uses: easingthemes/ssh-deploy@v2.1.5
       env:
         # Private Key
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
