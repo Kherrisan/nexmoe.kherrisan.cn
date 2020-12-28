@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>使用Gradle发布轮子库到GithubPackages</title>
+    <link href="/posts/cc3ae9ba/"/>
+    <url>/posts/cc3ae9ba/</url>
+    
+    <content type="html"><![CDATA[<p>以我用 Kotlin 写的几个轮子为例。</p><h1 id="Gradle-配置-Publishing"><a href="#Gradle-配置-Publishing" class="headerlink" title="Gradle 配置 Publishing"></a>Gradle 配置 Publishing</h1><p>首先添加 maven-publish 插件。</p><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-section">plugins</span> {    <span class="hljs-attribute">id</span> <span class="hljs-string">'maven-publish'</span>}</code></pre></div><p>并且补充 publish 的配置。publish 的配置有两部分：</p><ol><li>artifact：包括 groupId、artifactId、version 等。</li><li>repository：包括仓库的 uri（这里使用 <strong>github packages</strong> 的上传地址），用于用户鉴权的信息。</li></ol><div class="hljs"><pre><code class="hljs properties"><span class="hljs-attr">publishing</span> <span class="hljs-string">{</span>    <span class="hljs-attr">publications</span> <span class="hljs-string">{</span>        <span class="hljs-meta">maven(MavenPublication)</span> <span class="hljs-string">{</span>            <span class="hljs-attr">groupId</span> <span class="hljs-string">'cn.kherrisan'</span>            <span class="hljs-attr">artifactId</span> <span class="hljs-string">'kommons'</span>            <span class="hljs-attr">version</span> <span class="hljs-string">'1.0.0'</span>            <span class="hljs-attr">from</span> <span class="hljs-string">components.kotlin</span>        <span class="hljs-attr">}</span>    <span class="hljs-attr">}</span>    <span class="hljs-attr">repositories</span> <span class="hljs-string">{</span>        <span class="hljs-attr">maven</span> <span class="hljs-string">{</span>            <span class="hljs-attr">name</span> = <span class="hljs-string">"GitHubPackages"</span>            <span class="hljs-attr">url</span> = <span class="hljs-string">"https://maven.pkg.github.com/$USER_NAME/$GITHUB_REPOSITORY_NAME"</span>            <span class="hljs-attr">credentials</span> <span class="hljs-string">{</span>                <span class="hljs-attr">username</span> = <span class="hljs-string">$USER_NAME</span>                <span class="hljs-attr">password</span> = <span class="hljs-string">$USER_TOKEN</span>            <span class="hljs-attr">}</span>        <span class="hljs-attr">}</span>    <span class="hljs-attr">}</span><span class="hljs-attr">}</span></code></pre></div><ol><li>url 的最后要写上要把包发布到的仓库位置，即哪个用户的代码仓库。 </li><li>USER_TOKEN 从 github/settings/personal tokens 中获得，需要有 write packages 的权限。</li></ol><p>完成配置后执行<code>gradle publish</code>，发布到远程仓库中。</p><p>过一会儿就能在 github 的仓库页右侧看到 package 了。</p><p><img src="https://oss.kherrisan.cn/githubpackages.png" srcset="/img/loading.gif" alt></p><h1 id="Gradle-配置-dependency"><a href="#Gradle-配置-dependency" class="headerlink" title="Gradle 配置 dependency"></a>Gradle 配置 dependency</h1><p>若是需要引入这个包，则需要在引入的 Gradle 项目中配置 dependency。</p><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-section">repositories</span> {    <span class="hljs-section">maven</span> {        <span class="hljs-attribute">url</span> <span class="hljs-string">"https://maven.pkg.github.com/<span class="hljs-variable">$USER_NAME</span>/<span class="hljs-variable">$GITHUB_REPOSITORY_NAME</span>"</span>        credentials {            <span class="hljs-attribute">username</span> = <span class="hljs-variable">$USER_NAME</span>            password = <span class="hljs-variable">$USER_TOKEN</span>        }    }}dependencies {    <span class="hljs-attribute">implementation</span> <span class="hljs-string">"cn.kherrisan:kommons:1.0.0"</span>}</code></pre></div><ol><li>虽说如果仓库是公开的话，任何人都应该能够取得这个 package，即不需要配置 credentials.但实际测试中发现必须要credentials 才能获得到 package。这里的 TOKEN 不必和 publishing 中的 TOKEN 是同一个，但必须要有 read package 的权限。</li><li>dependencies 中，<strong>包的名字应该是之前在 publishing 中设置的 groupId:artifactId:version</strong>，而不是 USER_NAME:REPOSITORY 或者其他无关的名字。</li></ol>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>留言板(ÒܫÓױ)</title>
     <link href="/posts/fcad8979/"/>
     <url>/posts/fcad8979/</url>
@@ -375,11 +388,11 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>测试</tag>
       
       <tag>Markdown</tag>
+      
+      <tag>前端</tag>
       
       <tag>优化</tag>
       
@@ -1681,9 +1694,9 @@
     
     <tags>
       
-      <tag>Typescript</tag>
-      
       <tag>前端</tag>
+      
+      <tag>Typescript</tag>
       
     </tags>
     
@@ -1827,9 +1840,9 @@
     
     <tags>
       
-      <tag>Typescript</tag>
-      
       <tag>前端</tag>
+      
+      <tag>Typescript</tag>
       
     </tags>
     
@@ -1854,9 +1867,9 @@
     
     <tags>
       
-      <tag>Typescript</tag>
-      
       <tag>前端</tag>
+      
+      <tag>Typescript</tag>
       
     </tags>
     

@@ -9,18 +9,35 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>正在从科瑞杉的折越节点向艾尔地表投放部队</description>
-<<<<<<< HEAD
-    <pubDate>Thu, 11 Jun 2020 05:52:04 GMT</pubDate>
-=======
-    <pubDate>Wed, 24 Jun 2020 06:36:01 GMT</pubDate>
->>>>>>> 85d8163b5b33718dd61a1b1003055bdc17deec87
+    <pubDate>Mon, 28 Dec 2020 05:35:26 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>使用Gradle发布轮子库到GithubPackages</title>
+      <link>http://www.kherrisan.cn/posts/cc3ae9ba/</link>
+      <guid>http://www.kherrisan.cn/posts/cc3ae9ba/</guid>
+      <pubDate>Mon, 28 Dec 2020 12:47:17 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;以我用 Kotlin 写的几个轮子为例。&lt;/p&gt;
+&lt;h1 id=&quot;Gradle-配置-Publishing&quot;&gt;&lt;a href=&quot;#Gradle-配置-Publishing&quot; class=&quot;headerlink&quot; title=&quot;Gradle 配置 Publishing&quot;&gt;&lt;/
+        
+      
+      </description>
+      
+      
+      <content:encoded><![CDATA[<p>以我用 Kotlin 写的几个轮子为例。</p><h1 id="Gradle-配置-Publishing"><a href="#Gradle-配置-Publishing" class="headerlink" title="Gradle 配置 Publishing"></a>Gradle 配置 Publishing</h1><p>首先添加 maven-publish 插件。</p><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-section">plugins</span> {    <span class="hljs-attribute">id</span> <span class="hljs-string">'maven-publish'</span>}</code></pre></div><p>并且补充 publish 的配置。publish 的配置有两部分：</p><ol><li>artifact：包括 groupId、artifactId、version 等。</li><li>repository：包括仓库的 uri（这里使用 <strong>github packages</strong> 的上传地址），用于用户鉴权的信息。</li></ol><div class="hljs"><pre><code class="hljs properties"><span class="hljs-attr">publishing</span> <span class="hljs-string">{</span>    <span class="hljs-attr">publications</span> <span class="hljs-string">{</span>        <span class="hljs-meta">maven(MavenPublication)</span> <span class="hljs-string">{</span>            <span class="hljs-attr">groupId</span> <span class="hljs-string">'cn.kherrisan'</span>            <span class="hljs-attr">artifactId</span> <span class="hljs-string">'kommons'</span>            <span class="hljs-attr">version</span> <span class="hljs-string">'1.0.0'</span>            <span class="hljs-attr">from</span> <span class="hljs-string">components.kotlin</span>        <span class="hljs-attr">}</span>    <span class="hljs-attr">}</span>    <span class="hljs-attr">repositories</span> <span class="hljs-string">{</span>        <span class="hljs-attr">maven</span> <span class="hljs-string">{</span>            <span class="hljs-attr">name</span> = <span class="hljs-string">"GitHubPackages"</span>            <span class="hljs-attr">url</span> = <span class="hljs-string">"https://maven.pkg.github.com/$USER_NAME/$GITHUB_REPOSITORY_NAME"</span>            <span class="hljs-attr">credentials</span> <span class="hljs-string">{</span>                <span class="hljs-attr">username</span> = <span class="hljs-string">$USER_NAME</span>                <span class="hljs-attr">password</span> = <span class="hljs-string">$USER_TOKEN</span>            <span class="hljs-attr">}</span>        <span class="hljs-attr">}</span>    <span class="hljs-attr">}</span><span class="hljs-attr">}</span></code></pre></div><ol><li>url 的最后要写上要把包发布到的仓库位置，即哪个用户的代码仓库。 </li><li>USER_TOKEN 从 github/settings/personal tokens 中获得，需要有 write packages 的权限。</li></ol><p>完成配置后执行<code>gradle publish</code>，发布到远程仓库中。</p><p>过一会儿就能在 github 的仓库页右侧看到 package 了。</p><p><img src="https://oss.kherrisan.cn/githubpackages.png" srcset="/img/loading.gif" alt></p><h1 id="Gradle-配置-dependency"><a href="#Gradle-配置-dependency" class="headerlink" title="Gradle 配置 dependency"></a>Gradle 配置 dependency</h1><p>若是需要引入这个包，则需要在引入的 Gradle 项目中配置 dependency。</p><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-section">repositories</span> {    <span class="hljs-section">maven</span> {        <span class="hljs-attribute">url</span> <span class="hljs-string">"https://maven.pkg.github.com/<span class="hljs-variable">$USER_NAME</span>/<span class="hljs-variable">$GITHUB_REPOSITORY_NAME</span>"</span>        credentials {            <span class="hljs-attribute">username</span> = <span class="hljs-variable">$USER_NAME</span>            password = <span class="hljs-variable">$USER_TOKEN</span>        }    }}dependencies {    <span class="hljs-attribute">implementation</span> <span class="hljs-string">"cn.kherrisan:kommons:1.0.0"</span>}</code></pre></div><ol><li>虽说如果仓库是公开的话，任何人都应该能够取得这个 package，即不需要配置 credentials.但实际测试中发现必须要credentials 才能获得到 package。这里的 TOKEN 不必和 publishing 中的 TOKEN 是同一个，但必须要有 read package 的权限。</li><li>dependencies 中，<strong>包的名字应该是之前在 publishing 中设置的 groupId:artifactId:version</strong>，而不是 USER_NAME:REPOSITORY 或者其他无关的名字。</li></ol>]]></content:encoded>
+      
+      <comments>http://www.kherrisan.cn/posts/cc3ae9ba/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>留言板(ÒܫÓױ)</title>
       <link>http://www.kherrisan.cn/posts/fcad8979/</link>
       <guid>http://www.kherrisan.cn/posts/fcad8979/</guid>
-      <pubDate>Sun, 10 May 2020 05:13:44 GMT</pubDate>
+      <pubDate>Sun, 10 May 2020 13:13:44 GMT</pubDate>
       <description>
       
       </description>
@@ -33,7 +50,7 @@
       <title>我做的小玩意儿们</title>
       <link>http://www.kherrisan.cn/posts/a2c247c4/</link>
       <guid>http://www.kherrisan.cn/posts/a2c247c4/</guid>
-      <pubDate>Sun, 10 May 2020 05:07:34 GMT</pubDate>
+      <pubDate>Sun, 10 May 2020 13:07:34 GMT</pubDate>
       <description>
       
         
@@ -53,7 +70,7 @@
       <title>又一个新主题</title>
       <link>http://www.kherrisan.cn/posts/972280a7/</link>
       <guid>http://www.kherrisan.cn/posts/972280a7/</guid>
-      <pubDate>Sat, 09 May 2020 12:08:51 GMT</pubDate>
+      <pubDate>Sat, 09 May 2020 20:08:51 GMT</pubDate>
       <description>
       
         
@@ -74,7 +91,7 @@
       <title>53.最大子序和</title>
       <link>http://www.kherrisan.cn/posts/396fd427/</link>
       <guid>http://www.kherrisan.cn/posts/396fd427/</guid>
-      <pubDate>Sun, 03 May 2020 04:26:46 GMT</pubDate>
+      <pubDate>Sun, 03 May 2020 12:26:46 GMT</pubDate>
       <description>
       
         &lt;p&gt;给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。&lt;/p&gt;
@@ -94,7 +111,7 @@
       <title>我理想的文档管理模式</title>
       <link>http://www.kherrisan.cn/posts/25678d68/</link>
       <guid>http://www.kherrisan.cn/posts/25678d68/</guid>
-      <pubDate>Wed, 22 Apr 2020 13:23:16 GMT</pubDate>
+      <pubDate>Wed, 22 Apr 2020 21:23:16 GMT</pubDate>
       <description>
       
         
@@ -114,7 +131,7 @@
       <title>新的主题</title>
       <link>http://www.kherrisan.cn/posts/5ca0a75b/</link>
       <guid>http://www.kherrisan.cn/posts/5ca0a75b/</guid>
-      <pubDate>Fri, 10 Apr 2020 12:06:23 GMT</pubDate>
+      <pubDate>Fri, 10 Apr 2020 20:06:23 GMT</pubDate>
       <description>
       
         
@@ -135,7 +152,7 @@
       <title>2019年7月6日周记</title>
       <link>http://www.kherrisan.cn/posts/a9b253d5/</link>
       <guid>http://www.kherrisan.cn/posts/a9b253d5/</guid>
-      <pubDate>Sat, 06 Jul 2019 11:56:39 GMT</pubDate>
+      <pubDate>Sat, 06 Jul 2019 19:56:39 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;a href=&quot;#2019年6月31日-2019年7月6日&quot; class=&quot;headerlink&quot; title=&quot;2019年6月31日-2019年7月6日&quot;&gt;&lt;/a&gt;2019年6月31日-2019年7月6日&lt;/h2&gt;&lt;p&gt;离校了，宿舍里的东西全都搬到了家里，也都收拾好了。6月26日开始的为期三天的招生工作也宣告结束，不知道未来还有没有机会和计软的招生老师们一起去一中玩（zhuang）耍（bi）。&lt;/p&gt;
@@ -152,7 +169,7 @@
       <title>2019年6月消费情况总结及7月预算</title>
       <link>http://www.kherrisan.cn/posts/fc2f84e6/</link>
       <guid>http://www.kherrisan.cn/posts/fc2f84e6/</guid>
-      <pubDate>Mon, 01 Jul 2019 01:34:36 GMT</pubDate>
+      <pubDate>Mon, 01 Jul 2019 09:34:36 GMT</pubDate>
       <description>
       
         
@@ -173,7 +190,7 @@
       <title>2019年5月消费情况总结及6月预算</title>
       <link>http://www.kherrisan.cn/posts/983ed1c1/</link>
       <guid>http://www.kherrisan.cn/posts/983ed1c1/</guid>
-      <pubDate>Sun, 02 Jun 2019 10:03:51 GMT</pubDate>
+      <pubDate>Sun, 02 Jun 2019 18:03:51 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;5月消费总结&quot;&gt;&lt;a href=&quot;#5月消费总结&quot; class=&quot;headerlink&quot; title=&quot;5月消费总结&quot;&gt;&lt;/a&gt;5月消费总结&lt;/h2&gt;&lt;p&gt;我在五月的消费非常地不按照常理出牌，收入方面：&lt;/p&gt;
@@ -195,7 +212,7 @@
       <title>2019年4月消费情况总结及5月预算</title>
       <link>http://www.kherrisan.cn/posts/bc977d0a/</link>
       <guid>http://www.kherrisan.cn/posts/bc977d0a/</guid>
-      <pubDate>Mon, 29 Apr 2019 12:01:13 GMT</pubDate>
+      <pubDate>Mon, 29 Apr 2019 20:01:13 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够及时对”不堪回首“的消费记录进行分析和总结，并对下一个月的消费做出有效可行的预算，在此为消费单独开辟一个栏目。&lt;/p&gt;
@@ -212,7 +229,7 @@
       <title>2019年4月29日周记</title>
       <link>http://www.kherrisan.cn/posts/8336f069/</link>
       <guid>http://www.kherrisan.cn/posts/8336f069/</guid>
-      <pubDate>Mon, 29 Apr 2019 11:56:39 GMT</pubDate>
+      <pubDate>Mon, 29 Apr 2019 19:56:39 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;a href=&quot;#2019年4月22日-2019年4月28日&quot; class=&quot;headerlink&quot; title=&quot;2019年4月22日-2019年4月28日&quot;&gt;&lt;/a&gt;2019年4月22日-2019年4月28日&lt;/h2&gt;&lt;p&gt;本周是开始考研复习的第三周，实际上只复习了一天。在周一经过小伙伴提醒五一之后要交论文初稿，因此周一之后的所有时间都用来写论文了。但是论文进度比想象的慢，写作效率不高，可以形容为”&lt;strong&gt;以写论文的名义划水&lt;/strong&gt;“。&lt;/p&gt;
@@ -229,7 +246,7 @@
       <title>2019年4月19日周记</title>
       <link>http://www.kherrisan.cn/posts/1ad49668/</link>
       <guid>http://www.kherrisan.cn/posts/1ad49668/</guid>
-      <pubDate>Fri, 19 Apr 2019 14:55:29 GMT</pubDate>
+      <pubDate>Fri, 19 Apr 2019 22:55:29 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;为了能够记录自己平时的学习和生活，并进行一些有益的反思，我开始尝试写周记，同时也真心希望自己能够坚持下去。&lt;/p&gt;
@@ -246,7 +263,7 @@
       <title>Apple产品体验</title>
       <link>http://www.kherrisan.cn/posts/e19f7302/</link>
       <guid>http://www.kherrisan.cn/posts/e19f7302/</guid>
-      <pubDate>Sat, 06 Apr 2019 07:58:00 GMT</pubDate>
+      <pubDate>Sat, 06 Apr 2019 15:58:00 GMT</pubDate>
       <description>
       
         
@@ -267,7 +284,7 @@
       <title>休息一年，然后回来</title>
       <link>http://www.kherrisan.cn/posts/33352bc/</link>
       <guid>http://www.kherrisan.cn/posts/33352bc/</guid>
-      <pubDate>Sat, 06 Apr 2019 06:32:26 GMT</pubDate>
+      <pubDate>Sat, 06 Apr 2019 14:32:26 GMT</pubDate>
       <description>
       
         &lt;p&gt;本来在大三时打定主意，本科毕业了之后就直接参加工作，迅速进入资本积累的人生阶段。结果在大四秋招之后对职业生涯却产生了新的理解和认识。人生应该不至于此，我决定参加2019年考研。&lt;/p&gt;
@@ -284,7 +301,7 @@
       <title>如何看待江苏要南京提高首位度？</title>
       <link>http://www.kherrisan.cn/posts/a8d5d9dc/</link>
       <guid>http://www.kherrisan.cn/posts/a8d5d9dc/</guid>
-      <pubDate>Sun, 27 Jan 2019 12:31:04 GMT</pubDate>
+      <pubDate>Sun, 27 Jan 2019 20:31:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;这个主题来自&lt;a href=&quot;https://www.zhihu.com/question/266051194&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;知乎&lt;/a&gt;，今天在回家的高铁上偶然刷到。作为一个在南京生活了3年半的土生土长的常州人，我想围绕这个主体就知乎上的一些回答给出我自己的些许看法。&lt;/p&gt;
@@ -301,7 +318,7 @@
       <title>这是一个测试页</title>
       <link>http://www.kherrisan.cn/posts/1e12b02a/</link>
       <guid>http://www.kherrisan.cn/posts/1e12b02a/</guid>
-      <pubDate>Thu, 24 Jan 2019 05:46:26 GMT</pubDate>
+      <pubDate>Thu, 24 Jan 2019 13:46:26 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;Markdown语法渲染&quot;&gt;&lt;a href=&quot;#Markdown语法渲染&quot; class=&quot;headerlink&quot; title=&quot;Markdown语法渲染&quot;&gt;&lt;/a&gt;Markdown语法渲染&lt;/h2&gt;&lt;p&gt;这部分主要是为了测试Hexo渲染Markdown的编译器对常用记号的支持程度。&lt;/p&gt;
@@ -320,7 +337,7 @@
       <title>Netty——Pipeline(1)</title>
       <link>http://www.kherrisan.cn/posts/403de3e7/</link>
       <guid>http://www.kherrisan.cn/posts/403de3e7/</guid>
-      <pubDate>Tue, 08 Jan 2019 14:25:02 GMT</pubDate>
+      <pubDate>Tue, 08 Jan 2019 22:25:02 GMT</pubDate>
       <description>
       
         &lt;p&gt;)Netty中使用Handler对数据包进行处理，每个Handler成为整个处理过程的一个阶段，几个Handler前后相连构成了一个处理数据包的流水线（Pipeline）。同一个Handler实现可以在多种不同的处理流程中发挥自身的局部作用，可复用。 &lt;code&gt;Pipeline&lt;/code&gt;的继承结构： &lt;img src=&quot;https://oss.kherrisan.cn/e1fb7cb818b3cd0d10e25e3905f0efcb.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -337,7 +354,7 @@
       <title>JLink——借助JLink打包Java程序为可执行程序</title>
       <link>http://www.kherrisan.cn/posts/72407af/</link>
       <guid>http://www.kherrisan.cn/posts/72407af/</guid>
-      <pubDate>Sun, 06 Jan 2019 11:38:54 GMT</pubDate>
+      <pubDate>Sun, 06 Jan 2019 19:38:54 GMT</pubDate>
       <description>
       
         &lt;p&gt;JDK9中的模块化技术使得原本一两百兆的JRE能够被拆分成多个较小的模块，因此如果想要把Java程序打包成可执行程序，并在没有JRE环境的机器上运行，不再需要带上一个庞大的JRE，而只需要额外增加几个JDK中的module。 项目目录结构如下，仅仅是一个很简单的Hello World程序。代码中仅仅使用到了System.out.println这一个JDK中提供的函数。 &lt;img src=&quot;https://oss.kherrisan.cn/b6fc620903896d3ef034f5bed269fcaa.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 最重要的是module-info.jar文件，这个文件是module的定义文件，声明了我所编写的这个模块需要依赖哪些模块，以及对外暴露哪些东西。 由于只依赖java.base模块，而这个模块是默认包含的，因此module-info的大括号内可以为空。&lt;/p&gt;
@@ -354,7 +371,7 @@
       <title>Netty——NioEventLoop(2)</title>
       <link>http://www.kherrisan.cn/posts/75327452/</link>
       <guid>http://www.kherrisan.cn/posts/75327452/</guid>
-      <pubDate>Sat, 05 Jan 2019 02:36:54 GMT</pubDate>
+      <pubDate>Sat, 05 Jan 2019 10:36:54 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Loop过程&quot;&gt;&lt;a href=&quot;#Loop过程&quot; class=&quot;headerlink&quot; title=&quot;Loop过程&quot;&gt;&lt;/a&gt;Loop过程&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NioEventLoop&lt;/code&gt;最核心的就是处理事件循环的&lt;code&gt;run&lt;/code&gt;方法。这个方法看起来不长，但实际上它承担了最重要的逻辑，并且对很多细节问题做了处理。&lt;/p&gt;
@@ -371,7 +388,7 @@
       <title>Netty——NioEventLoop(1)</title>
       <link>http://www.kherrisan.cn/posts/5e1f2791/</link>
       <guid>http://www.kherrisan.cn/posts/5e1f2791/</guid>
-      <pubDate>Mon, 24 Dec 2018 12:41:23 GMT</pubDate>
+      <pubDate>Mon, 24 Dec 2018 20:41:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;作为Netty中最核心的概念之一，&lt;code&gt;NioEventLoop&lt;/code&gt;作为线程实体承载Netty中几乎所有代码的运行、所有事件的检测和触发。&lt;code&gt;EventLoop&lt;/code&gt;这个单词并不陌生。在很多的图形用户界面（GUI）程序中，都会使用较少的数个线程来运行代码，以应对用户操作事件。 由于Netty的线程模型基于Java的&lt;strong&gt;NIO&lt;/strong&gt;，而NIO又是通过&lt;strong&gt;IO多路复用&lt;/strong&gt;实现的。IO多路复用是底层技术，在其之上则是负责管理多路IO的线程模型。Reactor模式就是一种经典的多线程IO设计模型。 &lt;/p&gt;
@@ -388,7 +405,7 @@
       <title>K2-PandoraBox-IPV6（教育网）配置过程</title>
       <link>http://www.kherrisan.cn/posts/96393751/</link>
       <guid>http://www.kherrisan.cn/posts/96393751/</guid>
-      <pubDate>Sun, 25 Nov 2018 10:06:38 GMT</pubDate>
+      <pubDate>Sun, 25 Nov 2018 18:06:38 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;strong&gt;坐标：东南大学九龙湖校区梅园4C某宿舍&lt;/strong&gt; 昨晚向某个同学要了一台斐讯K2路由器，本想替换掉宿舍的TP-Link来提供5GHz频段的Wifi，因为2.4GHz频段的Wifi对我MacbookPro2018的USB-HUB以及蓝牙干扰太过于严重。忽然想把宿舍隔壁床位的IPV6网口利用起来。 之前尝试过将PC网口与IPV6网口直连上网，体会到了飞一般的网速，举个例子：下载一个ubuntu-desktop的镜像，大概只需要两分多钟就可以下载完毕。&lt;/p&gt;
@@ -405,7 +422,7 @@
       <title>Netty——下载、编译、调试源码</title>
       <link>http://www.kherrisan.cn/posts/1169e0a5/</link>
       <guid>http://www.kherrisan.cn/posts/1169e0a5/</guid>
-      <pubDate>Thu, 15 Nov 2018 12:39:40 GMT</pubDate>
+      <pubDate>Thu, 15 Nov 2018 20:39:40 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Intellij，启动！&quot;&gt;&lt;a href=&quot;#Intellij，启动！&quot; class=&quot;headerlink&quot; title=&quot;Intellij，启动！&quot;&gt;&lt;/a&gt;Intellij，启动！&lt;/h1&gt;&lt;h2 id=&quot;参考资料：&quot;&gt;&lt;a href=&quot;#参考资料：&quot; class=&quot;headerlink&quot; title=&quot;参考资料：&quot;&gt;&lt;/a&gt;参考资料：&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/9160684f134b&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Netty分享之动态生成重复性的代码&lt;/a&gt;&lt;/p&gt;
@@ -422,7 +439,7 @@
       <title>Netty——Bootstrap</title>
       <link>http://www.kherrisan.cn/posts/7c7e2239/</link>
       <guid>http://www.kherrisan.cn/posts/7c7e2239/</guid>
-      <pubDate>Wed, 14 Nov 2018 12:24:36 GMT</pubDate>
+      <pubDate>Wed, 14 Nov 2018 20:24:36 GMT</pubDate>
       <description>
       
         &lt;p&gt;以netty-example中的Echo（Server）为例，分析Netty源码的结构与运行过程。 跳过SSL相关的部分。从下面这一行代码开始：&lt;/p&gt;
@@ -440,7 +457,7 @@
       <title>JUC——ConcurrentHashMap</title>
       <link>http://www.kherrisan.cn/posts/b6a54201/</link>
       <guid>http://www.kherrisan.cn/posts/b6a54201/</guid>
-      <pubDate>Sun, 14 Oct 2018 09:14:51 GMT</pubDate>
+      <pubDate>Sun, 14 Oct 2018 17:14:51 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/dbdcdc86ee06761292636a46d6fc8878.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 1.7中的ConcurrentHashMap使用分段锁来解决并发线程之间的同步竞争问题，本文总结1.8中的实现。&lt;/p&gt;
@@ -457,7 +474,7 @@
       <title>JUC——ReentrantLock</title>
       <link>http://www.kherrisan.cn/posts/994661cc/</link>
       <guid>http://www.kherrisan.cn/posts/994661cc/</guid>
-      <pubDate>Sat, 06 Oct 2018 08:32:27 GMT</pubDate>
+      <pubDate>Sat, 06 Oct 2018 16:32:27 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/ce7ae3e6bb8915c9daaf1b1cc426ad33.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 单线程持有的、可重入的锁。&lt;/p&gt;
@@ -477,7 +494,7 @@
       <title>JUC——AQS</title>
       <link>http://www.kherrisan.cn/posts/794bdde7/</link>
       <guid>http://www.kherrisan.cn/posts/794bdde7/</guid>
-      <pubDate>Sat, 06 Oct 2018 07:08:33 GMT</pubDate>
+      <pubDate>Sat, 06 Oct 2018 15:08:33 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/6de3aa05c56e9c4d58266c20b05abb9c.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; AQS————AbstractQueuedSynchronizor，队列同步器，AQS是一个抽象类，它为开发者编写同步工具（比如锁、信号量）提供了开发框架，这个框架封装了对线程和竞态条件的细节，使得开发者能够只关注于锁的逻辑，而无需关注线程的维护以及竞态条件的控制。 JUC中很多锁都是基于AQS进行开发的。&lt;/p&gt;
@@ -494,7 +511,7 @@
       <title>Java Collection——PriorityQueue</title>
       <link>http://www.kherrisan.cn/posts/ecb1842/</link>
       <guid>http://www.kherrisan.cn/posts/ecb1842/</guid>
-      <pubDate>Fri, 05 Oct 2018 10:31:50 GMT</pubDate>
+      <pubDate>Fri, 05 Oct 2018 18:31:50 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/5e8210e35fb88ecb1fdf30acb61e0c78.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Java中的优先队列采用的是最小堆的结构，即使用数组来保存一棵完全二叉树。&lt;strong&gt;无界&lt;/strong&gt;，可以自动扩容。用于比较的元素值必须是不可变的否则最小堆的性质会被破坏。&lt;/p&gt;
@@ -511,7 +528,7 @@
       <title>Java Collection——HashTable</title>
       <link>http://www.kherrisan.cn/posts/212ef57b/</link>
       <guid>http://www.kherrisan.cn/posts/212ef57b/</guid>
-      <pubDate>Fri, 05 Oct 2018 07:00:47 GMT</pubDate>
+      <pubDate>Fri, 05 Oct 2018 15:00:47 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-09_16-06-28.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; HashTable继承了Dictionary类，这个抽象类没有在HashMap中见到过。进入该Dictionary抽象类中，发现所有的方法都没有实现，而且和Map接口很相似。 初步浏览了一下HashTable，感觉比HashMap更轻量一些，同时额外地提供了同步机制（在方法之前加synchronized关键字，类似于Vector之于ArrayList）。&lt;/p&gt;
@@ -528,7 +545,7 @@
       <title>Linux——进程管理</title>
       <link>http://www.kherrisan.cn/posts/2b8650f6/</link>
       <guid>http://www.kherrisan.cn/posts/2b8650f6/</guid>
-      <pubDate>Sun, 26 Aug 2018 10:36:06 GMT</pubDate>
+      <pubDate>Sun, 26 Aug 2018 18:36:06 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h1&gt;&lt;p&gt;进程（Process）是处于执行期程序以及其相关资源的总和，不仅仅局限于可执行程序代码，通常还包括其他资源如打开的文件、挂起的信号、内核内部数据、处理器的状态、一个或多个内存映射的内存地址空间以及一个或多个执行线程、全局变量数据段等。 在现代操作系统中，提供两种虚拟机制：虚拟CPU和虚拟内存，都给进程一种独占设备的假象。&lt;/p&gt;
@@ -545,7 +562,7 @@
       <title>Orange&#39;S——学习笔记</title>
       <link>http://www.kherrisan.cn/posts/45017174/</link>
       <guid>http://www.kherrisan.cn/posts/45017174/</guid>
-      <pubDate>Sat, 18 Aug 2018 13:47:33 GMT</pubDate>
+      <pubDate>Sat, 18 Aug 2018 21:47:33 GMT</pubDate>
       <description>
       
         &lt;p&gt;由于时间关系，不能够跟着书的进度自己一点点动手写出一个操作系统，因此想着先把书的内容过一遍，只要了解到OS底层运作思路即可。Orang’S下文简称为OS。&lt;/p&gt;
@@ -563,7 +580,7 @@
       <title>Spring——IOC流程概述</title>
       <link>http://www.kherrisan.cn/posts/e6be9c71/</link>
       <guid>http://www.kherrisan.cn/posts/e6be9c71/</guid>
-      <pubDate>Tue, 07 Aug 2018 14:29:11 GMT</pubDate>
+      <pubDate>Tue, 07 Aug 2018 22:29:11 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;tiny-spring&quot;&gt;&lt;a href=&quot;#tiny-spring&quot; class=&quot;headerlink&quot; title=&quot;tiny-spring&quot;&gt;&lt;/a&gt;tiny-spring&lt;/h1&gt;&lt;p&gt;这是一个简化版的spring框架，模仿spring的思路实现了IOC和AOP的功能，是github上的一位开发者编写的。 &lt;a href=&quot;https://github.com/Dokyme/tiny-spring&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/Dokyme/tiny-spring&lt;/a&gt; 其实spring IOC的步骤并不复杂，和把大象装进冰箱的过程（三步）是基本一致的，也可以说成是两步，根据我的理解：&lt;/p&gt;
@@ -584,7 +601,7 @@
       <title>Dell XPS 9360上安装Ubuntu 18.04失败的情况</title>
       <link>http://www.kherrisan.cn/posts/befdb876/</link>
       <guid>http://www.kherrisan.cn/posts/befdb876/</guid>
-      <pubDate>Thu, 05 Jul 2018 03:59:58 GMT</pubDate>
+      <pubDate>Thu, 05 Jul 2018 11:59:58 GMT</pubDate>
       <description>
       
         
@@ -604,7 +621,7 @@
       <title>HTTP协议详解</title>
       <link>http://www.kherrisan.cn/posts/b9e67ec1/</link>
       <guid>http://www.kherrisan.cn/posts/b9e67ec1/</guid>
-      <pubDate>Sat, 30 Jun 2018 12:45:00 GMT</pubDate>
+      <pubDate>Sat, 30 Jun 2018 20:45:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;HTTP协议应该是如今互联网中使用范围最广的协议了。现在对HTTP协议进行一个全面的分析，力求能够把常用的协议功能都覆盖到。&lt;/p&gt;
@@ -622,7 +639,7 @@
       <title>Spring Framework——概览及目录</title>
       <link>http://www.kherrisan.cn/posts/2591264a/</link>
       <guid>http://www.kherrisan.cn/posts/2591264a/</guid>
-      <pubDate>Mon, 07 May 2018 10:49:19 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 18:49:19 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-08-06_10-45-57.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; SpringFramework由十多个模块组成，其中最最核心的模块有：&lt;/p&gt;
@@ -645,7 +662,7 @@
       <title>JavaEE——JSP概览</title>
       <link>http://www.kherrisan.cn/posts/a85d6717/</link>
       <guid>http://www.kherrisan.cn/posts/a85d6717/</guid>
-      <pubDate>Mon, 07 May 2018 10:24:37 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 18:24:37 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-07_18-25-12.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; JSP是基于Servlet和模板渲染技术发展出来的一种后端开发技术（虽然现在JavaEE说到底都是用的Servlet）。其原理非常简单，模板引擎解析JSP文件之后，将其中的Java对象取出，其余的字面常量统统放入print函数中，以最为淳朴的字符串连接的操作组成最终完整的响应，填充到servlet的对应函数中。&lt;/p&gt;
@@ -662,7 +679,7 @@
       <title>Java——IO体系概览</title>
       <link>http://www.kherrisan.cn/posts/5088f3cd/</link>
       <guid>http://www.kherrisan.cn/posts/5088f3cd/</guid>
-      <pubDate>Mon, 07 May 2018 08:53:04 GMT</pubDate>
+      <pubDate>Mon, 07 May 2018 16:53:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;java整个io包主要分为四块：字节流、字符流、File、RandomAccessFile。其中最复杂的是字节流和字符流两个簇，File和RandomAccessFile的功能较为单一。从名字可以看出，RandomAccessFile用于随机读写，字节流和字符流则用于顺序读写。 &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-05-07_16-01-04.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -679,7 +696,7 @@
       <title>JVM——垃圾收集（GC）和内存分配</title>
       <link>http://www.kherrisan.cn/posts/2118eccf/</link>
       <guid>http://www.kherrisan.cn/posts/2118eccf/</guid>
-      <pubDate>Sun, 06 May 2018 03:04:37 GMT</pubDate>
+      <pubDate>Sun, 06 May 2018 11:04:37 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;GC日志&quot;&gt;&lt;a href=&quot;#GC日志&quot; class=&quot;headerlink&quot; title=&quot;GC日志&quot;&gt;&lt;/a&gt;GC日志&lt;/h1&gt;&lt;p&gt;JVM可以输出GC日志供开发者分析GC过程。 -XX:+PrintGC 输出GC日志 -XX:+PrintGCDetails 输出GC的详细日志 -XX:+PrintGCTimeStamps 输出GC的时间戳（以基准时间的形式） -XX:+PrintGCDateStamps 输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800） -XX:+PrintHeapAtGC 在进行GC的前后打印出堆的信息 -Xloggc:../logs/gc.log 日志文件的输出路径&lt;/p&gt;
@@ -696,7 +713,7 @@
       <title>JavaEE——Servlet总结</title>
       <link>http://www.kherrisan.cn/posts/d1de75a8/</link>
       <guid>http://www.kherrisan.cn/posts/d1de75a8/</guid>
-      <pubDate>Tue, 01 May 2018 07:54:58 GMT</pubDate>
+      <pubDate>Tue, 01 May 2018 15:54:58 GMT</pubDate>
       <description>
       
         &lt;p&gt;谈到JavaEE，虽然如今绝大部分场合使用的都是SSH、SSM等框架，但这些都是基于Servlet技术所做的进一步发展，也就是说底层实现还是servlet，只是做了针对业务需求做了进一步的封装，使得开发人员能够更加有针对性的、更加高效的编写代码。这里稍微总结一下servlet技术的几个重要概念。 从没有在实际项目过程中使用过servlet，因此这里就从一个开发者的角度来考虑几个问题。&lt;/p&gt;
@@ -713,7 +730,7 @@
       <title>MySQL——总体架构</title>
       <link>http://www.kherrisan.cn/posts/77a52e0d/</link>
       <guid>http://www.kherrisan.cn/posts/77a52e0d/</guid>
-      <pubDate>Mon, 30 Apr 2018 12:09:58 GMT</pubDate>
+      <pubDate>Mon, 30 Apr 2018 20:09:58 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://s3.51cto.com/wyfs02/M02/11/8A/wKiom1LUF8DS1inQAAE8bwOlNTY150.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -737,7 +754,7 @@
       <title>OS——The Abstraction: The Process</title>
       <link>http://www.kherrisan.cn/posts/f2b26827/</link>
       <guid>http://www.kherrisan.cn/posts/f2b26827/</guid>
-      <pubDate>Wed, 25 Apr 2018 11:41:59 GMT</pubDate>
+      <pubDate>Wed, 25 Apr 2018 19:41:59 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;抽象的概念&quot;&gt;&lt;a href=&quot;#抽象的概念&quot; class=&quot;headerlink&quot; title=&quot;抽象的概念&quot;&gt;&lt;/a&gt;抽象的概念&lt;/h2&gt;&lt;p&gt;进程（Process），指运行着的程序。程序指静静躺在在外存中的数据和代码，是静态概念，但是进程是动态的概念，他反应了程序在运行的时候的功能和性质。 现代典型的操作系统都是同时运行数十个至数百个进程的，使用分时（Time Sharing）的技术来实现看似每个进程都能独占一个CPU的效果，当然，分时是要付出性能上的代价的。 进程的组成部分：&lt;/p&gt;
@@ -754,7 +771,7 @@
       <title>Gradle——从各个“关键字”理解gradle</title>
       <link>http://www.kherrisan.cn/posts/c39d8650/</link>
       <guid>http://www.kherrisan.cn/posts/c39d8650/</guid>
-      <pubDate>Wed, 18 Apr 2018 14:34:09 GMT</pubDate>
+      <pubDate>Wed, 18 Apr 2018 22:34:09 GMT</pubDate>
       <description>
       
         &lt;p&gt;buildscript {&lt;br&gt;    ext {&lt;br&gt;        springBootVersion = ‘2.0.1.RELEASE’&lt;br&gt;    }&lt;br&gt;    repositories {&lt;br&gt;        mavenCentral()&lt;br&gt;    }&lt;br&gt;    dependencies {&lt;br&gt;        classpath(“org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}”)&lt;br&gt;    }&lt;br&gt;}&lt;/p&gt;
@@ -771,7 +788,7 @@
       <title>Gradle——从groovy语法角度理解Project</title>
       <link>http://www.kherrisan.cn/posts/35e8bc6d/</link>
       <guid>http://www.kherrisan.cn/posts/35e8bc6d/</guid>
-      <pubDate>Wed, 18 Apr 2018 14:31:37 GMT</pubDate>
+      <pubDate>Wed, 18 Apr 2018 22:31:37 GMT</pubDate>
       <description>
       
         &lt;p&gt;这是一个Spring Boot项目的build.gradle文件。&lt;/p&gt;
@@ -788,7 +805,7 @@
       <title>Java Collection——TreeMap</title>
       <link>http://www.kherrisan.cn/posts/3265045/</link>
       <guid>http://www.kherrisan.cn/posts/3265045/</guid>
-      <pubDate>Wed, 21 Feb 2018 06:12:22 GMT</pubDate>
+      <pubDate>Wed, 21 Feb 2018 14:12:22 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-21_14-15-34.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; TreeMap继承了AbstractMap抽象类，实现了NavigableMap接口。这个接口是HashMap和LinkedHashMap的定义中都没有见过的，从字面意思上来看，应该是“可导航Map”，到底是怎么个导航法，需要先了解一下这个接口。 &lt;/p&gt;
@@ -805,7 +822,7 @@
       <title>Java Collection——LinkedHashSet</title>
       <link>http://www.kherrisan.cn/posts/b728d676/</link>
       <guid>http://www.kherrisan.cn/posts/b728d676/</guid>
-      <pubDate>Mon, 19 Feb 2018 11:06:22 GMT</pubDate>
+      <pubDate>Mon, 19 Feb 2018 19:06:22 GMT</pubDate>
       <description>
       
         
@@ -825,7 +842,7 @@
       <title>Java Collection——LinkedHashMap</title>
       <link>http://www.kherrisan.cn/posts/c2915911/</link>
       <guid>http://www.kherrisan.cn/posts/c2915911/</guid>
-      <pubDate>Sat, 17 Feb 2018 06:31:56 GMT</pubDate>
+      <pubDate>Sat, 17 Feb 2018 14:31:56 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-17_12-14-56.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; LinkedHashMap和HashMap的区别在于前者在HashMap的基础上还维护了一个贯穿所有节点的双向链表，该链表决定了遍历的顺序，形如一个队列。 当然，这个链表并不会影响HashMap的结构，和HashMap的table或者链表或者红黑树是完全独立的一个结构。该链表的顺序可以是插入元素的顺序也可以是访问元素的顺序，具体选择何种顺序取决于accessOrder属性是true还是false。 在hashmap中预留了几个抽象方法，并在put和get等操作内调用了这些方法，为子类提供了可扩展的点。&lt;strong&gt;我认为这是“模板方法模式”的体现。&lt;/strong&gt; &lt;/p&gt;
@@ -842,7 +859,7 @@
       <title>JVM——内存区域和内存溢出异常</title>
       <link>http://www.kherrisan.cn/posts/e9b37112/</link>
       <guid>http://www.kherrisan.cn/posts/e9b37112/</guid>
-      <pubDate>Fri, 16 Feb 2018 08:00:32 GMT</pubDate>
+      <pubDate>Fri, 16 Feb 2018 16:00:32 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;内存区域&quot;&gt;&lt;a href=&quot;#内存区域&quot; class=&quot;headerlink&quot; title=&quot;内存区域&quot;&gt;&lt;/a&gt;内存区域&lt;/h2&gt;&lt;p&gt;作为VM，Java Virtual Machine模拟了操作系统的一些功能，其中之一就是对内存进行管理。JVM内存大致分为下面几个区域： &lt;a href=&quot;https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://raw.githubusercontent.com/ACFLOOD/MarkdownPictures/master/MemoryArea.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/a&gt;&lt;/p&gt;
@@ -862,7 +879,7 @@
       <title>MIT 6.828 Lab1：C, Assembly, Tools, and Bootstrapping</title>
       <link>http://www.kherrisan.cn/posts/807d354d/</link>
       <guid>http://www.kherrisan.cn/posts/807d354d/</guid>
-      <pubDate>Fri, 16 Feb 2018 07:41:27 GMT</pubDate>
+      <pubDate>Fri, 16 Feb 2018 15:41:27 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Boot-a-PC&quot;&gt;&lt;a href=&quot;#Boot-a-PC&quot; class=&quot;headerlink&quot; title=&quot;Boot a PC&quot;&gt;&lt;/a&gt;Boot a PC&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-01-30_18-18-06.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 熟悉汇编语言，由于去年学过IO，问题应该不大。这里就不复习了。&lt;/p&gt;
@@ -879,7 +896,7 @@
       <title>Java Collection——HashMap</title>
       <link>http://www.kherrisan.cn/posts/3bd06c35/</link>
       <guid>http://www.kherrisan.cn/posts/3bd06c35/</guid>
-      <pubDate>Wed, 14 Feb 2018 08:08:09 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 16:08:09 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;strong&gt;本部分的内容可能会随着java版本的变化而产生较大的变化，因此事先注明：下面的代码和原理都是基于JDK1.8。&lt;/strong&gt; &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-14_13-15-56-1.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Map是一种不同于List、Set和Queue的数据结构，其中存放的每个单元实际上包含两个元素————Key和Value，这两个元素都是开发人员所关心的。Map描述的是Key和Value的对应关系，就如同List中一个index对应一个element，只是Map的Key的类型并不一定是整数，可以是其他任何类型。&lt;/p&gt;
@@ -896,7 +913,7 @@
       <title>Java Collection——HashSet</title>
       <link>http://www.kherrisan.cn/posts/4e69e352/</link>
       <guid>http://www.kherrisan.cn/posts/4e69e352/</guid>
-      <pubDate>Wed, 14 Feb 2018 06:57:23 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 14:57:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-16_15-13-28.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; HashSet的实现是基于HashMap的，与Map不同的地方在于HashSet中Key对应的Value只需要一个标记即可。 由于HashSet最核心的部分————Hash已经由HashMap完成，因此只要加一个包装即可。&lt;/p&gt;
@@ -913,7 +930,7 @@
       <title>Java Collection——Vector</title>
       <link>http://www.kherrisan.cn/posts/1b534228/</link>
       <guid>http://www.kherrisan.cn/posts/1b534228/</guid>
-      <pubDate>Wed, 14 Feb 2018 06:45:43 GMT</pubDate>
+      <pubDate>Wed, 14 Feb 2018 14:45:43 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-14_13-22-11.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; Vector类的原型和ArrayList是一模一样的，实现了RandomAccess接口说明遍历的时候使用get方法比使用迭代器方法快（LinkedList就不必实现该接口），继承了AbstractList提供的一些较为基础和简单的方法实现（比如常常提到的modCount）。&lt;/p&gt;
@@ -930,7 +947,7 @@
       <title>JUC——CopyOnWriteArrayList</title>
       <link>http://www.kherrisan.cn/posts/c1bdaf6f/</link>
       <guid>http://www.kherrisan.cn/posts/c1bdaf6f/</guid>
-      <pubDate>Sun, 11 Feb 2018 06:08:44 GMT</pubDate>
+      <pubDate>Sun, 11 Feb 2018 14:08:44 GMT</pubDate>
       <description>
       
         &lt;p&gt;ArrayList和LinkedList都不是线程安全的。这时候就有必要研究一下CopyOnWriteArrayList了，一个略小众的容器类。 &lt;img src=&quot;https://oss.kherrisan.cn/Snipaste_2018-02-11_12-06-22.jpg&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 光看这个类的原型好像还挺简单的。&lt;/p&gt;
@@ -948,7 +965,7 @@
       <title>Java Collection——LinkedList</title>
       <link>http://www.kherrisan.cn/posts/7b8114a5/</link>
       <guid>http://www.kherrisan.cn/posts/7b8114a5/</guid>
-      <pubDate>Sat, 10 Feb 2018 04:43:22 GMT</pubDate>
+      <pubDate>Sat, 10 Feb 2018 12:43:22 GMT</pubDate>
       <description>
       
         &lt;p&gt;LinkedList不同于ArrayList，虽然二者都是List，呈现给用户的都是顺序列表容器，但是底层的实现是不一样的。ArrayList直接以Java的数组作为底层实现，数组中相邻元素在元素中也是相邻的，保持一致的顺序排列。而LinkedList的底层实现使用的是链表，即LinkedList中的元素在内存中不必相邻，不必连续排列，可以分散在各处，元素花费额外的空间存放指针来记录相邻元素的位置。 链表与数组各有各的优劣，数组的随机访问效率最高，但是要插入删除元素时必须要搬移其他元素；链表插入删除元素只需要常数时间复杂度，但是随机访问需要逐个遍历元素。 比较一下LinkedList和ArrayList分别继承了哪些类，实现了哪些接口。&lt;/p&gt;
@@ -965,7 +982,7 @@
       <title>Java Collection——ArrayList</title>
       <link>http://www.kherrisan.cn/posts/3e77724f/</link>
       <guid>http://www.kherrisan.cn/posts/3e77724f/</guid>
-      <pubDate>Fri, 09 Feb 2018 10:18:05 GMT</pubDate>
+      <pubDate>Fri, 09 Feb 2018 18:18:05 GMT</pubDate>
       <description>
       
         &lt;div class=&quot;hljs&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs null&quot;&gt;public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; 
@@ -984,7 +1001,7 @@
       <title>Java Collection——总览</title>
       <link>http://www.kherrisan.cn/posts/a80f8f54/</link>
       <guid>http://www.kherrisan.cn/posts/a80f8f54/</guid>
-      <pubDate>Fri, 09 Feb 2018 05:00:50 GMT</pubDate>
+      <pubDate>Fri, 09 Feb 2018 13:00:50 GMT</pubDate>
       <description>
       
         &lt;p&gt;说明： 1. 本系列的内容主要为基于相关源码分析Java Collection的实现，包含List、Queue、Set 、Map这四大块。 2. 在学习和整理笔记的过程中，参考了网上其他前辈的资料，由于笔记最终会发布到网上，出于对原创的尊重和对原作者的感谢，需要在引用了前辈的文字、图片、代码处标记出处，但是为了方便（懒），我就不一一标注了，改为集中在本文开始部分罗列参考资料链接。&lt;strong&gt;再次对把自己的研究成果和学习资源上传到互联网上供他人参考和学习的前辈们表示感谢&lt;/strong&gt; 参考链接： &lt;a href=&quot;https://github.com/CarpenterLee/JCFInternals&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; title=&quot;深入理解Java集合框架&quot;&gt;[CarpenterLee/JCFInternals]深入理解Java集合框架&lt;/a&gt;&lt;/p&gt;
@@ -1001,7 +1018,7 @@
       <title>自制Lex程序总结</title>
       <link>http://www.kherrisan.cn/posts/4fe1d90d/</link>
       <guid>http://www.kherrisan.cn/posts/4fe1d90d/</guid>
-      <pubDate>Thu, 21 Dec 2017 16:12:11 GMT</pubDate>
+      <pubDate>Fri, 22 Dec 2017 00:12:11 GMT</pubDate>
       <description>
       
         &lt;p&gt;编译原理实验一提供了三个层面的选择，第一层是最简单的，简单到我都忘记了是什么要求了；第二层是用程序实现基于DFA的词法分析器；第三层有些复杂，模仿Lex的功能，设计一个能够生成词法分析器源代码的程序，即“编译器的编译器”。我不自量力地选了第三层。 其实，第三次说难也不难，说简单的话倒真的到处都是坑。我停停写写，大概写了两三周，更加深刻地体会都自己写业务代码写的飞快，但是一旦碰到有些技术含量的代码就要开始面向Google编程的事实。 现在，程序写的差不多了，以及传到了Github上，还发了两个release版本，先贴上链接。 &lt;a href=&quot;https://github.com/Dokyme/DokymeLex&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DokymeLex&lt;/a&gt; 我作此文的目的是，对于程序的结构，设计和实现的思路，做一个记录和总结，也包括一些反思。&lt;/p&gt;
@@ -1018,7 +1035,7 @@
       <title>有关上线的微信小程序说明</title>
       <link>http://www.kherrisan.cn/posts/b89a4960/</link>
       <guid>http://www.kherrisan.cn/posts/b89a4960/</guid>
-      <pubDate>Tue, 19 Dec 2017 15:09:40 GMT</pubDate>
+      <pubDate>Tue, 19 Dec 2017 23:09:40 GMT</pubDate>
       <description>
       
         
@@ -1038,7 +1055,7 @@
       <title>Ubuntu Server配置BBR拥塞控制算法</title>
       <link>http://www.kherrisan.cn/posts/4aebf7b7/</link>
       <guid>http://www.kherrisan.cn/posts/4aebf7b7/</guid>
-      <pubDate>Tue, 19 Dec 2017 15:04:32 GMT</pubDate>
+      <pubDate>Tue, 19 Dec 2017 23:04:32 GMT</pubDate>
       <description>
       
         
@@ -1058,7 +1075,7 @@
       <title>2017-2018 SRTP项目心得体会</title>
       <link>http://www.kherrisan.cn/posts/ac366cab/</link>
       <guid>http://www.kherrisan.cn/posts/ac366cab/</guid>
-      <pubDate>Mon, 20 Nov 2017 06:38:19 GMT</pubDate>
+      <pubDate>Mon, 20 Nov 2017 14:38:19 GMT</pubDate>
       <description>
       
         
@@ -1078,7 +1095,7 @@
       <title>TCP/IP协议 TCP Timeout and Retransmission</title>
       <link>http://www.kherrisan.cn/posts/1d215dd1/</link>
       <guid>http://www.kherrisan.cn/posts/1d215dd1/</guid>
-      <pubDate>Wed, 18 Oct 2017 05:24:42 GMT</pubDate>
+      <pubDate>Wed, 18 Oct 2017 13:24:42 GMT</pubDate>
       <description>
       
       </description>
@@ -1091,7 +1108,7 @@
       <title>TCP/IP实验 到指定目标的路由追踪（实现tracert功能）</title>
       <link>http://www.kherrisan.cn/posts/652e246f/</link>
       <guid>http://www.kherrisan.cn/posts/652e246f/</guid>
-      <pubDate>Fri, 29 Sep 2017 13:28:23 GMT</pubDate>
+      <pubDate>Fri, 29 Sep 2017 21:28:23 GMT</pubDate>
       <description>
       
         &lt;p&gt;路由追踪指当访问一个远程的设备时，能够得到沿途的路由器的IP。这个功能已经由tracert（traceroute）程序实现了，我一来闲的没事，而来早就想做一些关于主机发现和路由追踪的小程序，因此就研究了一下。 使用python的scapy库进行数据包的收发，由于scapy已经实现了traceroute功能，更何况windows和linux都有tracert（traceroute）命令，但是我还是想从底层搞清楚原理，所有先用traceroute做追踪，同时使用wireshark抓包，研究一下包的结构和原理，再自己用scapy实现一下traceroute。 &lt;strong&gt;注意：Win10 &amp; Python2.7 环境下，使用pip安装scapy可能会遇到问题（global name xxx is not defined），建议直接clone github上的仓库，然后python setup.py install。&lt;/strong&gt; 使用我们学校jwc网站作为实验对象，所有实验都在seu内网进行（感觉内网变化小一些）。 先抓个包看看jwc网站ip地址是多少。其实应该是有更加简便的方法的，只是我不知道。而且tracert直接填主机名好像不行。&lt;/p&gt;
@@ -1108,7 +1125,7 @@
       <title>爱奇艺视频广告流量分析</title>
       <link>http://www.kherrisan.cn/posts/7270ded8/</link>
       <guid>http://www.kherrisan.cn/posts/7270ded8/</guid>
-      <pubDate>Wed, 13 Sep 2017 15:32:04 GMT</pubDate>
+      <pubDate>Wed, 13 Sep 2017 23:32:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;按照老师教的步骤，在wifi环境下抓安卓端的爱奇艺app的数据包，并从中分析出广告的流量。 三生三世十里桃花01 首先进行tcp会话的统计，我比较喜欢把rel start和duration两栏拉长： 先按照数据量排序： &lt;img src=&quot;https://i.loli.net/2017/09/13/59b9519bf02ab.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt; 好像看不出什么来，老师的经验之谈是高清的视频1s大概100kb。&lt;/p&gt;
@@ -1125,7 +1142,7 @@
       <title>Git 算是比较系统的学习笔记</title>
       <link>http://www.kherrisan.cn/posts/5151ce74/</link>
       <guid>http://www.kherrisan.cn/posts/5151ce74/</guid>
-      <pubDate>Thu, 07 Sep 2017 11:50:05 GMT</pubDate>
+      <pubDate>Thu, 07 Sep 2017 19:50:05 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;Git-基础&quot;&gt;&lt;a href=&quot;#Git-基础&quot; class=&quot;headerlink&quot; title=&quot;Git 基础&quot;&gt;&lt;/a&gt;Git 基础&lt;/h1&gt;&lt;p&gt;git是一个分布式的版本管理工具。所谓的分布式就是每个人的电脑上都可以安装完整的git管理系统，进行本地的版本管理，而不需要中央服务器的集中管理。 git不同于其他版本管理系统，它保存的是一个项目中所有文件的集合的快照，如果文件没有被修改那就用一个指针指向之前那个版本。 &lt;img src=&quot;https://git-scm.com/book/en/v2/images/snapshots.png&quot; srcset=&quot;/img/loading.gif&quot; alt&gt;&lt;/p&gt;
@@ -1142,7 +1159,7 @@
       <title>Git 面向项目开发的git教程</title>
       <link>http://www.kherrisan.cn/posts/4d8d0ed2/</link>
       <guid>http://www.kherrisan.cn/posts/4d8d0ed2/</guid>
-      <pubDate>Mon, 04 Sep 2017 11:28:24 GMT</pubDate>
+      <pubDate>Mon, 04 Sep 2017 19:28:24 GMT</pubDate>
       <description>
       
         &lt;p&gt;Git是一种版本控制工具，Github是提供git服务器支持的一个社区。&lt;/p&gt;
@@ -1160,7 +1177,7 @@
       <title>TCP/IP协议 TCP Connection Mnagement</title>
       <link>http://www.kherrisan.cn/posts/b225a4eb/</link>
       <guid>http://www.kherrisan.cn/posts/b225a4eb/</guid>
-      <pubDate>Thu, 27 Jul 2017 13:39:01 GMT</pubDate>
+      <pubDate>Thu, 27 Jul 2017 21:39:01 GMT</pubDate>
       <description>
       
         &lt;p&gt;因为TCP是一个面向连接的协议，所以建立释放连接的过程是很重要的。&lt;/p&gt;
@@ -1178,7 +1195,7 @@
       <title>TCP/IP协议 TCP(Preliminaries)</title>
       <link>http://www.kherrisan.cn/posts/ad7bd9a4/</link>
       <guid>http://www.kherrisan.cn/posts/ad7bd9a4/</guid>
-      <pubDate>Wed, 26 Jul 2017 11:16:59 GMT</pubDate>
+      <pubDate>Wed, 26 Jul 2017 19:16:59 GMT</pubDate>
       <description>
       
         &lt;p&gt;本章应是介绍TCP的引言，后面有5个章节是详细介绍TCP协议各个部分的。&lt;/p&gt;
@@ -1196,7 +1213,7 @@
       <title>Typescript 函数</title>
       <link>http://www.kherrisan.cn/posts/f8eab2f8/</link>
       <guid>http://www.kherrisan.cn/posts/f8eab2f8/</guid>
-      <pubDate>Sat, 22 Jul 2017 13:52:40 GMT</pubDate>
+      <pubDate>Sat, 22 Jul 2017 21:52:40 GMT</pubDate>
       <description>
       
         
@@ -1221,7 +1238,7 @@ let myAdd:
       <title>MIT_6.828 Homework: boot xv6</title>
       <link>http://www.kherrisan.cn/posts/7ce108b4/</link>
       <guid>http://www.kherrisan.cn/posts/7ce108b4/</guid>
-      <pubDate>Wed, 19 Jul 2017 08:13:44 GMT</pubDate>
+      <pubDate>Wed, 19 Jul 2017 16:13:44 GMT</pubDate>
       <description>
       
         &lt;p&gt;&lt;a href=&quot;https://gyazo.com/43c38a68a3753834a69995cd0a6ee24b&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://i.gyazo.com/43c38a68a3753834a69995cd0a6ee24b.png&quot; srcset=&quot;/img/loading.gif&quot; alt=&quot;https://gyazo.com/43c38a68a3753834a69995cd0a6ee24b&quot;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1238,7 +1255,7 @@ let myAdd:
       <title>TCP/IP协议 Introduction</title>
       <link>http://www.kherrisan.cn/posts/379185ba/</link>
       <guid>http://www.kherrisan.cn/posts/379185ba/</guid>
-      <pubDate>Tue, 18 Jul 2017 09:38:05 GMT</pubDate>
+      <pubDate>Tue, 18 Jul 2017 17:38:05 GMT</pubDate>
       <description>
       
         &lt;p&gt;一边看书，一边做一些笔记。刚刚开始看第一章，书是全英文版的，一上来就感觉很难，一改这类书第一章都是导论所以很简单的印象。&lt;/p&gt;
@@ -1256,7 +1273,7 @@ let myAdd:
       <title>MIT_6.828 简介，环境搭建</title>
       <link>http://www.kherrisan.cn/posts/d949f9e1/</link>
       <guid>http://www.kherrisan.cn/posts/d949f9e1/</guid>
-      <pubDate>Mon, 17 Jul 2017 08:13:22 GMT</pubDate>
+      <pubDate>Mon, 17 Jul 2017 16:13:22 GMT</pubDate>
       <description>
       
         &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;MIT大名鼎鼎的操作系统课程，6.828，根据我初步的了解，这门课非常注重动手能力。大二下学期刚刚上了操作系统课，但是总共就做了两个实验，感觉动手的成分非常的少，作业都是以做题为主。所以想亲自动手尝试一下。 整个课程基于linux的xv6系统，使用qemu模拟器进行运行和调试，同时涉及c语言编译链接的工具链的使用。&lt;/p&gt;
@@ -1273,7 +1290,7 @@ let myAdd:
       <title>Typescript 类</title>
       <link>http://www.kherrisan.cn/posts/f5fd3baa/</link>
       <guid>http://www.kherrisan.cn/posts/f5fd3baa/</guid>
-      <pubDate>Thu, 13 Jul 2017 03:22:11 GMT</pubDate>
+      <pubDate>Thu, 13 Jul 2017 11:22:11 GMT</pubDate>
       <description>
       
         
@@ -1297,7 +1314,7 @@ let myAdd:
       <title>Typescript 接口</title>
       <link>http://www.kherrisan.cn/posts/d016d80b/</link>
       <guid>http://www.kherrisan.cn/posts/d016d80b/</guid>
-      <pubDate>Thu, 13 Jul 2017 02:40:41 GMT</pubDate>
+      <pubDate>Thu, 13 Jul 2017 10:40:41 GMT</pubDate>
       <description>
       
         
@@ -1321,7 +1338,7 @@ let
       <title>Typescript 类型和变量</title>
       <link>http://www.kherrisan.cn/posts/6eb1636b/</link>
       <guid>http://www.kherrisan.cn/posts/6eb1636b/</guid>
-      <pubDate>Tue, 11 Jul 2017 15:01:04 GMT</pubDate>
+      <pubDate>Tue, 11 Jul 2017 23:01:04 GMT</pubDate>
       <description>
       
         &lt;p&gt;因为我js没有认真学，所以从typescript学起的话要从基础的一点一点来了。&lt;/p&gt;
@@ -1338,7 +1355,7 @@ let
       <title>Typescript 简述，安装，开发环境配置</title>
       <link>http://www.kherrisan.cn/posts/f576dfeb/</link>
       <guid>http://www.kherrisan.cn/posts/f576dfeb/</guid>
-      <pubDate>Tue, 11 Jul 2017 06:20:15 GMT</pubDate>
+      <pubDate>Tue, 11 Jul 2017 14:20:15 GMT</pubDate>
       <description>
       
         &lt;h1 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h1&gt;&lt;p&gt;Typescript是一个由微软开发的编程语言，听说有C#的首席架构师助阵Typescript的开发。是Javascript的超集，提供了可选的静态类型和基于类的面向对象编程，感觉就像C#和JavaScript之间的一种语言。 废话少说，先把环境搞起来，环境搭好了就可以码代码了。 以下所有的代码都来自于 &lt;a href=&quot;http://www.typescriptlang.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; title=&quot;Typescript&quot;&gt;Typescriptlang&lt;/a&gt; 这个网站，感觉比较良心，大家可以参考一下。&lt;/p&gt;
@@ -1355,7 +1372,7 @@ let
       <title>首</title>
       <link>http://www.kherrisan.cn/posts/b8431f23/</link>
       <guid>http://www.kherrisan.cn/posts/b8431f23/</guid>
-      <pubDate>Sun, 25 Jun 2017 05:20:53 GMT</pubDate>
+      <pubDate>Sun, 25 Jun 2017 13:20:53 GMT</pubDate>
       <description>
       
         

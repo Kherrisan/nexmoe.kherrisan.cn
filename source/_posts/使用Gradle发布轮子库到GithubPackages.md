@@ -1,5 +1,6 @@
 ---
 title: 使用Gradle发布轮子库到GithubPackages
+abbrlink: cc3ae9ba
 date: 2020-12-28 12:47:17
 tags:
 ---
